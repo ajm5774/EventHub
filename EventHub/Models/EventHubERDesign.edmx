@@ -200,8 +200,9 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="School" />
           <Property Name="PIcturePath" Type="String" Nullable="false" />
+          <NavigationProperty Name="School" Relationship="Model.AspNetUsersSchools" FromRole="AspNetUsers" ToRole="Schools" />
+          <NavigationProperty Name="Subscribers" Relationship="Model.AspNetUsersSubscribers" FromRole="AspNetUsers" ToRole="Subscribers" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -261,6 +262,38 @@
           <EntitySet Name="EventPicturesSet" EntityType="Model.EventPictures" />
           <EntitySet Name="UserEventNotificationsSet" EntityType="Model.UserEventNotifications" />
           <EntitySet Name="SubscribersSet" EntityType="Model.Subscribers" />
+          <AssociationSet Name="EventsEventPictures" Association="Model.EventsEventPictures">
+            <End Role="Events" EntitySet="EventsSet" />
+            <End Role="EventPictures" EntitySet="EventPicturesSet" />
+          </AssociationSet>
+          <AssociationSet Name="EventsComments" Association="Model.EventsComments">
+            <End Role="Events" EntitySet="EventsSet" />
+            <End Role="Comments" EntitySet="CommentsSet" />
+          </AssociationSet>
+          <AssociationSet Name="GroupsEvents" Association="Model.GroupsEvents">
+            <End Role="Groups" EntitySet="GroupsSet" />
+            <End Role="Events" EntitySet="EventsSet" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUsersSchools" Association="Model.AspNetUsersSchools">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Schools" EntitySet="SchoolsSet" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUsersSubscribers" Association="Model.AspNetUsersSubscribers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Subscribers" EntitySet="SubscribersSet" />
+          </AssociationSet>
+          <AssociationSet Name="GroupsSubscribers" Association="Model.GroupsSubscribers">
+            <End Role="Groups" EntitySet="GroupsSet" />
+            <End Role="Subscribers" EntitySet="SubscribersSet" />
+          </AssociationSet>
+          <AssociationSet Name="EventsUserEventNotifications" Association="Model.EventsUserEventNotifications">
+            <End Role="Events" EntitySet="EventsSet" />
+            <End Role="UserEventNotifications" EntitySet="UserEventNotificationsSet" />
+          </AssociationSet>
+          <AssociationSet Name="NotificationsUserEventNotifications" Association="Model.NotificationsUserEventNotifications">
+            <End Role="Notifications" EntitySet="NotificationsSet" />
+            <End Role="UserEventNotifications" EntitySet="UserEventNotificationsSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Notifications">
           <Key>
@@ -272,6 +305,7 @@
           <NavigationProperty Name="TargetUser" />
           <NavigationProperty Name="SourceUser" />
           <Property Name="NotificationType" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="UserEventNotifications" Relationship="Model.NotificationsUserEventNotifications" FromRole="Notifications" ToRole="UserEventNotifications" />
         </EntityType>
         <EntityType Name="Groups">
           <Key>
@@ -280,10 +314,11 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" />
-          <NavigationProperty Name="Events" />
           <NavigationProperty Name="School" />
           <Property Name="PicturePath" Type="String" Nullable="false" />
           <NavigationProperty Name="GroupUsers" />
+          <NavigationProperty Name="Events" Relationship="Model.GroupsEvents" FromRole="Groups" ToRole="Events" />
+          <NavigationProperty Name="Subscribers" Relationship="Model.GroupsSubscribers" FromRole="Groups" ToRole="Subscribers" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -291,8 +326,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Message" Type="String" Nullable="false" />
-          <NavigationProperty Name="User" />
-          <NavigationProperty Name="Event" />
+          <NavigationProperty Name="Event" Relationship="Model.EventsComments" FromRole="Comments" ToRole="Events" />
+          <Property Name="EventsId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Events">
           <Key>
@@ -301,8 +336,11 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DateTime" Type="String" Nullable="false" />
           <Property Name="Place" Type="String" Nullable="false" />
-          <NavigationProperty Name="Comments" />
-          <NavigationProperty Name="Pictures" />
+          <NavigationProperty Name="EventPictures" Relationship="Model.EventsEventPictures" FromRole="Events" ToRole="EventPictures" />
+          <NavigationProperty Name="Comments" Relationship="Model.EventsComments" FromRole="Events" ToRole="Comments" />
+          <NavigationProperty Name="Group" Relationship="Model.GroupsEvents" FromRole="Events" ToRole="Groups" />
+          <Property Name="GroupsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserEventNotifications" Relationship="Model.EventsUserEventNotifications" FromRole="Events" ToRole="UserEventNotifications" />
         </EntityType>
         <EntityType Name="Schools">
           <Key>
@@ -310,6 +348,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Model.AspNetUsersSchools" FromRole="Schools" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="EventPictures">
           <Key>
@@ -317,6 +356,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PicturePath" Type="String" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="Model.EventsEventPictures" FromRole="EventPictures" ToRole="Events" />
+          <Property Name="EventsId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UserEventNotifications">
           <Key>
@@ -324,8 +365,10 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AllowNotifications" Type="String" Nullable="false" />
-          <NavigationProperty Name="Event" />
-          <NavigationProperty Name="User" />
+          <NavigationProperty Name="Event" Relationship="Model.EventsUserEventNotifications" FromRole="UserEventNotifications" ToRole="Events" />
+          <Property Name="EventsId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Notification" Relationship="Model.NotificationsUserEventNotifications" FromRole="UserEventNotifications" ToRole="Notifications" />
+          <Property Name="NotificationsId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Subscribers">
           <Key>
@@ -333,9 +376,99 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IsAdministrator" Type="String" Nullable="false" />
-          <NavigationProperty Name="Group" />
-          <NavigationProperty Name="User" />
+          <NavigationProperty Name="AspNetUser" Relationship="Model.AspNetUsersSubscribers" FromRole="Subscribers" ToRole="AspNetUsers" />
+          <Property Name="AspNetUsersId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Group" Relationship="Model.GroupsSubscribers" FromRole="Subscribers" ToRole="Groups" />
+          <Property Name="GroupsId" Type="Int32" Nullable="false" />
         </EntityType>
+        <Association Name="EventsEventPictures">
+          <End Type="Model.Events" Role="Events" Multiplicity="1" />
+          <End Type="Model.EventPictures" Role="EventPictures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventPictures">
+              <PropertyRef Name="EventsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventsComments">
+          <End Type="Model.Events" Role="Events" Multiplicity="1" />
+          <End Type="Model.Comments" Role="Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="EventsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupsEvents">
+          <End Type="Model.Groups" Role="Groups" Multiplicity="1" />
+          <End Type="Model.Events" Role="Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="GroupsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUsersSchools">
+          <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="Model.Schools" Role="Schools" Multiplicity="1" />
+        </Association>
+        <Association Name="AspNetUsersSubscribers">
+          <End Type="Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="Model.Subscribers" Role="Subscribers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subscribers">
+              <PropertyRef Name="AspNetUsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupsSubscribers">
+          <End Type="Model.Groups" Role="Groups" Multiplicity="1" />
+          <End Type="Model.Subscribers" Role="Subscribers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subscribers">
+              <PropertyRef Name="GroupsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventsUserEventNotifications">
+          <End Type="Model.Events" Role="Events" Multiplicity="1" />
+          <End Type="Model.UserEventNotifications" Role="UserEventNotifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserEventNotifications">
+              <PropertyRef Name="EventsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="NotificationsUserEventNotifications">
+          <End Type="Model.Notifications" Role="Notifications" Multiplicity="1" />
+          <End Type="Model.UserEventNotifications" Role="UserEventNotifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notifications">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserEventNotifications">
+              <PropertyRef Name="NotificationsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
