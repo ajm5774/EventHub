@@ -46,7 +46,8 @@ namespace EventHub.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Email/Username")]
+        [DataType(DataType.EmailAddress)]
         public string UserName { get; set; }
 
         [Required]

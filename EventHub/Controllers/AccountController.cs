@@ -23,6 +23,8 @@ namespace EventHub.Controllers
         public AccountController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+            var userValidator = UserManager.UserValidator as UserValidator<ApplicationUser>;
+            userValidator.AllowOnlyAlphanumericUserNames = false;
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
