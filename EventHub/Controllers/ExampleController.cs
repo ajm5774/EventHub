@@ -9,12 +9,14 @@ namespace EventHub.Controllers
 {
     public class ExampleController : Controller
     {
+        //Entities extends DbContext
         private Entities db = new Entities();
 
         //
         // GET: /Example/
         public ActionResult Index()
         {
+            //Get the rows from the Events table
             List<Event> events = db.Events.ToList();
             return View();
         }
