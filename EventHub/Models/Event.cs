@@ -26,6 +26,7 @@ namespace EventHub.Models
         public string Place { get; set; }
         public int GroupId { get; set; }
         public string Description { get; set; }
+        public string Title { get; set; }
     
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<EventPicture> EventPictures { get; set; }

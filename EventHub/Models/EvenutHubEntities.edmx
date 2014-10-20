@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -450,6 +450,8 @@
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EventId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="Self.FK_EventsComments" FromRole="Comments" ToRole="Events" />
+          <NavigationProperty Name="AspNetUser" Relationship="Model.AspNetUserComment" FromRole="Comment" ToRole="AspNetUser" />
+          <Property Name="UserId" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="EventPicture">
           <Key>
@@ -473,6 +475,7 @@
           <NavigationProperty Name="UserEventNotifications" Relationship="Self.FK_EventsUserEventNotifications" FromRole="Events" ToRole="UserEventNotifications" />
           <NavigationProperty Name="Group" Relationship="Self.FK_GroupsEvents" FromRole="Events" ToRole="Groups" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Title" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -733,10 +736,18 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
+          <AssociationSet Name="AspNetUserComment" Association="Model.AspNetUserComment">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="AspNetUserNotification">
           <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="1" />
           <End Type="Model.Notification" Role="Notification" Multiplicity="*" />
+        </Association>
+        <Association Name="AspNetUserComment">
+          <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="Model.Comment" Role="Comment" Multiplicity="1" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
