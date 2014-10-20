@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ExampleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -179,22 +180,61 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\EventHubERDesign.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventHubERDesign.Context.tt</DependentUpon>
+    <Compile Include="Models\AspNetRole.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventHubERDesign.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EventHubERDesign.tt</DependentUpon>
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventHubERDesign.Designer.cs">
+    <Compile Include="Models\AspNetUserClaim.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogin.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__MigrationHistory.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Event.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventPicture.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EvenutHubEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EventHubERDesign.edmx</DependentUpon>
+      <DependentUpon>EvenutHubEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EvenutHubEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EvenutHubEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EvenutHubEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Group.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupSubscription.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Notification.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\School.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserEventNotification.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -205,24 +245,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\EvenutHubEntities.edmx.sql" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\EventHubERDesign.edmx">
+    <EntityDeploy Include="Models\EvenutHubEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EventHubERDesign.Designer.cs</LastGenOutput>
+      <LastGenOutput>EvenutHubEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\EventHubERDesign.Context.tt">
+    <Content Include="Models\EvenutHubEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EventHubERDesign.edmx</DependentUpon>
-      <LastGenOutput>EventHubERDesign.Context.cs</LastGenOutput>
+      <DependentUpon>EvenutHubEntities.edmx</DependentUpon>
+      <LastGenOutput>EvenutHubEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\EventHubERDesign.edmx.diagram">
-      <DependentUpon>EventHubERDesign.edmx</DependentUpon>
+    <Content Include="Models\EvenutHubEntities.edmx.diagram">
+      <DependentUpon>EvenutHubEntities.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\EventHubERDesign.tt">
+    <Content Include="Models\EvenutHubEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EventHubERDesign.edmx</DependentUpon>
-      <LastGenOutput>EventHubERDesign.cs</LastGenOutput>
+      <DependentUpon>EvenutHubEntities.edmx</DependentUpon>
+      <LastGenOutput>EvenutHubEntities.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -264,6 +305,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Example\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
