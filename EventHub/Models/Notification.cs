@@ -17,8 +17,9 @@ namespace EventHub.Models
         public int Id { get; set; }
         public string Message { get; set; }
         public bool Viewed { get; set; }
-        public short NotificationType { get; set; }
+        public NotificationType NotificationType { get; set; }
         public string AspNetUserId { get; set; }
+        public string AspNetUserId1 { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser SourceUser { get; set; }

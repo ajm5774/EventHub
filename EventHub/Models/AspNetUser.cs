@@ -22,6 +22,7 @@ namespace EventHub.Models
             this.GroupSubscriptions = new HashSet<GroupSubscription>();
             this.UserEventNotifications = new HashSet<UserEventNotification>();
             this.AspNetRoles = new HashSet<AspNetRole>();
+            this.Comments = new HashSet<Comment>();
         }
     
         public string Id { get; set; }
@@ -41,5 +42,6 @@ namespace EventHub.Models
         public virtual ICollection<GroupSubscription> GroupSubscriptions { get; set; }
         public virtual ICollection<UserEventNotification> UserEventNotifications { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

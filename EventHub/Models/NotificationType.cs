@@ -10,16 +10,10 @@
 namespace EventHub.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Comment
+    public enum NotificationType : short
     {
-        public int Id { get; set; }
-        public string Message { get; set; }
-        public int EventId { get; set; }
-        public string AspNetUserId { get; set; }
-    
-        public virtual Event Event { get; set; }
-        public virtual AspNetUser AspNetUser { get; set; }
+        Comment = 0,
+        EventChanged = 1
     }
 }

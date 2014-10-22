@@ -6,11 +6,11 @@
     <edmx:Diagrams>
       <Diagram DiagramId="8531273ad3b84438975ed3a88a578a8d" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="Model.AspNetRole" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.AspNetUserClaim" Width="1.5" PointX="0.875" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.AspNetUserLogin" Width="1.5" PointX="0.625" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.AspNetUserClaim" Width="1.875" PointX="0.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.AspNetUserLogin" Width="1.75" PointX="0.5" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.AspNetUser" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Comment" Width="1.5" PointX="7.875" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Comment" Width="1.5" PointX="8.125" PointY="1.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.EventPicture" Width="1.5" PointX="10.25" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Event" Width="1.5" PointX="7.875" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Group" Width="1.5" PointX="7.625" PointY="8.25" IsExpanded="true" />
@@ -30,8 +30,8 @@
         <AssociationConnector Association="Model.FK_GroupsEvents" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_GroupsSubscribers" ManuallyRouted="false" />
         <AssociationConnector Association="Model.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="Model.AspNetUserNotification" />
         <AssociationConnector Association="Model.AspNetUserComment" />
+        <AssociationConnector Association="Model.AspNetUserNotification" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

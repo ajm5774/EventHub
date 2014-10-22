@@ -230,6 +230,9 @@
     <Compile Include="Models\Notification.cs">
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\NotificationType.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\School.cs">
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
