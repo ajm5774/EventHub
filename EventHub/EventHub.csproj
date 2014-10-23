@@ -161,6 +161,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\ExampleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -198,7 +200,7 @@
     <Compile Include="Models\C__MigrationHistory.cs">
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DatabaseSeed.cs" />
+    <Compile Include="Models\EntityInitializer.cs" />
     <Compile Include="Models\Event.cs">
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
@@ -306,9 +308,12 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Event\Event.cshtml" />
+    <Content Include="Views\Event\EventFeed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Comment\" />
     <Folder Include="Views\Example\" />
   </ItemGroup>
   <ItemGroup>

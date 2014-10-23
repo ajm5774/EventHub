@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/22/2014 19:45:56
+-- Date Created: 10/23/2014 15:16:19
 -- Generated from EDMX file: C:\Users\Andrew\documents\visual studio 2013\Projects\EventHub\EventHub\Models\EvenutHubEntities.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [aspnet-EventHub-20141011031728];
+USE [aspnet-EventHub-20141011031729];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -17,23 +17,32 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserClaims] DROP CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id];
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserComment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_AspNetUserComment];
 GO
-IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserLogins] DROP CONSTRAINT [FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId];
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserNotification]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUserNotification];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetRoles]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetRoles];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetUsers]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetUsers];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersNotifications1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUsersNotifications1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUsersSchools]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUsers] DROP CONSTRAINT [FK_AspNetUsersSchools];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersSubscribers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[GroupSubscriptions] DROP CONSTRAINT [FK_AspNetUsersSubscribers];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersUserEventNotifications]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserEventNotifications] DROP CONSTRAINT [FK_AspNetUsersUserEventNotifications];
+GO
+IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserClaims] DROP CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id];
+GO
+IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserLogins] DROP CONSTRAINT [FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId];
 GO
 IF OBJECT_ID(N'[dbo].[FK_EventsComments]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_EventsComments];
@@ -50,18 +59,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_GroupsSubscribers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[GroupSubscriptions] DROP CONSTRAINT [FK_GroupsSubscribers];
 GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetRoles]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetRoles];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetUsers]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetUsers];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserNotification]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUserNotification];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserComment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_AspNetUserComment];
-GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -75,6 +72,9 @@ IF OBJECT_ID(N'[dbo].[AspNetUserClaims]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[AspNetUserLogins]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUserLogins];
+GO
+IF OBJECT_ID(N'[dbo].[AspNetUserRoles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AspNetUserRoles];
 GO
 IF OBJECT_ID(N'[dbo].[AspNetUsers]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUsers];
@@ -105,9 +105,6 @@ IF OBJECT_ID(N'[dbo].[Schools]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[UserEventNotifications]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserEventNotifications];
-GO
-IF OBJECT_ID(N'[dbo].[AspNetUserRoles]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[AspNetUserRoles];
 GO
 
 -- --------------------------------------------------

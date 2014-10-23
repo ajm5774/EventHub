@@ -196,6 +196,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AspNetUsersSchools">
+          <End Role="Schools" Type="Self.Schools" Multiplicity="1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schools">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AspNetUsersSubscribers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="GroupSubscriptions" Type="Self.GroupSubscriptions" Multiplicity="*" />
@@ -342,6 +354,10 @@
           <AssociationSet Name="FK_AspNetUsersNotifications1" Association="Self.FK_AspNetUsersNotifications1">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Notifications" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsersSchools" Association="Self.FK_AspNetUsersSchools">
+            <End Role="Schools" EntitySet="Schools" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_AspNetUsersSubscribers" Association="Self.FK_AspNetUsersSubscribers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />

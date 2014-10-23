@@ -2,35 +2,65 @@
     ViewBag.Title = "Home Page";
 }
 
-<!--
-<div class="jumbotron">
-    <h1>Event Hub</h1>
-    <p class="lead">This is a clever description.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+<div id="EventFeed">
 </div>
--->
 
-<div id="events">
-     <div class="event row">
-         <div class="event-info col-md-6 col-md-offset-3">
-             <h2>Super Awesome Event</h2>
-             <p>This will be magic and super fun and there will be unicorns and stuff.</br>
-                <strong>Time: 7PM</strong><br/>
-                <strong>Date: 11/11/11</strong>
-             </p>
-             <button class="btn btn-primary">Join Event</button>
-        </div>
-     </div>
+@section scripts
+{
+    <script type="text/javascript">
+        //refresh the eventfeed every 20 seconds
+        $(document).ready(function () {
+            LoadFeed();
+            setInterval(LoadFeed, 20000);
+        });
 
-    <div class="event row">
-        <div class="event-info col-md-6 col-md-offset-3">
-            <h2>Another Awesome Event</h2>
-            <p>
-                Cupcakes, kittens, and unicorns.</br>
-                <strong>Time: 7PM</strong><br />
-                <strong>Date: 11/11/11</strong>
-            </p>
-            <button class="btn btn-primary">Join Event</button>
+        function LoadFeed() {
+            $.ajax({
+                url: '/Event/EventFeed',
+                contentType: 'Application/html; charset=utf-8',
+                type: 'Get',
+                dataType: 'html'
+            }).success(function (result) {
+                $("#EventFeed").html(result);
+            });
+        }
+    </script>
+}
+
+
+
+
+
+    <!--
+    <div class="jumbotron">
+        <h1>Event Hub</h1>
+        <p class="lead">This is a clever description.</p>
+        <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    </div>
+    -->
+    <!--
+    <div id="events">
+         <div class="event row">
+             <div class="event-info col-md-6 col-md-offset-3">
+                 <h2>Super Awesome Event</h2>
+                 <p>This will be magic and super fun and there will be unicorns and stuff.</br>
+                    <strong>Time: 7PM</strong><br/>
+                    <strong>Date: 11/11/11</strong>
+                 </p>
+                 <button class="btn btn-primary">Join Event</button>
+            </div>
+         </div>
+
+        <div class="event row">
+            <div class="event-info col-md-6 col-md-offset-3">
+                <h2>Another Awesome Event</h2>
+                <p>
+                    Cupcakes, kittens, and unicorns.</br>
+                    <strong>Time: 7PM</strong><br />
+                    <strong>Date: 11/11/11</strong>
+                </p>
+                <button class="btn btn-primary">Join Event</button>
+            </div>
         </div>
     </div>
-</div>
+        -->

@@ -20,8 +20,6 @@ namespace EventHub
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Database.SetInitializer<Entities>(new EntityInitializer());
-            Entities ent = new Entities();
-            ent.Database.Initialize(true);
         }
     }
 }
