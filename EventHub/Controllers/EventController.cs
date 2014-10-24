@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EventHub.Models;
+using Microsoft.AspNet.Identity;
 
 namespace EventHub.Controllers
 {
@@ -14,7 +15,19 @@ namespace EventHub.Controllers
         // GET: /Event/
         public PartialViewResult EventFeed()
         {
-            List<Event> events = (db.Events.Where(e => e.DateTime > DateTime.Now).OrderBy(e => e.DateTime).ToList<Event>());
+            //var id = User.Identity.GetUserId();
+
+            //var result = from gs in db.GroupSubscriptions.Where(s => s.AspNetUserId == id).ToList()
+            //             join g in db.Groups on gs.GroupId equals g.Id
+            //             select new
+            //             {
+            //                 events = g.Events
+            //             };
+
+            List<Event> events = new List<Event>();
+
+            
+                //= (db.Events.Where(e => e.DateTime > DateTime.Now && id = e.Group.).OrderBy(e => e.DateTime).ToList<Event>());
             return PartialView(events);
         }
 

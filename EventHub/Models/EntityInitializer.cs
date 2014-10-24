@@ -32,15 +32,25 @@ namespace EventHub.Models
                 }.ForEach(group => context.Groups.Add(group));
                 context.SaveChanges();
 
+                ApplicationDbContext idContext = new ApplicationDbContext();//we need a different context for users and roles
+                //Roles
+                var store = new RoleStore<IdentityRole>(idContext);
+                var roleManager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "BasicUser" };
+                roleManager.Create(role);
+                idContext.SaveChanges();
+
                 //users
-                ApplicationDbContext idContext = new ApplicationDbContext();//we need a different context for users
                 var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(idContext));
                 var userValidator = manager.UserValidator as UserValidator<ApplicationUser>;
                 userValidator.AllowOnlyAlphanumericUserNames = false;
-                var user1 = new ApplicationUser { Id = "1", FirstName = "Bob", LastName = "Hope", UserName = "bHope@gmail.com", SchoolId = 1, PicturePath = "/bHope.jpeg" };
-                var user2 = new ApplicationUser { Id = "2", FirstName = "Bobby", LastName = "Joe", UserName = "bJoe@gmail.com", SchoolId = 1, PicturePath = "/bJoe.jpeg" };
+                var user1 = new ApplicationUser { Id = "1", FirstName = "Bob", LastName = "Hope", UserName = "bHope@gmail.com", SchoolId = 1, PicturePath = "/EventHub/UploadedImages/bob-hope.jpeg" };
+                var user2 = new ApplicationUser { Id = "2", FirstName = "Bobby", LastName = "Joe", UserName = "bJoe@gmail.com", SchoolId = 1, PicturePath = "/EventHub/UploadedImages/bobby-joe.jpeg" };
                 manager.Create(user1, "ChangeItAsap!");
+                manager.AddToRole(user1.Id, "BasicUser");
                 manager.Create(user2, "ChangeItAsap!");
+                manager.AddToRole(user2.Id, "BasicUser");
+                idContext.SaveChanges();
 
                 //Events
                 new List<Event>

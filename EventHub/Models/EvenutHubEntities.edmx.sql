@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/23/2014 15:16:19
+-- Date Created: 10/23/2014 20:08:15
 -- Generated from EDMX file: C:\Users\Andrew\documents\visual studio 2013\Projects\EventHub\EventHub\Models\EvenutHubEntities.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [aspnet-EventHub-20141011031729];
+USE [aspnet-EventHub-20141011031730];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -31,6 +31,9 @@ IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetUsers]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersNotifications1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUsersNotifications1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUsersSchools]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUsers] DROP CONSTRAINT [FK_AspNetUsersSchools];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersSubscribers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[GroupSubscriptions] DROP CONSTRAINT [FK_AspNetUsersSubscribers];

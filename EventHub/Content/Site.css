@@ -67,3 +67,7 @@ input[type="checkbox"].input-validation-error {
 .commentPicture{
     margin:0px 10px 0px 0px;
 }
+.commentTextArea{
+    max-width: none;
+    margin-bottom: 5px;
+}
