@@ -47,9 +47,9 @@ namespace EventHub.Models
                 var user1 = new ApplicationUser { Id = "1", FirstName = "Bob", LastName = "Hope", UserName = "bHope@gmail.com", SchoolId = 1, PicturePath = "/EventHub/UploadedImages/bob-hope.jpeg" };
                 var user2 = new ApplicationUser { Id = "2", FirstName = "Bobby", LastName = "Joe", UserName = "bJoe@gmail.com", SchoolId = 1, PicturePath = "/EventHub/UploadedImages/bobby-joe.jpeg" };
                 manager.Create(user1, "ChangeItAsap!");
-                manager.AddToRole(user1.Id, "BasicUser");
+                //manager.AddToRole(user1.Id, "BasicUser");
                 manager.Create(user2, "ChangeItAsap!");
-                manager.AddToRole(user2.Id, "BasicUser");
+                //manager.AddToRole(user2.Id, "BasicUser");
                 idContext.SaveChanges();
 
                 //Events

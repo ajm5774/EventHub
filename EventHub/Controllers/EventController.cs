@@ -27,7 +27,7 @@ namespace EventHub.Controllers
             List<Event> events = new List<Event>();
 
             
-                //= (db.Events.Where(e => e.DateTime > DateTime.Now && id = e.Group.).OrderBy(e => e.DateTime).ToList<Event>());
+            events = (db.Events.Where(e => e.DateTime > DateTime.Now).OrderBy(e => e.DateTime).ToList<Event>());
             return PartialView(events);
         }
 
