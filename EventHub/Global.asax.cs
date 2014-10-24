@@ -1,5 +1,7 @@
-﻿using System;
+﻿using EventHub.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +18,10 @@ namespace EventHub
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Database.SetInitializer<Entities>(new EntityInitializer());
+            Entities db = new Entities();
+            db.Database.Initialize(true);
         }
     }
 }

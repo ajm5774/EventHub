@@ -8,7 +8,8 @@ namespace EventHub.Models
     {
         public String FirstName { get; set; }
         public String LastName { get; set; }
-        public String School { get; set; } 
+        public int SchoolId { get; set; }
+        public String PicturePath { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

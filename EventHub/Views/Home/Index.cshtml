@@ -2,30 +2,65 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+<div id="EventFeed">
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+@section scripts
+{
+    <script type="text/javascript">
+        //refresh the eventfeed every 20 seconds
+        $(document).ready(function () {
+            LoadFeed();
+            setInterval(LoadFeed, 20000);
+        });
+
+        function LoadFeed() {
+            $.ajax({
+                url: '/Event/EventFeed',
+                contentType: 'Application/html; charset=utf-8',
+                type: 'Get',
+                dataType: 'html'
+            }).success(function (result) {
+                $("#EventFeed").html(result);
+            });
+        }
+    </script>
+}
+
+
+
+
+
+    <!--
+    <div class="jumbotron">
+        <h1>Event Hub</h1>
+        <p class="lead">This is a clever description.</p>
+        <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    -->
+    <!--
+    <div id="events">
+         <div class="event row">
+             <div class="event-info col-md-6 col-md-offset-3">
+                 <h2>Super Awesome Event</h2>
+                 <p>This will be magic and super fun and there will be unicorns and stuff.</br>
+                    <strong>Time: 7PM</strong><br/>
+                    <strong>Date: 11/11/11</strong>
+                 </p>
+                 <button class="btn btn-primary">Join Event</button>
+            </div>
+         </div>
+
+        <div class="event row">
+            <div class="event-info col-md-6 col-md-offset-3">
+                <h2>Another Awesome Event</h2>
+                <p>
+                    Cupcakes, kittens, and unicorns.</br>
+                    <strong>Time: 7PM</strong><br />
+                    <strong>Date: 11/11/11</strong>
+                </p>
+                <button class="btn btn-primary">Join Event</button>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+        -->
