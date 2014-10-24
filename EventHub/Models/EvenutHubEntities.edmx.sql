@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/23/2014 20:08:15
+-- Date Created: 10/24/2014 15:48:25
 -- Generated from EDMX file: C:\Users\Andrew\documents\visual studio 2013\Projects\EventHub\EventHub\Models\EvenutHubEntities.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [aspnet-EventHub-20141011031730];
+USE [aspnet-EventHub-20141011031731];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -17,17 +17,11 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserComment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_AspNetUserComment];
+IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserClaims] DROP CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id];
 GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserNotification]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUserNotification];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetRoles]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetRoles];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserRoles_AspNetUsers]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserRoles_AspNetUsers];
+IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserLogins] DROP CONSTRAINT [FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersNotifications1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUsersNotifications1];
@@ -40,12 +34,6 @@ IF OBJECT_ID(N'[dbo].[FK_AspNetUsersSubscribers]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersUserEventNotifications]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserEventNotifications] DROP CONSTRAINT [FK_AspNetUsersUserEventNotifications];
-GO
-IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserClaims] DROP CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id];
-GO
-IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserLogins] DROP CONSTRAINT [FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId];
 GO
 IF OBJECT_ID(N'[dbo].[FK_EventsComments]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_EventsComments];
@@ -62,6 +50,18 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_GroupsSubscribers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[GroupSubscriptions] DROP CONSTRAINT [FK_GroupsSubscribers];
 GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserComment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_AspNetUserComment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserNotification]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUserNotification];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetRoleAspNetUserRoles]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetRoleAspNetUserRoles];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserAspNetUserRoles]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserAspNetUserRoles];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -75,9 +75,6 @@ IF OBJECT_ID(N'[dbo].[AspNetUserClaims]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[AspNetUserLogins]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUserLogins];
-GO
-IF OBJECT_ID(N'[dbo].[AspNetUserRoles]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[AspNetUserRoles];
 GO
 IF OBJECT_ID(N'[dbo].[AspNetUsers]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUsers];
@@ -108,6 +105,9 @@ IF OBJECT_ID(N'[dbo].[Schools]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[UserEventNotifications]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserEventNotifications];
+GO
+IF OBJECT_ID(N'[dbo].[AspNetUserRoles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AspNetUserRoles];
 GO
 
 -- --------------------------------------------------
@@ -144,11 +144,10 @@ CREATE TABLE [dbo].[AspNetUsers] (
     [UserName] nvarchar(max)  NULL,
     [PasswordHash] nvarchar(max)  NULL,
     [SecurityStamp] nvarchar(max)  NULL,
-    [Discriminator] nvarchar(128)  NOT NULL,
     [FirstName] nvarchar(256)  NULL,
     [LastName] nvarchar(256)  NULL,
-    [PicturePath] nvarchar(max)  NOT NULL,
-    [SchoolId] int  NOT NULL
+    [PicturePath] nvarchar(max)  NULL,
+    [SchoolId] int  NULL
 );
 GO
 
@@ -236,8 +235,9 @@ GO
 
 -- Creating table 'AspNetUserRoles'
 CREATE TABLE [dbo].[AspNetUserRoles] (
-    [AspNetRoles_Id] nvarchar(128)  NOT NULL,
-    [AspNetUsers_Id] nvarchar(128)  NOT NULL
+    [RoleId] nvarchar(128)  NOT NULL,
+    [UserId] nvarchar(128)  NOT NULL,
+    [Id] int  NOT NULL
 );
 GO
 
@@ -323,10 +323,10 @@ ADD CONSTRAINT [PK_UserEventNotifications]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [AspNetRoles_Id], [AspNetUsers_Id] in table 'AspNetUserRoles'
+-- Creating primary key on [Id] in table 'AspNetUserRoles'
 ALTER TABLE [dbo].[AspNetUserRoles]
 ADD CONSTRAINT [PK_AspNetUserRoles]
-    PRIMARY KEY CLUSTERED ([AspNetRoles_Id], [AspNetUsers_Id] ASC);
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -482,29 +482,6 @@ ON [dbo].[GroupSubscriptions]
     ([GroupId]);
 GO
 
--- Creating foreign key on [AspNetRoles_Id] in table 'AspNetUserRoles'
-ALTER TABLE [dbo].[AspNetUserRoles]
-ADD CONSTRAINT [FK_AspNetUserRoles_AspNetRoles]
-    FOREIGN KEY ([AspNetRoles_Id])
-    REFERENCES [dbo].[AspNetRoles]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating foreign key on [AspNetUsers_Id] in table 'AspNetUserRoles'
-ALTER TABLE [dbo].[AspNetUserRoles]
-ADD CONSTRAINT [FK_AspNetUserRoles_AspNetUsers]
-    FOREIGN KEY ([AspNetUsers_Id])
-    REFERENCES [dbo].[AspNetUsers]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserRoles_AspNetUsers'
-CREATE INDEX [IX_FK_AspNetUserRoles_AspNetUsers]
-ON [dbo].[AspNetUserRoles]
-    ([AspNetUsers_Id]);
-GO
-
 -- Creating foreign key on [AspNetUserId] in table 'Comments'
 ALTER TABLE [dbo].[Comments]
 ADD CONSTRAINT [FK_AspNetUserComment]
@@ -531,6 +508,34 @@ ADD CONSTRAINT [FK_AspNetUserNotification]
 CREATE INDEX [IX_FK_AspNetUserNotification]
 ON [dbo].[Notifications]
     ([AspNetUserId1]);
+GO
+
+-- Creating foreign key on [RoleId] in table 'AspNetUserRoles'
+ALTER TABLE [dbo].[AspNetUserRoles]
+ADD CONSTRAINT [FK_AspNetRoleAspNetUserRoles]
+    FOREIGN KEY ([RoleId])
+    REFERENCES [dbo].[AspNetRoles]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_AspNetRoleAspNetUserRoles'
+CREATE INDEX [IX_FK_AspNetRoleAspNetUserRoles]
+ON [dbo].[AspNetUserRoles]
+    ([RoleId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'AspNetUserRoles'
+ALTER TABLE [dbo].[AspNetUserRoles]
+ADD CONSTRAINT [FK_AspNetUserAspNetUserRoles]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserAspNetUserRoles'
+CREATE INDEX [IX_FK_AspNetUserAspNetUserRoles]
+ON [dbo].[AspNetUserRoles]
+    ([UserId]);
 GO
 
 -- --------------------------------------------------

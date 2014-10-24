@@ -32,26 +32,6 @@ namespace EventHub.Models
                 }.ForEach(group => context.Groups.Add(group));
                 context.SaveChanges();
 
-                ApplicationDbContext idContext = new ApplicationDbContext();//we need a different context for users and roles
-                //Roles
-                var store = new RoleStore<IdentityRole>(idContext);
-                var roleManager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "BasicUser" };
-                roleManager.Create(role);
-                idContext.SaveChanges();
-
-                //users
-                var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(idContext));
-                var userValidator = manager.UserValidator as UserValidator<ApplicationUser>;
-                userValidator.AllowOnlyAlphanumericUserNames = false;
-                var user1 = new ApplicationUser { Id = "1", FirstName = "Bob", LastName = "Hope", UserName = "bHope@gmail.com", SchoolId = 1, PicturePath = "/EventHub/UploadedImages/bob-hope.jpeg" };
-                var user2 = new ApplicationUser { Id = "2", FirstName = "Bobby", LastName = "Joe", UserName = "bJoe@gmail.com", SchoolId = 1, PicturePath = "/EventHub/UploadedImages/bobby-joe.jpeg" };
-                manager.Create(user1, "ChangeItAsap!");
-                //manager.AddToRole(user1.Id, "BasicUser");
-                manager.Create(user2, "ChangeItAsap!");
-                //manager.AddToRole(user2.Id, "BasicUser");
-                idContext.SaveChanges();
-
                 //Events
                 new List<Event>
                 {
@@ -85,6 +65,26 @@ namespace EventHub.Models
                         Description = "This tourny is gonna be awesome. Have teams of 6 register an hour before the event!" },
                 }.ForEach(e => context.Events.Add(e));
                 context.SaveChanges();
+
+                //Roles
+                ApplicationDbContext identityContext = new ApplicationDbContext();
+                //var store = new RoleStore<AspNetRole>(identityContext);
+                //var roleManager = new RoleManager<AspNetRole>(store);
+                //var role = new AspNetRole { Name = "BasicUser" };
+                //roleManager.Create(role);
+                //identityContext.SaveChanges();
+
+                //users
+                var manager = new UserManager<AspNetUser>(new UserStore<AspNetUser>(identityContext));
+                var userValidator = manager.UserValidator as UserValidator<AspNetUser>;
+                userValidator.AllowOnlyAlphanumericUserNames = false;
+                var user1 = new AspNetUser { Id = "1", FirstName = "Bob", LastName = "Hope", UserName = "bHope@gmail.com", SchoolId = 1, PicturePath = "/EventHub/UploadedImages/bob-hope.jpeg" };
+                var user2 = new AspNetUser { Id = "2", FirstName = "Bobby", LastName = "Joe", UserName = "bJoe@gmail.com", SchoolId = 1, PicturePath = "/EventHub/UploadedImages/bobby-joe.jpeg" };
+                manager.Create(user1, "ChangeItAsap!");
+                //manager.AddToRole(user1.Id, "BasicUser");
+                manager.Create(user2, "ChangeItAsap!");
+                //manager.AddToRole(user2.Id, "BasicUser");
+                identityContext.SaveChanges();
 
                 //Comment
                 new List<Comment>

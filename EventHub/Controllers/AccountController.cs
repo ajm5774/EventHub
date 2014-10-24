@@ -16,18 +16,18 @@ namespace EventHub.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+            : this(new UserManager<AspNetUser>(new UserStore<AspNetUser>(new ApplicationDbContext())))
         {
         }
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(UserManager<AspNetUser> userManager)
         {
             UserManager = userManager;
-            var userValidator = UserManager.UserValidator as UserValidator<ApplicationUser>;
+            var userValidator = UserManager.UserValidator as UserValidator<AspNetUser>;
             userValidator.AllowOnlyAlphanumericUserNames = false;
         }
 
-        public UserManager<ApplicationUser> UserManager { get; private set; }
+        public UserManager<AspNetUser> UserManager { get; private set; }
 
         //
         // GET: /Account/Login
@@ -80,7 +80,7 @@ namespace EventHub.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
+                var user = new AspNetUser() { UserName = model.UserName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -267,7 +267,7 @@ namespace EventHub.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser() { UserName = model.UserName };
+                var user = new AspNetUser() { UserName = model.UserName };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -333,7 +333,7 @@ namespace EventHub.Controllers
             }
         }
 
-        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
+        private async Task SignInAsync(AspNetUser user, bool isPersistent)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);

@@ -168,18 +168,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201410162040320_FirstName.cs" />
-    <Compile Include="Migrations\201410162040320_FirstName.Designer.cs">
-      <DependentUpon>201410162040320_FirstName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201410162046383_LastName.cs" />
-    <Compile Include="Migrations\201410162046383_LastName.Designer.cs">
-      <DependentUpon>201410162046383_LastName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201410162047396_School.cs" />
-    <Compile Include="Migrations\201410162047396_School.Designer.cs">
-      <DependentUpon>201410162047396_School.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
@@ -192,6 +180,9 @@
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserLogin.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserRoles.cs">
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Comment.cs">
@@ -322,17 +313,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201410162040320_FirstName.resx">
-      <DependentUpon>201410162040320_FirstName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201410162046383_LastName.resx">
-      <DependentUpon>201410162046383_LastName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201410162047396_School.resx">
-      <DependentUpon>201410162047396_School.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
