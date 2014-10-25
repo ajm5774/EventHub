@@ -11,22 +11,27 @@ namespace EventHub.Controllers
     public class EventController : Controller
     {
         Entities db = new Entities();
-        //
-        // GET: /Event/
+
+        [Authorize]
         public PartialViewResult EventFeed()
         {
-            //var id = User.Identity.GetUserId();
-
-            //var result = from gs in db.GroupSubscriptions.Where(s => s.AspNetUserId == id).ToList()
-            //             join g in db.Groups on gs.GroupId equals g.Id
-            //             select new
-            //             {
-            //                 events = g.Events
-            //             };
-
             List<Event> events = new List<Event>();
 
+            //var id = User.Identity.GetUserId();
+            //var userGroups = from gs in db.GroupSubscriptions.Where(s => s.AspNetUserId == id).ToList()
+            //                         join g in db.Groups on gs.GroupId equals g.Id
+            //                         select new 
+            //                         {
+            //                             userGroups
+            //                         };
+
+            //foreach(var gs in groupSubscriptions)
+            //{
+            //    gs.Group
+            //}
+
             
+
             events = (db.Events.Where(e => e.DateTime > DateTime.Now).OrderBy(e => e.DateTime).ToList<Event>());
             return PartialView(events);
         }

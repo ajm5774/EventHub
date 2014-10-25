@@ -1,6 +1,11 @@
-﻿@{
+﻿@model EventHub.Models.IndexViewModel
+@{
     ViewBag.Title = "Home Page";
 }
+
+<div id="AccountPicture" class="col-md-3 col-md-offset-1">
+    <img src="@Model.PicturePath" />
+</div>
 
 <div id="EventFeed">
 </div>

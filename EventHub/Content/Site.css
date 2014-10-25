@@ -71,3 +71,10 @@ input[type="checkbox"].input-validation-error {
     max-width: none;
     margin-bottom: 5px;
 }
+
+#AccountPicture > img{
+    border: 1px solid black;
+    margin:5px;
+    width: 100px;
+    height: 100px;
+}
