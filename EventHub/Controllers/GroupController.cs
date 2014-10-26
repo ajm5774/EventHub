@@ -46,7 +46,15 @@ namespace EventHub.Controllers
             try
             {
                 // TODO: Add insert logic here
-
+                var user = userManager.FindById(User.Identity.GetUserId());
+                var school = db.Schools.Where(s => s.Id == user.SchoolId).Single();
+                var group = new Group();
+                group.Name = collection.GetValue("name").ToString();
+                group.Description = collection.GetValue("decription").ToString();
+                group.SchoolId = school.Id;
+                //picture path info?
+                db.Groups.Add(group);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
@@ -68,7 +76,13 @@ namespace EventHub.Controllers
             try
             {
                 // TODO: Add update logic here
-
+                var user = userManager.FindById(User.Identity.GetUserId());
+                var group = db.Groups.Find(id);
+                group.Name = collection.GetValue("name").ToString();
+                group.Description = collection.GetValue("decription").ToString();
+                //picture path info?
+                //db.Groups.AddOrUpdate(group);
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
@@ -90,7 +104,12 @@ namespace EventHub.Controllers
             try
             {
                 // TODO: Add delete logic here
-
+                var group = db.Groups.Find(id);
+                if (group != null)
+                {
+                    db.Groups.Remove(group);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
             catch
