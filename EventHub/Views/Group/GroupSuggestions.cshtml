@@ -19,7 +19,7 @@
             <div class="group">
                 @using (Html.BeginForm("Add", "Group", FormMethod.Post))
                 {
-                    <img src="@group.PicturePath" class="commentPicture" width="30" height="30" />
+                    <img src="@group.PicturePath" class="pictureBorder" width="40" height="40" />
                     @group.Name
 
                     @Html.AntiForgeryToken()

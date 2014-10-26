@@ -20,7 +20,6 @@ namespace EventHub.Controllers
             var id = User.Identity.GetUserId();
             var eventGroups = from gs in db.GroupSubscriptions.Where(s => s.AspNetUserId == id).ToList()
                              join g in db.Groups on gs.GroupId equals g.Id
-                             
                              select new
                              {
                                  Events = g.Events
