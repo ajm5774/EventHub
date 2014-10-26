@@ -244,6 +244,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\testImages\bob-hope.jpg" />
+    <Content Include="Content\Images\testImages\bobby-joe.jpg" />
+    <Content Include="Content\Images\testImages\group1Pic.jpg" />
+    <Content Include="Content\Images\testImages\group2Pic.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
