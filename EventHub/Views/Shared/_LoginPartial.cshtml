@@ -10,9 +10,12 @@
             @Html.ActionLink("Account Settings", "Manage", "Account", routeValues: null, htmlAttributes: new {})
         </li>
         <li>
-            <a href="">Hello @(User.Identity.Name)!</a>
+            @*<a href="">Hello @(User.Identity.Name)!</a>*@
+            <a>Hello @(User.Identity.Name)!</a>
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <li>
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        </li>
     </ul>
     }
 }
