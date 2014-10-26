@@ -49,8 +49,8 @@ namespace EventHub.Controllers
                 var user = userManager.FindById(User.Identity.GetUserId());
                 var school = db.Schools.Where(s => s.Id == user.SchoolId).Single();
                 var group = new Group();
-                group.Name = collection.GetValue("Name").ToString();
-                group.Description = collection.GetValue("Description").ToString();
+                group.Name = collection.Get("Name").ToString();
+                group.Description = collection.Get("Description").ToString();
                 group.SchoolId = school.Id;
                 group.PicturePath = "";
                 //picture path info?
@@ -67,7 +67,11 @@ namespace EventHub.Controllers
         // GET: Group/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var group = db.Groups.Find(id);
+            string name = group.Name;
+            string desc = group.Description;
+            string picPath = group.PicturePath;
+            return View(new EditGroupViewModel() { Name = name, Description = desc, PicturePath = picPath});
         }
 
         // POST: Group/Edit/5
@@ -79,11 +83,12 @@ namespace EventHub.Controllers
                 // TODO: Add update logic here
                 var user = userManager.FindById(User.Identity.GetUserId());
                 var group = db.Groups.Find(id);
-                group.Name = collection.GetValue("name").ToString();
-                group.Description = collection.GetValue("decription").ToString();
+                group.Name = collection.Get("Name").ToString();
+                group.Description = collection.Get("Description").ToString();
                 //picture path info?
-                //db.Groups.AddOrUpdate(group);
-                //db.SaveChanges();
+                group.PicturePath = "";
+                db.Groups.Attach(group);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
@@ -111,7 +116,7 @@ namespace EventHub.Controllers
                     db.Groups.Remove(group);
                     db.SaveChanges();
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home", new { success = true });
             }
             catch
             {
