@@ -17,11 +17,13 @@ namespace EventHub.Models
         public School()
         {
             this.AspNetUsers = new HashSet<AspNetUser>();
+            this.Groups = new HashSet<Group>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
     }
 }

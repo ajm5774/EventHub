@@ -24,8 +24,10 @@ namespace EventHub.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string PicturePath { get; set; }
+        public int SchoolId { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<GroupSubscription> GroupSubscriptions { get; set; }
+        public virtual School School { get; set; }
     }
 }

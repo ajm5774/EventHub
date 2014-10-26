@@ -27,8 +27,8 @@ namespace EventHub.Models
                 //Groups
                 new List<Group>
                 {
-                    new Group() { Id = 1, Name = "Outting Club", Description = "People get together to do outdoor things.", PicturePath = "/group1Pic"},
-                    new Group() { Id = 2, Name = "Dodgeball Club", Description = "Dodge Dip Dive and Dodge", PicturePath = "/group2Pic" }
+                    new Group() { Id = 1, Name = "Outting Club", Description = "People get together to do outdoor things.", PicturePath = "/group1Pic", SchoolId = 1},
+                    new Group() { Id = 2, Name = "Dodgeball Club", Description = "Dodge Dip Dive and Dodge", PicturePath = "/group2Pic", SchoolId = 1 }
                 }.ForEach(group => context.Groups.Add(group));
                 context.SaveChanges();
 
@@ -105,7 +105,8 @@ namespace EventHub.Models
                 new List<GroupSubscription>
                 {
                     new GroupSubscription() { Id = 1, IsAdministrator = true, AspNetUserId="1", GroupId = 1 },
-                    new GroupSubscription() { Id = 2, IsAdministrator = false, AspNetUserId = "2", GroupId = 1 }
+                    new GroupSubscription() { Id = 2, IsAdministrator = false, AspNetUserId="1", GroupId = 2 },
+                    new GroupSubscription() { Id = 3, IsAdministrator = false, AspNetUserId = "2", GroupId = 1 }
                 }.ForEach(groupSubscription => context.GroupSubscriptions.Add(groupSubscription));
                 context.SaveChanges();
 

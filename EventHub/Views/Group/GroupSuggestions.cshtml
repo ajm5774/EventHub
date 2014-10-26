@@ -1,0 +1,33 @@
+﻿@model EventHub.Models.GroupSuggestionsViewModel
+
+<div>
+    <div>
+        <h3>Groups For:</h3>
+        <h4>@Model.School.Name</h4>
+    </div>
+
+    @*<div class="col-md-12">
+        <form class="navbar-form navbar-left" role="search">
+            <input type="text" class="col-md-8" placeholder="Search">
+            <button type="submit" class="btn btn-default col-md-4">Submit</button>
+        </form>
+    </div>
+    <br />*@
+    <div>
+        @foreach (var group in Model.Groups)
+        {
+            <div class="group">
+                @using (Html.BeginForm("Add", "Group", FormMethod.Post))
+                {
+                    <img src="@group.PicturePath" class="commentPicture" width="30" height="30" />
+                    @group.Name
+
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("Group", @group, new { @class = "form-control commentTextArea" })
+
+                    <input type="submit" class="btn btn-default pull-right" value="+" />
+                }
+            </div>
+        }
+    </div>
+</div>

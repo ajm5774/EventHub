@@ -13,7 +13,7 @@ namespace EventHub.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUser :IdentityUser
+    public partial class AspNetUser : IdentityUser
     {
         public AspNetUser()
         {

@@ -1,7 +1,7 @@
 ﻿
 @model EventHub.Models.Event
 <div class="event row">
-    <div class="event-info col-md-8 col-md-offset-2">
+    <div class="event-info">
         <h2>@Model.Title</h2>
         <p>
             @Model.Description
@@ -14,7 +14,7 @@
             <div class="comments">
                 @foreach (EventHub.Models.Comment comment in Model.Comments)
                 {
-                    <div class="comment  col-md-12 col-md-offset-0">
+                    <div class="comment col-md-12">
                         <table>
                             <tr>
                                 <td>
@@ -35,7 +35,7 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.Hidden("EventId", Model.Id)
-                @Html.TextArea("Message", new { @class = "form-control commentTextArea"})
+                @Html.TextArea("Message", new { @class = "form-control commentTextArea", @placeholder="Add Comment"})
 
                 <div class="form-group">
                     <div class="text-right">

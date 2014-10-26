@@ -41,6 +41,7 @@
         <EntityTypeShape EntityType="Model.AspNetUserRoles" Width="1.75" PointX="2.875" PointY="7.5" />
         <AssociationConnector Association="Model.AspNetRoleAspNetUserRoles" />
         <AssociationConnector Association="Model.AspNetUserAspNetUserRoles" />
+        <AssociationConnector Association="Model.SchoolGroup" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

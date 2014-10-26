@@ -24,7 +24,8 @@ namespace EventHub.Models
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
@@ -37,5 +38,6 @@ namespace EventHub.Models
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<School> Schools { get; set; }
         public virtual DbSet<UserEventNotification> UserEventNotifications { get; set; }
+        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
     }
 }

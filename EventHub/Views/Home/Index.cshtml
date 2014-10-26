@@ -3,12 +3,18 @@
     ViewBag.Title = "Home Page";
 }
 
-<div id="AccountPicture" class="col-md-3 col-md-offset-1">
-    <img src="@Model.PicturePath" />
-</div>
+<div >
+    <div id="AccountPicture" class="col-md-2">
+        <img src="@Model.PicturePath" />
+    </div>
 
-<div id="EventFeed">
+    <div id="EventFeed" class=" col-md-7">
+    </div>
+
+    <div id="GroupSuggestions" class="col-md-3">
+    </div>
 </div>
+<div></div>
 
 @section scripts
 {
@@ -17,6 +23,9 @@
         $(document).ready(function () {
             LoadFeed();
             setInterval(LoadFeed, 20000);
+
+            LoadGroupSuggestions();
+            setInterval(LoadGroupSuggestions, 60000);
         });
 
         function LoadFeed() {
@@ -27,6 +36,17 @@
                 dataType: 'html'
             }).success(function (result) {
                 $("#EventFeed").html(result);
+            });
+        }
+
+        function LoadGroupSuggestions() {
+            $.ajax({
+                url: '/Group/GroupSuggestions',
+                contentType: 'Application/html; charset=utf-8',
+                type: 'Get',
+                dataType: 'html'
+            }).success(function (result) {
+                $("#GroupSuggestions").html(result);
             });
         }
     </script>
