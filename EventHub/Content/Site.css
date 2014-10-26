@@ -77,13 +77,13 @@ input[type="checkbox"].input-validation-error {
 
 #AccountPicture > img{
     border: 1px solid black;
-    margin:5px;
+    margin:10px 5px 5px 5px;
     width: 175px;
     height: 175px;
 }
 
 #GroupSuggestions{
-    margin-top:9px;
+    margin-top:10px;
     background-color:#D3E8D8;
     border-radius:10px;
     padding:5px;
