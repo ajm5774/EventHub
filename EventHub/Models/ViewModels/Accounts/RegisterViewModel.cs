@@ -33,5 +33,10 @@ namespace EventHub.Models
         [Display(Name = "Last Name")]
         [DataType(DataType.Text)]
         public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "School")]
+        [DataType(DataType.Text)]
+        public string SchoolName { get; set; }
     }
 }

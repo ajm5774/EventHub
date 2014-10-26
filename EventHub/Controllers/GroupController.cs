@@ -52,10 +52,11 @@ namespace EventHub.Controllers
                 group.Name = collection.GetValue("name").ToString();
                 group.Description = collection.GetValue("decription").ToString();
                 group.SchoolId = school.Id;
+                group.PicturePath = "";
                 //picture path info?
                 db.Groups.Add(group);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return View("~/Views/Home/Index.cshtml");
             }
             catch
             {
@@ -81,7 +82,7 @@ namespace EventHub.Controllers
                 group.Name = collection.GetValue("name").ToString();
                 group.Description = collection.GetValue("decription").ToString();
                 //picture path info?
-                //db.Groups.AddOrUpdate(group);
+                db.Groups.AddOrUpdate(group);
                 //db.SaveChanges();
                 return RedirectToAction("Index");
             }

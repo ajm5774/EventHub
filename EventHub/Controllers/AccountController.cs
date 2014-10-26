@@ -80,7 +80,7 @@ namespace EventHub.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new AspNetUser() { UserName = model.UserName };
+                var user = new AspNetUser() { UserName = model.UserName};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
