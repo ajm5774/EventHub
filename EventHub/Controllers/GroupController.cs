@@ -20,9 +20,14 @@ namespace EventHub.Controllers
         }
 
         // GET:  Group/Details/5
-        public ActionResult Details()
+        public ActionResult Details(int id)
         {
-            return View();
+            var group = db.Groups.Find(id);
+            string name = group.Name;
+            string desc = group.Description;
+            string picPath = group.PicturePath;
+            string school = group.School.Name;
+            return View(new EditGroupViewModel() { Name = name, Description = desc, PicturePath = picPath, SchoolName = school });
         }
 
         [Authorize]
@@ -71,7 +76,9 @@ namespace EventHub.Controllers
             string name = group.Name;
             string desc = group.Description;
             string picPath = group.PicturePath;
-            return View(new EditGroupViewModel() { Name = name, Description = desc, PicturePath = picPath});
+            //should not actually use this info in view
+            string school = group.School.Name;
+            return View(new EditGroupViewModel() { Name = name, Description = desc, PicturePath = picPath, SchoolName = school});
         }
 
         // POST: Group/Edit/5
