@@ -13,14 +13,16 @@
     </div>
 
     <div id="EventFeed" class=" col-md-6">
+        @{Html.RenderAction("EventFeed", "Event");}
     </div>
 
     <div id="GroupSuggestions" class="groupList col-md-3" >
+        @{Html.RenderAction("GroupSuggestions", "Group");}
     </div>
 </div>
 <div></div>
 
-@section scripts
+@*@section scripts
 {
     <script type="text/javascript">
         //refresh the eventfeed every 20 seconds
@@ -53,43 +55,4 @@
                 $("#GroupSuggestions").html(result);
             });
         }
-    </script>
-}
-
-
-
-
-
-    <!--
-    <div class="jumbotron">
-        <h1>Event Hub</h1>
-        <p class="lead">This is a clever description.</p>
-        <p><a href="http://asp.net" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-    </div>
-    -->
-    <!--
-    <div id="events">
-         <div class="event row">
-             <div class="event-info col-md-6 col-md-offset-3">
-                 <h2>Super Awesome Event</h2>
-                 <p>This will be magic and super fun and there will be unicorns and stuff.</br>
-                    <strong>Time: 7PM</strong><br/>
-                    <strong>Date: 11/11/11</strong>
-                 </p>
-                 <button class="btn btn-primary">Join Event</button>
-            </div>
-         </div>
-
-        <div class="event row">
-            <div class="event-info col-md-6 col-md-offset-3">
-                <h2>Another Awesome Event</h2>
-                <p>
-                    Cupcakes, kittens, and unicorns.</br>
-                    <strong>Time: 7PM</strong><br />
-                    <strong>Date: 11/11/11</strong>
-                </p>
-                <button class="btn btn-primary">Join Event</button>
-            </div>
-        </div>
-    </div>
-        -->
+    </script>}*@
