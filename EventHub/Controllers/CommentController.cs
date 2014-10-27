@@ -10,6 +10,7 @@ namespace EventHub.Controllers
 {
     public class CommentController : Controller
     {
+        Entities db = new Entities();
         //
         // POST: /Event/Create
         [Authorize]
@@ -23,7 +24,10 @@ namespace EventHub.Controllers
                 comment.AspNetUserId = User.Identity.GetUserId();
                 comment.Message = collection.Get("Message");
                 comment.EventId = Int32.Parse(collection.Get("EventId"));
-                return RedirectToAction("Index");
+                db.Comments.Add(comment);
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

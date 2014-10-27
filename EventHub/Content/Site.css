@@ -83,7 +83,7 @@ input[type="checkbox"].input-validation-error {
     height: 175px;
 }
 
-#GroupSuggestions{
+.groupList{
     margin-top:10px;
     background-color:#D3E8D8;
     border-radius:10px;

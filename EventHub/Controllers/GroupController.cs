@@ -26,6 +26,15 @@ namespace EventHub.Controllers
             return View(group);
         }
 
+        [Authorize]
+        public PartialViewResult MyGroups()
+        {
+            var user = userManager.FindById(User.Identity.GetUserId());
+            var groups = (from gs in db.GroupSubscriptions.Where(s => s.AspNetUserId == user.Id).ToList()
+                         join g in db.Groups on gs.GroupId equals g.Id
+                         select g).ToList();
+            return PartialView(groups);
+        }
 
         [Authorize]
         public PartialViewResult GroupSuggestions()
@@ -33,6 +42,30 @@ namespace EventHub.Controllers
             var user = userManager.FindById(User.Identity.GetUserId());
             var school = db.Schools.Where(s => s.Id == user.SchoolId).Single();
             return PartialView(new GroupSuggestionsViewModel() {Groups = school.Groups.ToList(), School = school });
+        }
+
+        [Authorize]
+        public ActionResult Add(FormCollection collection)
+        {
+            var user = userManager.FindById(User.Identity.GetUserId());
+            var id = Int32.Parse(collection.Get("GroupId"));
+            GroupSubscription gs = new GroupSubscription() { GroupId=id, AspNetUserId= user.Id};
+            db.GroupSubscriptions.Add(gs);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public ActionResult Remove(FormCollection collection)
+        {
+            var user = userManager.FindById(User.Identity.GetUserId());
+            var id = Int32.Parse(collection.Get("GroupId"));
+            var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == user.Id && gs.GroupId == id).Single();
+            db.GroupSubscriptions.Remove(groupSub);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Group/Create

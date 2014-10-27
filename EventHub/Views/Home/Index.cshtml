@@ -4,14 +4,18 @@
 }
 
 <div >
-    <div id="AccountPicture" class="col-md-2">
+    <div id="AccountPicture" class="col-md-3">
         <img src="@Model.PicturePath" />
+        <br />
+        <div class="groupList">
+            @{Html.RenderAction("MyGroups", "Group");}
+        </div>
     </div>
 
-    <div id="EventFeed" class=" col-md-7">
+    <div id="EventFeed" class=" col-md-6">
     </div>
 
-    <div id="GroupSuggestions" class="col-md-3">
+    <div id="GroupSuggestions" class="groupList col-md-3" >
     </div>
 </div>
 <div></div>
