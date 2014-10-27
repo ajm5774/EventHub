@@ -13,7 +13,7 @@ namespace EventHub.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUser : IdentityUser
+    public partial class AspNetUser :IdentityUser
     {
         public AspNetUser()
         {
@@ -25,6 +25,11 @@ namespace EventHub.Models
             this.Comments = new HashSet<Comment>();
             this.AspNetUserRoles = new HashSet<AspNetUserRoles>();
         }
+    
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string PasswordHash { get; set; }
+        public string SecurityStamp { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PicturePath { get; set; }

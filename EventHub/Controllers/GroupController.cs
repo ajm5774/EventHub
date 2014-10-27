@@ -61,7 +61,7 @@ namespace EventHub.Controllers
         {
             var user = userManager.FindById(User.Identity.GetUserId());
             var id = Int32.Parse(collection.Get("GroupId"));
-            var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == user.Id && gs.GroupId == id).Single();
+            var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == user.Id && gs.GroupId == id).First();
             db.GroupSubscriptions.Remove(groupSub);
             db.SaveChanges();
 
