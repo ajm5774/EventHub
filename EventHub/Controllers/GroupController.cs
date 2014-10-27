@@ -20,10 +20,12 @@ namespace EventHub.Controllers
         }
 
         // GET:  Group/Details/5
-        public ActionResult Details()
+        public ActionResult Details(int id)
         {
-            return View();
+            var group = db.Groups.Where(i => i.Id == id).Single();
+            return View(group);
         }
+
 
         [Authorize]
         public PartialViewResult GroupSuggestions()
@@ -71,7 +73,8 @@ namespace EventHub.Controllers
             string name = group.Name;
             string desc = group.Description;
             string picPath = group.PicturePath;
-            return View(new EditGroupViewModel() { Name = name, Description = desc, PicturePath = picPath});
+            return View(group);
+            //return View(new EditGroupViewModel() { Name = name, Description = desc, PicturePath = picPath});
         }
 
         // POST: Group/Edit/5
@@ -82,14 +85,17 @@ namespace EventHub.Controllers
             {
                 // TODO: Add update logic here
                 var user = userManager.FindById(User.Identity.GetUserId());
-                var group = db.Groups.Find(id);
+                var group = db.Groups.Single(a =>a.Id == id);
                 group.Name = collection.Get("Name").ToString();
                 group.Description = collection.Get("Description").ToString();
                 //picture path info?
                 group.PicturePath = "";
-                db.Groups.Attach(group);
+                
+                //db.Groups.Attach(group);
+                db.Entry(group).CurrentValues.SetValues(group);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Group", new { id = group.Id});
+                //return RedirectToAction("Index");
             }
             catch
             {
@@ -97,20 +103,17 @@ namespace EventHub.Controllers
             }
         }
 
+
+
         // GET: Group/Delete/5
         public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Group/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
-                var group = db.Groups.Find(id);
+                //var group = db.Groups.Find(id);
+                var group = db.Groups.Single(a => a.Id == id);
+
                 if (group != null)
                 {
                     db.Groups.Remove(group);
@@ -120,7 +123,7 @@ namespace EventHub.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", "Home", new { success = true });
             }
         }
     }
