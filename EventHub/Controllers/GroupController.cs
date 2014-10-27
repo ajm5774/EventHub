@@ -96,7 +96,7 @@ namespace EventHub.Controllers
                 group.PicturePath = "";
                 db.Groups.Attach(group);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home", new { success = true });
             }
             catch
             {
