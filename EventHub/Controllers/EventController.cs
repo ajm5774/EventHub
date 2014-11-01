@@ -43,25 +43,26 @@ namespace EventHub.Controllers
 
         //
         // GET: /Event/Create
-        public ActionResult Create()
+        public ActionResult Create(int groupId)
         {
-            return View(new Event() {DateTime = DateTime.Now});
+            return View(new Event() {DateTime = DateTime.Now, GroupId = groupId});
         }
 
         //
         // POST: /Event/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Event myEvent)
         {
             try
             {
-                // TODO: Add insert logic here
+                db.Events.Add(myEvent);
+                db.SaveChanges();
 
                 return RedirectToAction("Index", "Home");
             }
             catch
             {
-                return View();
+                return View(myEvent);
             }
         }
 
