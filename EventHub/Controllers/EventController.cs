@@ -45,7 +45,7 @@ namespace EventHub.Controllers
         // GET: /Event/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new Event() {DateTime = DateTime.Now});
         }
 
         //
@@ -57,7 +57,7 @@ namespace EventHub.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

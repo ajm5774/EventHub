@@ -76,7 +76,7 @@ input[type="checkbox"].input-validation-error {
     margin-bottom: 5px;
 }
 
-#AccountPicture > img{
+.mainPicture{
     border: 1px solid black;
     margin:10px 5px 5px 5px;
     width: 175px;

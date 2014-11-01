@@ -4,8 +4,10 @@
 }
 
 <div >
-    <div id="AccountPicture" class="col-md-3">
-        <img src="@Model.PicturePath" />
+    <div class="col-md-3">
+        <img src="@Model.PicturePath" class="mainPicture"/>
+        <br />
+        <button onclick="CreateEventDialog()" class="btn btn-default">Create Event</button>
         <br />
         <div class="groupList">
             @{Html.RenderAction("MyGroups", "Group");}
@@ -19,8 +21,35 @@
     <div id="GroupSuggestions" class="groupList col-md-3" >
         @{Html.RenderAction("GroupSuggestions", "Group");}
     </div>
+
+    <div id="CreateEventDialog" title="Create New Event">
+    </div>
 </div>
-<div></div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        var dialog = $("#CreateEventDialog").dialog({
+            autoOpen: false,
+            height: 350,
+            width: 500
+        });
+
+        function CreateEventDialog() {
+            $.ajax({
+                url: '/Event/Create',
+                contentType: 'Application/html; charset=utf-8',
+                type: 'Get',
+                dataType: 'html'
+            }).success(function (result) {
+                $("#CreateEventDialog").html(result);
+            });
+
+            dialog.dialog("open");
+        }
+    </script>
+}
 
 @*@section scripts
 {
