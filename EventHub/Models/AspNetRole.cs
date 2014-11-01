@@ -9,10 +9,11 @@
 
 namespace EventHub.Models
 {
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetRole
+    public partial class AspNetRole : IdentityRole
     {
         public AspNetRole()
         {

@@ -25,6 +25,7 @@ namespace EventHub.Models
             this.Comments = new HashSet<Comment>();
             this.AspNetUserRoles = new HashSet<AspNetUserRoles>();
         }
+   
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PicturePath { get; set; }
