@@ -38,7 +38,8 @@ namespace EventHub.Controllers
         // GET: /Event/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var events = db.Events.Where(i => i.Id == id).Single();
+            return View(events);
         }
 
         //
