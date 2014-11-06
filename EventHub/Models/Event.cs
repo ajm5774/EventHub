@@ -19,6 +19,7 @@ namespace EventHub.Models
             this.Comments = new HashSet<Comment>();
             this.EventPictures = new HashSet<EventPicture>();
             this.UserEventNotifications = new HashSet<UserEventNotification>();
+            this.EventReplies = new HashSet<EventUserReply>();
         }
     
         public int Id { get; set; }
@@ -32,5 +33,6 @@ namespace EventHub.Models
         public virtual ICollection<EventPicture> EventPictures { get; set; }
         public virtual ICollection<UserEventNotification> UserEventNotifications { get; set; }
         public virtual Group Group { get; set; }
+        public virtual ICollection<EventUserReply> EventReplies { get; set; }
     }
 }

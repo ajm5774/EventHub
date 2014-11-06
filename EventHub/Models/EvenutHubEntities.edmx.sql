@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/25/2014 19:51:38
--- Generated from EDMX file: C:\Users\Andrew\Source\Repos\EventHub\EventHub\Models\EvenutHubEntities.edmx
+-- Date Created: 11/06/2014 18:37:09
+-- Generated from EDMX file: C:\Users\Andrew\documents\visual studio 2013\Projects\EventHub\EventHub\Models\EvenutHubEntities.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [aspnet-EventHub-20141011031731];
+USE [aspnet-EventHub-20141011031734];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -31,6 +31,9 @@ IF OBJECT_ID(N'[dbo].[FK_AspNetUserNotification]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersNotifications1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUsersNotifications1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUsersSchools]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUsers] DROP CONSTRAINT [FK_AspNetUsersSchools];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersSubscribers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[GroupSubscriptions] DROP CONSTRAINT [FK_AspNetUsersSubscribers];
@@ -242,6 +245,15 @@ CREATE TABLE [dbo].[AspNetUserRoles] (
 );
 GO
 
+-- Creating table 'EventUserReplies'
+CREATE TABLE [dbo].[EventUserReplies] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Reply] int  NOT NULL,
+    [AspNetUserId] nvarchar(128)  NOT NULL,
+    [EventId] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -330,6 +342,12 @@ ADD CONSTRAINT [PK_AspNetUserRoles]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
+-- Creating primary key on [Id] in table 'EventUserReplies'
+ALTER TABLE [dbo].[EventUserReplies]
+ADD CONSTRAINT [PK_EventUserReplies]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
@@ -341,7 +359,6 @@ ADD CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id]
     REFERENCES [dbo].[AspNetUsers]
         ([Id])
     ON DELETE CASCADE ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id'
 CREATE INDEX [IX_FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id]
@@ -365,7 +382,6 @@ ADD CONSTRAINT [FK_AspNetUsersNotifications1]
     REFERENCES [dbo].[AspNetUsers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUsersNotifications1'
 CREATE INDEX [IX_FK_AspNetUsersNotifications1]
@@ -380,7 +396,6 @@ ADD CONSTRAINT [FK_AspNetUsersSchools]
     REFERENCES [dbo].[Schools]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUsersSchools'
 CREATE INDEX [IX_FK_AspNetUsersSchools]
@@ -395,7 +410,6 @@ ADD CONSTRAINT [FK_AspNetUsersSubscribers]
     REFERENCES [dbo].[AspNetUsers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUsersSubscribers'
 CREATE INDEX [IX_FK_AspNetUsersSubscribers]
@@ -410,7 +424,6 @@ ADD CONSTRAINT [FK_AspNetUsersUserEventNotifications]
     REFERENCES [dbo].[AspNetUsers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUsersUserEventNotifications'
 CREATE INDEX [IX_FK_AspNetUsersUserEventNotifications]
@@ -425,7 +438,6 @@ ADD CONSTRAINT [FK_EventsComments]
     REFERENCES [dbo].[Events]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_EventsComments'
 CREATE INDEX [IX_FK_EventsComments]
@@ -440,7 +452,6 @@ ADD CONSTRAINT [FK_EventsEventPictures]
     REFERENCES [dbo].[Events]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_EventsEventPictures'
 CREATE INDEX [IX_FK_EventsEventPictures]
@@ -455,7 +466,6 @@ ADD CONSTRAINT [FK_EventsUserEventNotifications]
     REFERENCES [dbo].[Events]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_EventsUserEventNotifications'
 CREATE INDEX [IX_FK_EventsUserEventNotifications]
@@ -470,7 +480,6 @@ ADD CONSTRAINT [FK_GroupsEvents]
     REFERENCES [dbo].[Groups]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GroupsEvents'
 CREATE INDEX [IX_FK_GroupsEvents]
@@ -485,7 +494,6 @@ ADD CONSTRAINT [FK_GroupsSubscribers]
     REFERENCES [dbo].[Groups]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GroupsSubscribers'
 CREATE INDEX [IX_FK_GroupsSubscribers]
@@ -500,7 +508,6 @@ ADD CONSTRAINT [FK_AspNetUserComment]
     REFERENCES [dbo].[AspNetUsers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserComment'
 CREATE INDEX [IX_FK_AspNetUserComment]
@@ -515,7 +522,6 @@ ADD CONSTRAINT [FK_AspNetUserNotification]
     REFERENCES [dbo].[AspNetUsers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserNotification'
 CREATE INDEX [IX_FK_AspNetUserNotification]
@@ -530,7 +536,6 @@ ADD CONSTRAINT [FK_AspNetRoleAspNetUserRoles]
     REFERENCES [dbo].[AspNetRoles]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AspNetRoleAspNetUserRoles'
 CREATE INDEX [IX_FK_AspNetRoleAspNetUserRoles]
@@ -545,7 +550,6 @@ ADD CONSTRAINT [FK_AspNetUserAspNetUserRoles]
     REFERENCES [dbo].[AspNetUsers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserAspNetUserRoles'
 CREATE INDEX [IX_FK_AspNetUserAspNetUserRoles]
@@ -560,12 +564,39 @@ ADD CONSTRAINT [FK_SchoolGroup]
     REFERENCES [dbo].[Schools]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_SchoolGroup'
 CREATE INDEX [IX_FK_SchoolGroup]
 ON [dbo].[Groups]
     ([SchoolId]);
+GO
+
+-- Creating foreign key on [AspNetUserId] in table 'EventUserReplies'
+ALTER TABLE [dbo].[EventUserReplies]
+ADD CONSTRAINT [FK_AspNetUserEventUserReply]
+    FOREIGN KEY ([AspNetUserId])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserEventUserReply'
+CREATE INDEX [IX_FK_AspNetUserEventUserReply]
+ON [dbo].[EventUserReplies]
+    ([AspNetUserId]);
+GO
+
+-- Creating foreign key on [EventId] in table 'EventUserReplies'
+ALTER TABLE [dbo].[EventUserReplies]
+ADD CONSTRAINT [FK_EventEventUserReply]
+    FOREIGN KEY ([EventId])
+    REFERENCES [dbo].[Events]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EventEventUserReply'
+CREATE INDEX [IX_FK_EventEventUserReply]
+ON [dbo].[EventUserReplies]
+    ([EventId]);
 GO
 
 -- --------------------------------------------------

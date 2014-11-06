@@ -198,6 +198,12 @@
     <Compile Include="Models\EventPicture.cs">
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EventReply.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventUserReply.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EvenutHubEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

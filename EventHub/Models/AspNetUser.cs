@@ -24,8 +24,8 @@ namespace EventHub.Models
             this.UserEventNotifications = new HashSet<UserEventNotification>();
             this.Comments = new HashSet<Comment>();
             this.AspNetUserRoles = new HashSet<AspNetUserRoles>();
+            this.EventReplies = new HashSet<EventUserReply>();
         }
-   
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PicturePath { get; set; }
@@ -39,5 +39,6 @@ namespace EventHub.Models
         public virtual ICollection<UserEventNotification> UserEventNotifications { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public virtual ICollection<EventUserReply> EventReplies { get; set; }
     }
 }

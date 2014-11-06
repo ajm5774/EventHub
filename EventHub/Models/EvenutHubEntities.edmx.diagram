@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="Model.Group" Width="1.5" PointX="8.625" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.GroupSubscription" Width="1.5" PointX="8.5" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Notification" Width="1.5" PointX="6.5" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.School" Width="1.5" PointX="6" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.School" Width="1.5" PointX="6.625" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.UserEventNotification" Width="1.875" PointX="8.625" PointY="9.625" IsExpanded="true" />
         <AssociationConnector Association="Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
@@ -42,6 +42,9 @@
         <AssociationConnector Association="Model.AspNetRoleAspNetUserRoles" />
         <AssociationConnector Association="Model.AspNetUserAspNetUserRoles" />
         <AssociationConnector Association="Model.SchoolGroup" />
+        <EntityTypeShape EntityType="Model.EventUserReply" Width="1.5" PointX="8.5" PointY="1" />
+        <AssociationConnector Association="Model.AspNetUserEventUserReply" />
+        <AssociationConnector Association="Model.EventEventUserReply" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

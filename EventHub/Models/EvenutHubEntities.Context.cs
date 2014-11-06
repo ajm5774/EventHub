@@ -39,5 +39,6 @@ namespace EventHub.Models
         public virtual DbSet<School> Schools { get; set; }
         public virtual DbSet<UserEventNotification> UserEventNotifications { get; set; }
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public virtual DbSet<EventUserReply> EventUserReplies { get; set; }
     }
 }
