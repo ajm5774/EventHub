@@ -12,6 +12,7 @@ namespace EventHub.Models.ViewModels.User
         public string FirstName { set; get; }
         public string LastName { set; get; }
         public string SchoolName { set; get; }
+        public string PicturePath { set; get; }
 
     }
 }
