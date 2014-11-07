@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EventHub.Models
 {
+    public class SchoolListViewModel
+    {
+        public int Id { set; get; }
+        public string Name { set; get; }
+    }
+
     public class RegisterViewModel
     {
         [Required]
@@ -21,7 +28,7 @@ namespace EventHub.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
@@ -34,9 +41,8 @@ namespace EventHub.Models
         [DataType(DataType.Text)]
         public string LastName { get; set; }
 
-        [Required]
-        [Display(Name = "School")]
-        [DataType(DataType.Text)]
-        public string SchoolName { get; set; }
+        public List<SchoolListViewModel> Schools { set; get; }
+
+        public int SelectedSchoolId { set; get; }
     }
 }

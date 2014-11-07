@@ -66,9 +66,25 @@ namespace EventHub.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Register()
         {
-            return View();
+            /*Create instance of entity model*/
+            Entities db = new Entities();
+            /*Getting data from database*/
+            List<School> schoolList = (from data in db.Schools select data).ToList();
+
+            List<SchoolListViewModel> sList = new List<SchoolListViewModel>();
+            foreach(School s in schoolList){
+                SchoolListViewModel model = new SchoolListViewModel();
+                model.Id = s.Id;
+                model.Name = s.Name;
+                sList.Add(model);
+            }
+
+            RegisterViewModel regVM = new RegisterViewModel();
+            regVM.Schools = sList;
+            return View(regVM);
         }
 
         //
@@ -80,10 +96,11 @@ namespace EventHub.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new AspNetUser() { UserName = model.UserName};
+                //change empty string for picturePath to placeholder image path
+                var user = new AspNetUser() { UserName = model.UserName, FirstName = model.FirstName, LastName = model.LastName, SchoolId = model.SelectedSchoolId, PicturePath = "Content\\Images\\testImages\\person_default.png"};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
-                {
+                {   
                     await SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }

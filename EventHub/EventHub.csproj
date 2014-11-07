@@ -238,6 +238,7 @@
     <Compile Include="Models\UserEventNotification.cs">
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\Accounts\SchoolListViewModel.cs" />
     <Compile Include="Models\ViewModels\Group\EditGroupViewModel.cs" />
     <Compile Include="Models\ViewModels\Group\GroupSuggestionsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -251,6 +252,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\testImages\person_default.png" />
     <Content Include="Content\Images\testImages\bob-hope.jpg" />
     <Content Include="Content\Images\testImages\bobby-joe.jpg" />
     <Content Include="Content\Images\testImages\group1Pic.jpg" />
