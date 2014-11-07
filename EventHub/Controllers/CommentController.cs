@@ -26,8 +26,30 @@ namespace EventHub.Controllers
                 comment.EventId = Int32.Parse(collection.Get("EventId"));
                 db.Comments.Add(comment);
                 db.SaveChanges();
-
+                
                 return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult EventCreate(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+                int thisId = Int32.Parse(collection.Get("EventId"));
+                var events = db.Events.Single(a => a.Id == thisId);
+                Comment comment = new Comment();
+                comment.AspNetUserId = User.Identity.GetUserId();
+                comment.Message = collection.Get("Message");
+                comment.EventId = Int32.Parse(collection.Get("EventId"));
+                db.Comments.Add(comment);
+                db.SaveChanges();
+
+                return RedirectToAction("Details", "Event", new { id = events.Id });
             }
             catch
             {

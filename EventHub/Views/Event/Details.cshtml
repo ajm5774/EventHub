@@ -7,6 +7,16 @@
 <div>
     <br/>
     <div class="col-md-3">
+        @{
+            int attending = 0;   
+            foreach (EventHub.Models.EventUserReply reply in Model.EventReplies)
+            {
+                if(reply.Reply == EventHub.Models.EventReply.Going)
+                {
+                    attending++;
+                }
+            }
+        }
         @if(@Model.EventPictures.Any())
         {
             <img src="@Model.EventPictures.First().PicturePath" class="mainPicture"/>
@@ -15,14 +25,51 @@
         {
             @*Put a placeholder photo*@
         }
+        <h4>@attending People Attending</h4>
         
+        @{
+            bool help = true;
+            foreach(EventHub.Models.EventUserReply reply in Model.EventReplies)
+            {
+                if (reply.AspNetUser.UserName == User.Identity.Name && reply.Reply == 0)
+                {
+                    help = false;
+                }
+            }
+        }
 
+        @{
+            if (help)
+            {
+                using (Html.BeginForm("In", "Event", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("EventId", Model.Id)
+            
+                    <br />
+                    <input type="submit" class="btn btn-default" value="+I'm In!" />
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("Out", "Event", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("EventId", Model.Id)
+            
+                    <br />
+                    <input type="submit" class="btn btn-default" value="-I'm Out!" />
+                }   
+            }
+        }
+        <br/>
+       
     </div>
     <div class =" col-md-6">
         <div class="event-info">
             <h2>@Model.Title</h2>
             <h4>Hosted by <a href="/Group/Details/@Model.GroupId">@Model.Group.Name</a></h4>
-
+            
             <br />
             @Html.DisplayFor(model => model.Description)
             <br />
@@ -54,7 +101,7 @@
             }
             <br />
             <div class="col-md-12 col-md-offset-0">
-                @using (Html.BeginForm("Create", "Comment", FormMethod.Post))
+                @using (Html.BeginForm("EventCreate", "Comment", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("EventId", Model.Id)
@@ -71,7 +118,7 @@
         </div>
     </div>
 </div>
-@*@<p>
+<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
-</p>*@
+</p>
