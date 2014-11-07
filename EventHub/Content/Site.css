@@ -26,7 +26,6 @@ textarea {
 }
 
 input.input-validation-error {
-    border: 1px solid #b94a48;
 }
 
 input[type="checkbox"].input-validation-error {
@@ -51,24 +50,20 @@ input[type="checkbox"].input-validation-error {
     background-color:#D3E8D8;
     border-radius:10px;
     padding:8px;
-    border: 1px solid black;
 }
 
 .comments{
-    border: 2px solid black;
     padding: 5px;
     border-radius:5px;
 }
 .comment{
     margin-top: 5px;
     margin-bottom: 5px;
-    border: 1px solid black;
     background-color: white;
     padding: 2px;
 }
 
 .pictureBorder{
-    border: 1px solid black;
     margin-right: 10px;
 }
 .commentTextArea{
@@ -77,7 +72,6 @@ input[type="checkbox"].input-validation-error {
 }
 
 .mainPicture{
-    border: 1px solid black;
     margin:10px 5px 5px 5px;
     width: 175px;
     height: 175px;
@@ -88,11 +82,9 @@ input[type="checkbox"].input-validation-error {
     background-color:#D3E8D8;
     border-radius:10px;
     padding:5px;
-    border: 1px solid black;
 }
 
 .group{
-    border: 1px solid gray;
     padding-top:10px;
     padding-bottom:10px;
     padding-left:5px;
