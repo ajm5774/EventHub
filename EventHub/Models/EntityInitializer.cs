@@ -29,8 +29,8 @@ namespace EventHub.Models
                 //Groups
                 new List<Group>
                 {
-                    new Group() { Id = 1, Name = "Outting Club", Description = "People get together to do outdoor things.", PicturePath = "Content\\Images\\testImages\\group1Pic.jpg" , SchoolId = 1},
-                    new Group() { Id = 2, Name = "Dodgeball Club", Description = "Dodge Dip Dive and Dodge", PicturePath = "Content\\Images\\testImages\\group2Pic.jpg", SchoolId = 1 }
+                    new Group() { Id = 1, Name = "Outting Club", Description = "People get together to do outdoor things.", PicturePath = "\\Content\\Images\\testImages\\group1Pic.jpg" , SchoolId = 1},
+                    new Group() { Id = 2, Name = "Dodgeball Club", Description = "Dodge Dip Dive and Dodge", PicturePath = "\\Content\\Images\\testImages\\group2Pic.jpg", SchoolId = 1 }
                 }.ForEach(group => context.Groups.Add(group));
                 context.SaveChanges();
 
@@ -80,8 +80,8 @@ namespace EventHub.Models
                 var manager = new UserManager<AspNetUser>(new UserStore<AspNetUser>(identityContext));
                 var userValidator = manager.UserValidator as UserValidator<AspNetUser>;
                 userValidator.AllowOnlyAlphanumericUserNames = false;
-                var user1 = new AspNetUser { Id = "1", FirstName = "Bob", LastName = "Hope", UserName = "bHope@gmail.com", SchoolId = 1, PicturePath = "Content\\Images\\testImages\\bob-hope.jpg" };
-                var user2 = new AspNetUser { Id = "2", FirstName = "Bobby", LastName = "Joe", UserName = "bJoe@gmail.com", SchoolId = 1, PicturePath = "Content\\Images\\testImages\\bobby-joe.jpg" };
+                var user1 = new AspNetUser { Id = "1", FirstName = "Bob", LastName = "Hope", UserName = "bHope@gmail.com", SchoolId = 1, PicturePath = "\\Content\\Images\\testImages\\bob-hope.jpg" };
+                var user2 = new AspNetUser { Id = "2", FirstName = "Bobby", LastName = "Joe", UserName = "bJoe@gmail.com", SchoolId = 1, PicturePath = "\\Content\\Images\\testImages\\bobby-joe.jpg" };
                 manager.Create(user1, "ChangeItAsap!");
                 //manager.AddToRole(user1.Id, "BasicUser");
                 manager.Create(user2, "ChangeItAsap!");
