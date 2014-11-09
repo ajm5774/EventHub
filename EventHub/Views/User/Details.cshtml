@@ -11,7 +11,7 @@
         <br />
        
         <div class="groupList">
-            @{Html.RenderAction("UserGroups", "Group");}
+            @{Html.RenderAction("UserGroups", "Group", new { user_id = Model.UserId });}
         </div>
 
     </div>

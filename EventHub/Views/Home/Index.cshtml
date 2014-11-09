@@ -8,9 +8,7 @@
         <img src="@Model.PicturePath" class="mainPicture"/>
         
         <br />
-        @Model.FirstName
-        @Model.LastName
-        @*Html.ActionLink("Model.FirstName Model.LastName", "Details", "User", routeValues: null, htmlAttributes: new {id = Convert.ToString(Model.UserId) })*@
+        <a href ="#" onclick="UserInfoDialog()">@Model.FirstName @Model.LastName </a>
         <br />
         <br />
         <button onclick="CreateGroupDialog()" class="btn btn-default">Create New Group</button>
@@ -31,12 +29,15 @@
     <div id="CreateGroupDialog" title="Create New Group">
     </div>
 
+    <div id="UserInfoDialog" title="User Info">
+    </div>
+
     
 </div>
 @section scripts
 {
     <script type="text/javascript">
-        var dialog = $("#CreateGroupDialog").dialog({
+        var groupDialog = $("#CreateGroupDialog").dialog({
             autoOpen: false,
             height: 500,
             width: 750
@@ -52,7 +53,26 @@
                 $("#CreateGroupDialog").html(result);
             });
 
-            dialog.dialog("open");
+            groupDialog.dialog("open");
+        }
+
+        var userDialog = $("#UserInfoDialog").dialog({
+            autoOpen: false,
+            height: 500,
+            width: 750
+        });
+
+        function UserInfoDialog() {
+            $.ajax({
+                url: '/User/Details?id=@Model.UserId',
+                contentType: 'Application/html; charset=utf-8',
+                type: 'Get',
+                dataType: 'html'
+            }).success(function (result) {
+                $("#UserInfoDialog").html(result);
+            });
+
+            userDialog.dialog("open");
         }
     </script>
 }

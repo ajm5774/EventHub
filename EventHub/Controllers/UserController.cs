@@ -20,9 +20,9 @@ namespace EventHub.Controllers
         }
 
         // GET:  User/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            var user = db.AspNetUsers.Where(u => u.Id == Convert.ToString(id)).Single();
+            var user = db.AspNetUsers.Where(u => u.Id == id).Single();
             UserDetailsViewModel userVM = new UserDetailsViewModel();
             userVM.FirstName = user.FirstName;
             userVM.LastName = user.LastName;
