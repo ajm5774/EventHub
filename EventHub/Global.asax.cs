@@ -18,11 +18,11 @@ namespace EventHub
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-//#if DEBUG
+#if DEBUG
             Database.SetInitializer<Entities>(new EntityInitializer());
             Entities db = new Entities();
             db.Database.Initialize(true);
-//#endif
+#endif
         }
     }
 }
