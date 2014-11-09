@@ -11,7 +11,7 @@
         <br />
        
         <div class="groupList">
-            @{Html.RenderAction("UserGroups", "Group", Model.Id);}
+            @{Html.RenderAction("UserGroups", "Group");}
         </div>
 
     </div>
@@ -30,7 +30,7 @@
             </dt>
 
             <dt>
-                @Model.School
+                @Model.SchoolName
             </dt>
 
         </dl>

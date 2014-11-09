@@ -8,6 +8,13 @@
         <img src="@Model.PicturePath" class="mainPicture"/>
         
         <br />
+        @Model.FirstName
+        @Model.LastName
+        @*Html.ActionLink("Model.FirstName Model.LastName", "Details", "User", routeValues: null, htmlAttributes: new {id = Convert.ToString(Model.UserId) })*@
+        <br />
+        <br />
+        <button onclick="CreateGroupDialog()" class="btn btn-default">Create New Group</button>
+        
         <div class="groupList">
             @{Html.RenderAction("MyGroups", "Group");}
         </div>
@@ -21,9 +28,34 @@
         @{Html.RenderAction("GroupSuggestions", "Group");}
     </div>
 
+    <div id="CreateGroupDialog" title="Create New Group">
+    </div>
+
     
 </div>
+@section scripts
+{
+    <script type="text/javascript">
+        var dialog = $("#CreateGroupDialog").dialog({
+            autoOpen: false,
+            height: 500,
+            width: 750
+        });
 
+        function CreateGroupDialog() {
+            $.ajax({
+                url: '/Group/Create',
+                contentType: 'Application/html; charset=utf-8',
+                type: 'Get',
+                dataType: 'html'
+            }).success(function (result) {
+                $("#CreateGroupDialog").html(result);
+            });
+
+            dialog.dialog("open");
+        }
+    </script>
+}
 @*@section scripts
 {
     <script type="text/javascript">
