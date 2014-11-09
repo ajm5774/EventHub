@@ -40,6 +40,16 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
+#NotificationFeed{
+    background-color:#D3E8D8;
+}
+.notification{
+    margin:2px;
+    border-radius:4px;
+    padding:2px;
+    background-color:#FFFFFF;
+}
+
 #events{
     margin-top:10px;
 }
