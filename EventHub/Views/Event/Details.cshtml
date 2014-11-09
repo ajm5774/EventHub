@@ -8,7 +8,15 @@
     <br/>
     <div class="col-md-3">
         @{
-            int attending = 0;   
+            int attending = 0;
+            bool isAdmin = false;
+            foreach(EventHub.Models.GroupSubscription gsub in Model.Group.GroupSubscriptions)
+            {
+                if(gsub.AspNetUser.UserName == User.Identity.Name && gsub.IsAdministrator == true)
+                {
+                    isAdmin = true;
+                }
+            }
             foreach (EventHub.Models.EventUserReply reply in Model.EventReplies)
             {
                 if(reply.Reply == EventHub.Models.EventReply.Going)
@@ -17,29 +25,30 @@
                 }
             }
         }
+
         @if(@Model.EventPictures.Any())
         {
             <img src="@Model.EventPictures.First().PicturePath" class="mainPicture"/>
         }
         else
         {
-            @*Put a placeholder photo*@
+            <img src="Content\Images\testImages\group_default.png" class="mainPicture"/>
         }
         <h4>@attending People Attending</h4>
         
         @{
-            bool help = true;
+            bool userReplied = true;
             foreach(EventHub.Models.EventUserReply reply in Model.EventReplies)
             {
                 if (reply.AspNetUser.UserName == User.Identity.Name && reply.Reply == 0)
                 {
-                    help = false;
+                    userReplied = false;
                 }
             }
         }
 
         @{
-            if (help)
+            if (userReplied)
             {
                 using (Html.BeginForm("In", "Event", FormMethod.Post))
                 {
@@ -119,6 +128,9 @@
     </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (isAdmin == true)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id });
+    }
+    
 </p>
