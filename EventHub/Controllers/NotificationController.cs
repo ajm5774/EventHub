@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EventHub.Models;
+using Microsoft.AspNet.Identity;
 
 namespace EventHub.Controllers
 {
@@ -19,6 +20,16 @@ namespace EventHub.Controllers
         {
             var notifications = db.Notifications.Include(n => n.AspNetUser).Include(n => n.SourceUser);
             return View(notifications.ToList());
+        }
+
+        public PartialViewResult NotificationFeed()
+        {
+            var id = User.Identity.GetUserId();
+            List<Notification> notifications = db.Notifications.Where(i =>
+                (i.AspNetUserId1 == id) &&
+                (i.Viewed == false)
+            ).ToList();
+            return PartialView(notifications);
         }
 
         // GET: /Notification/Details/5

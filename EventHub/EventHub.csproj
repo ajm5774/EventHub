@@ -379,6 +379,8 @@
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Edit.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Notification\NotificationFeed.cshtml" />
+    <Content Include="Views\Notification\Notification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
