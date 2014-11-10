@@ -15,6 +15,7 @@
                 if(gsub.AspNetUser.UserName == User.Identity.Name && gsub.IsAdministrator == true)
                 {
                     isAdmin = true;
+                    
                 }
             }
             foreach (EventHub.Models.EventUserReply reply in Model.EventReplies)
@@ -28,11 +29,11 @@
 
         @if(@Model.EventPictures.Any())
         {
-            <img src="@Model.EventPictures.First().PicturePath" class="mainPicture"/>
+            <img src="\\@Model.EventPictures.First().PicturePath" class="mainPicture"/>
         }
         else
         {
-            <img src="Content\Images\testImages\group_default.png" class="mainPicture"/>
+            <img src="\\Content\Images\testImages\group_default.png" class="mainPicture"/>
         }
         <h4>@attending People Attending</h4>
         
@@ -126,11 +127,39 @@
 
         </div>
     </div>
+    <div id="EditEventDialog" title="Edit Event">
+    </div>
 </div>
-<p>
-    @if (isAdmin == true)
-    {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id });
-    }
-    
-</p>
+<div>
+    <p>
+        @if (isAdmin == true)
+        {
+            <button onclick="EditEventDialog()" class="btn btn-default">Edit Event</button>
+        }
+
+    </p>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        var eventDialog = $("#EditEventDialog").dialog({
+            autoOpen: false,
+            height: 500,
+            width: 750
+        });
+
+        function EditEventDialog() {
+            $.ajax({
+                url: '/Event/Edit?id=@Model.Id',
+                contentType: 'Application/html; charset=utf-8',
+                type: 'Get',
+                dataType: 'html'
+            }).success(function (result) {
+                $("#EditEventDialog").html(result);
+            });
+
+            eventDialog.dialog("open");
+        }
+
+    </script>
+}
