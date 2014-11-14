@@ -36,6 +36,15 @@ namespace EventHub.Controllers
             return PartialView(groups);
         }
 
+        public PartialViewResult MyUsers(int id)
+        {
+            var users = (from gs in db.GroupSubscriptions.Where(gs => gs.GroupId == id).ToList()
+                         join u in db.AspNetUsers on gs.AspNetUserId equals u.Id
+                         select u).ToList();
+            return PartialView(users);
+
+        }
+
         [Authorize]
         public PartialViewResult UserGroups(string user_id)
         {
@@ -72,6 +81,16 @@ namespace EventHub.Controllers
             var id = Int32.Parse(collection.Get("GroupId"));
             var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == user.Id && gs.GroupId == id).First();
             db.GroupSubscriptions.Remove(groupSub);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Admin(int id, FormCollection collection)
+        {
+            var UId = collection.Get("Id");
+            var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == UId && gs.GroupId == id).First();
+            groupSub.IsAdministrator= true;
             db.SaveChanges();
 
             return RedirectToAction("Index", "Home");

@@ -7,8 +7,23 @@
         <img src="@Model.PicturePath" class="mainPicture" />
 
         <br />
-        <button onclick="CreateEventDialog()" class="btn btn-default">Create Event</button>
 
+        @{bool isAdmin = false;
+            foreach(EventHub.Models.GroupSubscription gsub in Model.GroupSubscriptions)
+            {
+                if(gsub.AspNetUser.UserName == User.Identity.Name && gsub.IsAdministrator == true)
+                {
+                    isAdmin = true;
+
+                }
+            }
+        }
+
+        @if (isAdmin == true)
+        {
+        <button onclick="CreateEventDialog()" class="btn btn-default">Create Event</button>
+        }
+        
         <br />
         <div class="groupList">
             <p>
@@ -20,9 +35,12 @@
 
     <div id="Events" class="col-md-6">
         @{Html.RenderAction("GroupEventFeed", "Event");}
+        @{Html.RenderAction("GroupEventFeedPast", "Event");}
     </div>
 
+
     <div class="groupList col-md-3">
+
     </div>
 </div>
 

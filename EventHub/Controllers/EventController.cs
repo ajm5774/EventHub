@@ -52,6 +52,17 @@ namespace EventHub.Controllers
             return PartialView(events);
         }
 
+        public PartialViewResult GroupEventFeedPast(int id)
+        {
+            List<Event> events = new List<Event>();
+
+            var egroup = db.Groups.Where(g => g.Id == id).Single();
+            events.AddRange(egroup.Events.Where(e => e.DateTime <= DateTime.Now).ToList());
+            events = events.OrderBy(e => e.DateTime).ToList();
+            events.Reverse();
+            return PartialView(events);
+        }
+
         //
         // GET: /Event/Details/5
         public ActionResult Details(int id)
