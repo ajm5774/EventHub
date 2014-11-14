@@ -1,43 +1,31 @@
 ﻿@model EventHub.Models.Group
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
+<h2>@Html.DisplayFor(model => model.Name)</h2>
 
 <div>
-    <h4>Group</h4>
-	<hr />
-    <br />
-    <button onclick="CreateEventDialog()" class="btn btn-default">Create Event</button>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div class="col-md-3">
+        <img src="@Model.PicturePath" class="mainPicture" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+        <br />
+        <button onclick="CreateEventDialog()" class="btn btn-default">Create Event</button>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+        <br />
+        <div class="groupList">
+            <p>
+                @Html.DisplayFor(model => model.Description)
+            </p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PicturePath)
-        </dt>
+    <div id="Events" class="col-md-6">
+        @{Html.RenderAction("GroupEventFeed", "Event");}
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.PicturePath)
-        </dd>
-
-    </dl>
+    <div class="groupList col-md-3">
+    </div>
 </div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
