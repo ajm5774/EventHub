@@ -237,10 +237,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EvenutHubEntities.Designer.cs">
+    <Compile Include="Models\EventHubEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>EvenutHubEntities.edmx</DependentUpon>
+      <DependentUpon>EventHubEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Group.cs">
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
@@ -305,25 +305,26 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\EventHubEntities.edmx.sql" />
     <Content Include="Models\EvenutHubEntities.edmx.sql" />
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\EvenutHubEntities.edmx">
+    <EntityDeploy Include="Models\EventHubEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EvenutHubEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>EventHubEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\EvenutHubEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EvenutHubEntities.edmx</DependentUpon>
+      <DependentUpon>EventHubEntities.edmx</DependentUpon>
       <LastGenOutput>EvenutHubEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\EvenutHubEntities.edmx.diagram">
-      <DependentUpon>EvenutHubEntities.edmx</DependentUpon>
+    <Content Include="Models\EventHubEntities.edmx.diagram">
+      <DependentUpon>EventHubEntities.edmx</DependentUpon>
     </Content>
     <Content Include="Models\EvenutHubEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EvenutHubEntities.edmx</DependentUpon>
+      <DependentUpon>EventHubEntities.edmx</DependentUpon>
       <LastGenOutput>EvenutHubEntities.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\Eventhub.pubxml" />

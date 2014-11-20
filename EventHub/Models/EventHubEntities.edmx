@@ -151,6 +151,7 @@
     <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
     <Property Name="EventId" Type="int" Nullable="false" />
     <Property Name="AspNetUserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="DateTime" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="EventPictures">
     <Key>
@@ -529,6 +530,7 @@
           <NavigationProperty Name="Event" Relationship="Self.FK_EventsComments" FromRole="Comments" ToRole="Events" />
           <NavigationProperty Name="AspNetUser" Relationship="Model.AspNetUserComment" FromRole="Comment" ToRole="AspNetUser" />
           <Property Name="AspNetUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="EventPicture">
           <Key>
@@ -1015,6 +1017,7 @@
           <ScalarProperty Name="Message" ColumnName="Message" />
           <ScalarProperty Name="EventId" ColumnName="EventId" />
           <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

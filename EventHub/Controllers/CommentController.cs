@@ -24,35 +24,39 @@ namespace EventHub.Controllers
                 comment.AspNetUserId = User.Identity.GetUserId();
                 comment.Message = collection.Get("Message");
                 comment.EventId = Int32.Parse(collection.Get("EventId"));
+                comment.DateTime = DateTime.Now;
                 db.Comments.Add(comment);
-                db.SaveChanges();
+                
 
-                NotificationController nController = new NotificationController();
                 Notification notification = new Notification();
-                notification.Message = User.Identity.Name + " has sent the message " + comment.Message;
-                notification.NotificationType = 0;
+                notification.Message = User.Identity.Name + " has sent the message \"" + comment.Message + "\"";
+                notification.NotificationType = NotificationType.Comment;
                 notification.AspNetUserId = User.Identity.GetUserId();
 
-                var prevComments = GetPrevComments(comment.EventId);
-                foreach(Comment c in prevComments){
-                    if(c.AspNetUserId != User.Identity.GetUserId()){
+                HashSet<string> commentUserSet = new HashSet<string>();
+                GetPrevComments(comment.EventId).ForEach(c => commentUserSet.Add(c.AspNetUserId));
+
+                foreach (string userid in commentUserSet)
+                {
+                    if (userid != User.Identity.GetUserId())
+                    {
                         //check if the user turned off notifications for the event
                         if (db.UserEventNotifications.Where(uen =>
-                            uen.AspNetUsersId == c.AspNetUserId &&
+                            uen.AspNetUsersId == userid &&
                             uen.EventsId == comment.EventId &&
                             uen.AllowNotifications).Any())
                         {
-                            notification.AspNetUserId1 = c.AspNetUserId;
-                            nController.Create(notification);
+                            notification.AspNetUserId1 = userid;
+                            db.Notifications.Add(notification);
                         }
                     }
                 }
-
+                db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", "Home");
             }
         }
 

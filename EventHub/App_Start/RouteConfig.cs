@@ -19,10 +19,6 @@ namespace EventHub
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-            routes.MapRoute(
-                name: "toggleEventNotifications",
-                url: "Event/ToggleEventNotifications/{id}"
-            );
         }
     }
 }

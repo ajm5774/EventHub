@@ -91,8 +91,8 @@ namespace EventHub.Models
                 //Comment
                 new List<Comment>
                 {
-                    new Comment() { Id = 1, EventId = 1, Message = "TeeHee This event looks totes cool!", AspNetUserId = "1"},
-                    new Comment() { Id = 2, EventId = 1, Message = "Aww, ive got something else planned!", AspNetUserId = "2" }
+                    new Comment() { Id = 1, EventId = 1, Message = "TeeHee This event looks totes cool!", AspNetUserId = "1", DateTime=DateTime.Now},
+                    new Comment() { Id = 2, EventId = 1, Message = "Aww, ive got something else planned!", AspNetUserId = "2", DateTime=DateTime.Now }
                 }.ForEach(comment => context.Comments.Add(comment));
                 context.SaveChanges();
 

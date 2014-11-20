@@ -18,6 +18,7 @@ namespace EventHub.Models
         public string Message { get; set; }
         public int EventId { get; set; }
         public string AspNetUserId { get; set; }
+        public System.DateTime DateTime { get; set; }
     
         public virtual Event Event { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }

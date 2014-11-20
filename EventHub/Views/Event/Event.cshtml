@@ -15,10 +15,12 @@
             </a>
         </div>
         <h2><a href="/Event/Details/@Model.AnEvent.Id">@Model.AnEvent.Title</a></h2>
+        <h4>Hosted by <a href="/Group/Details/@Model.AnEvent.GroupId">@Model.AnEvent.Group.Name</a></h4>
         <p>
             @Model.AnEvent.Description
             </br></br>
             <strong>Time: @Model.AnEvent.DateTime</strong><br />
+            <strong>Location: @Model.AnEvent.Place</strong><br />
         </p>
         @if (Model.AnEvent.Comments.Any())
         {
