@@ -1,18 +1,30 @@
 ﻿
-@model EventHub.Models.Event
+@model EventHub.Models.EventViewModel
 <div class="event row">
     <div class="event-info">
-        <h2><a href="/Event/Details/@Model.Id">@Model.Title</a></h2>
+        <div class="pull-right">
+            <a href="/Event/ToggleEventNotifications/@Model.AnEvent.Id">
+                @if (Model.ReceiveNotifications)
+                {
+                    <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                }
+            </a>
+        </div>
+        <h2><a href="/Event/Details/@Model.AnEvent.Id">@Model.AnEvent.Title</a></h2>
         <p>
-            @Model.Description
+            @Model.AnEvent.Description
             </br></br>
-            <strong>Time: @Model.DateTime</strong><br />
+            <strong>Time: @Model.AnEvent.DateTime</strong><br />
         </p>
-        @if(Model.Comments.Any())
+        @if (Model.AnEvent.Comments.Any())
         {
             <p>Comments:</p>
             <div class="comments">
-                @foreach (EventHub.Models.Comment comment in Model.Comments)
+                @foreach (EventHub.Models.Comment comment in Model.AnEvent.Comments)
                 {
                     <div class="comment col-md-12">
                         <table>
@@ -34,7 +46,7 @@
             @using (Html.BeginForm("Create", "Comment", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
-                @Html.Hidden("EventId", Model.Id)
+                @Html.Hidden("EventId", Model.AnEvent.Id)
                 @Html.TextArea("Message", new { @class = "form-control commentTextArea", @placeholder="Add Comment"})
 
                 <div class="form-group">

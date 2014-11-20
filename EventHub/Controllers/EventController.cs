@@ -23,7 +23,7 @@ namespace EventHub.Controllers
         [Authorize]
         public PartialViewResult EventFeed()
         {
-            List<Event> events = new List<Event>();
+            List<EventViewModel> events = new List<EventViewModel>();
 
             var id = User.Identity.GetUserId();
             var eventGroups = from gs in db.GroupSubscriptions.Where(s => s.AspNetUserId == id).ToList()
@@ -34,11 +34,18 @@ namespace EventHub.Controllers
                              };
             var eventGroupsList = eventGroups.ToList();
 
+            bool receiveNotifications;
+            UserEventNotification userEventNotification;
             foreach(var eventGroup in eventGroupsList)
             {
-                events.AddRange(eventGroup.Events.Where(e => e.DateTime > DateTime.Now).ToList());
+                foreach(var anEvent in eventGroup.Events.Where(e => e.DateTime > DateTime.Now).ToList())
+                {
+                    userEventNotification = anEvent.UserEventNotifications.Where( uen => uen.AspNetUsersId == id).FirstOrDefault();
+                    receiveNotifications = userEventNotification == null? true : userEventNotification.AllowNotifications;
+                    events.Add( new EventViewModel(){ AnEvent = anEvent, ReceiveNotifications = receiveNotifications});
+                }
             }
-            events = events.OrderBy(e => e.DateTime).ToList();
+            events = events.OrderBy(e => e.AnEvent.DateTime).ToList();
             return PartialView(events);
         }
 
@@ -203,6 +210,31 @@ namespace EventHub.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Details", "Event", new { id = reply.EventId });
+        }
+
+        [HttpPost]
+        public ActionResult ToggleEventNotifications(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var userEventNotification = db.UserEventNotifications
+                .Where(uen => id == uen.EventsId && uen.AspNetUsersId == userId)
+                .FirstOrDefault();
+
+            if (userEventNotification == null)
+            {
+                userEventNotification = new UserEventNotification()
+                {
+                    AspNetUsersId = userId,
+                    EventsId = id,
+                    AllowNotifications = false
+                };
+                db.UserEventNotifications.Add(userEventNotification);
+            }
+            else
+                userEventNotification.AllowNotifications = !userEventNotification.AllowNotifications;
+
+            return Redirect(Request.RawUrl);
         }
     }
 }
