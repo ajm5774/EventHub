@@ -97,7 +97,7 @@ namespace EventHub.Controllers
             if (ModelState.IsValid)
             {
                 //change empty string for picturePath to placeholder image path
-                var user = new AspNetUser() { UserName = model.UserName, FirstName = model.FirstName, LastName = model.LastName, SchoolId = model.SelectedSchoolId, PicturePath = "Content\\Images\\testImages\\person_default.png"};
+                var user = new AspNetUser() { UserName = model.UserName, FirstName = model.FirstName, LastName = model.LastName, SchoolId = model.SelectedSchoolId, PicturePath = "\\Content\\Images\\testImages\\person_default.png"};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {   

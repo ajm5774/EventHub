@@ -1,0 +1,7 @@
+﻿@model List<EventHub.Models.Notification>
+<div id="notifications">
+    @foreach (EventHub.Models.Notification nf in Model)
+    {
+        @Html.Partial("Notification", nf);
+    }
+</div>

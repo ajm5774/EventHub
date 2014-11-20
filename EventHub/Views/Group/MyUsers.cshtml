@@ -1,0 +1,25 @@
+﻿@model List<EventHub.Models.AspNetUser>
+<div>
+    <div>
+        <h4>Subscribers:</h4>
+    </div>
+    <div>
+        @foreach (var user in Model)
+        {
+            <div class="group">
+                @using (Html.BeginForm("Admin", "Group", FormMethod.Post))
+                {
+                    <img src="@user.PicturePath" class="pictureBorder" width="40" height="40" />
+
+                    @Html.ActionLink(@user.FirstName, "Details", "User", new { id = @user.Id }, htmlAttributes: new { })
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("UserId", @user.Id, new { @class = "form-control commentTextArea" })
+                    <br />
+                    <br />
+                    <input type="submit" class="btn btn-default" value="+Admin" />
+                }
+            </div>
+        }
+    </div>
+</div>
+

@@ -9,5 +9,9 @@ namespace EventHub.Models
             : base("Entities")
         {
         }
+
+        public System.Data.Entity.DbSet<EventHub.Models.Notification> Notifications { get; set; }
+
+        public System.Data.Entity.DbSet<EventHub.Models.AspNetUser> AspNetUsers { get; set; }
     }
 }

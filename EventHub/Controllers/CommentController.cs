@@ -26,13 +26,39 @@ namespace EventHub.Controllers
                 comment.EventId = Int32.Parse(collection.Get("EventId"));
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                
+
+                NotificationController nController = new NotificationController();
+                Notification notification = new Notification();
+                notification.Message = User.Identity.Name + " has sent the message " + comment.Message;
+                notification.NotificationType = 0;
+                notification.AspNetUserId = User.Identity.GetUserId();
+
+                var prevComments = GetPrevComments(comment.EventId);
+                foreach(Comment c in prevComments){
+                    if(c.AspNetUserId != User.Identity.GetUserId()){
+                        //check if the user turned off notifications for the event
+                        if (db.UserEventNotifications.Where(uen =>
+                            uen.AspNetUsersId == c.AspNetUserId &&
+                            uen.EventsId == comment.EventId &&
+                            uen.AllowNotifications).Any())
+                        {
+                            notification.AspNetUserId1 = c.AspNetUserId;
+                            nController.Create(notification);
+                        }
+                    }
+                }
+
                 return RedirectToAction("Index", "Home");
             }
             catch
             {
                 return View();
             }
+        }
+
+        public List<Comment> GetPrevComments(int eventId)
+        {
+            return db.Comments.Where(i => i.EventId == eventId).ToList();
         }
 
         public ActionResult EventCreate(FormCollection collection)

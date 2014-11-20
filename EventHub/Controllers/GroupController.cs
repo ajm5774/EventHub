@@ -31,8 +31,26 @@ namespace EventHub.Controllers
         {
             var user = userManager.FindById(User.Identity.GetUserId());
             var groups = (from gs in db.GroupSubscriptions.Where(s => s.AspNetUserId == user.Id).ToList()
-                         join g in db.Groups on gs.GroupId equals g.Id
-                         select g).ToList();
+                          join g in db.Groups on gs.GroupId equals g.Id
+                          select g).ToList();
+            return PartialView(groups);
+        }
+
+        public PartialViewResult MyUsers(int id)
+        {
+            var users = (from gs in db.GroupSubscriptions.Where(gs => gs.GroupId == id).ToList()
+                         join u in db.AspNetUsers on gs.AspNetUserId equals u.Id
+                         select u).ToList();
+            return PartialView(users);
+
+        }
+
+        [Authorize]
+        public PartialViewResult UserGroups(string user_id)
+        {
+            var groups = (from gs in db.GroupSubscriptions.Where(s => s.AspNetUserId == user_id).ToList()
+                          join g in db.Groups on gs.GroupId equals g.Id
+                          select g).ToList();
             return PartialView(groups);
         }
 
@@ -41,7 +59,7 @@ namespace EventHub.Controllers
         {
             var user = userManager.FindById(User.Identity.GetUserId());
             var school = db.Schools.Where(s => s.Id == user.SchoolId).Single();
-            return PartialView(new GroupSuggestionsViewModel() {Groups = school.Groups.ToList(), School = school });
+            return PartialView(new GroupSuggestionsViewModel() { Groups = school.Groups.ToList(), School = school });
         }
 
         [Authorize]
@@ -49,7 +67,7 @@ namespace EventHub.Controllers
         {
             var user = userManager.FindById(User.Identity.GetUserId());
             var id = Int32.Parse(collection.Get("GroupId"));
-            GroupSubscription gs = new GroupSubscription() { GroupId=id, AspNetUserId= user.Id};
+            GroupSubscription gs = new GroupSubscription() { GroupId = id, AspNetUserId = user.Id };
             db.GroupSubscriptions.Add(gs);
             db.SaveChanges();
 
@@ -63,6 +81,16 @@ namespace EventHub.Controllers
             var id = Int32.Parse(collection.Get("GroupId"));
             var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == user.Id && gs.GroupId == id).First();
             db.GroupSubscriptions.Remove(groupSub);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Admin(int id, FormCollection collection)
+        {
+            var UId = collection.Get("Id");
+            var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == UId && gs.GroupId == id).First();
+            groupSub.IsAdministrator= true;
             db.SaveChanges();
 
             return RedirectToAction("Index", "Home");
@@ -90,6 +118,10 @@ namespace EventHub.Controllers
                 group.PicturePath = "";
                 //picture path info?
                 db.Groups.Add(group);
+                //Add user to group subscription
+                GroupSubscription gs = new GroupSubscription() { GroupId = group.Id, AspNetUserId = user.Id };
+                db.GroupSubscriptions.Add(gs);
+
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home", new { success = true });
             }
@@ -118,16 +150,16 @@ namespace EventHub.Controllers
             {
                 // TODO: Add update logic here
                 var user = userManager.FindById(User.Identity.GetUserId());
-                var group = db.Groups.Single(a =>a.Id == id);
+                var group = db.Groups.Single(a => a.Id == id);
                 group.Name = collection.Get("Name").ToString();
                 group.Description = collection.Get("Description").ToString();
                 //picture path info?
                 group.PicturePath = "";
-                
+
                 //db.Groups.Attach(group);
                 db.Entry(group).CurrentValues.SetValues(group);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Group", new { id = group.Id});
+                return RedirectToAction("Details", "Group", new { id = group.Id });
                 //return RedirectToAction("Index");
             }
             catch

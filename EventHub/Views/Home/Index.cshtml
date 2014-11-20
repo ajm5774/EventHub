@@ -8,6 +8,11 @@
         <img src="@Model.PicturePath" class="mainPicture"/>
         
         <br />
+        <a href ="#" onclick="UserInfoDialog()">@Model.FirstName @Model.LastName </a>
+        <br />
+        <br />
+        <button onclick="CreateGroupDialog()" class="btn btn-default">Create New Group</button>
+        
         <div class="groupList">
             @{Html.RenderAction("MyGroups", "Group");}
         </div>
@@ -21,9 +26,56 @@
         @{Html.RenderAction("GroupSuggestions", "Group");}
     </div>
 
+    <div id="CreateGroupDialog" title="Create New Group">
+    </div>
+
+    <div id="UserInfoDialog" title="User Info">
+    </div>
+
     
 </div>
+@section scripts
+{
+    <script type="text/javascript">
+        var groupDialog = $("#CreateGroupDialog").dialog({
+            autoOpen: false,
+            height: 500,
+            width: 750
+        });
 
+        function CreateGroupDialog() {
+            $.ajax({
+                url: '/Group/Create',
+                contentType: 'Application/html; charset=utf-8',
+                type: 'Get',
+                dataType: 'html'
+            }).success(function (result) {
+                $("#CreateGroupDialog").html(result);
+            });
+
+            groupDialog.dialog("open");
+        }
+
+        var userDialog = $("#UserInfoDialog").dialog({
+            autoOpen: false,
+            height: 500,
+            width: 750
+        });
+
+        function UserInfoDialog() {
+            $.ajax({
+                url: '/User/Details?id=@Model.UserId',
+                contentType: 'Application/html; charset=utf-8',
+                type: 'Get',
+                dataType: 'html'
+            }).success(function (result) {
+                $("#UserInfoDialog").html(result);
+            });
+
+            userDialog.dialog("open");
+        }
+    </script>
+}
 @*@section scripts
 {
     <script type="text/javascript">
