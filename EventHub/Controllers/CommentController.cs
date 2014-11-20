@@ -36,8 +36,15 @@ namespace EventHub.Controllers
                 var prevComments = GetPrevComments(comment.EventId);
                 foreach(Comment c in prevComments){
                     if(c.AspNetUserId != User.Identity.GetUserId()){
-                        notification.AspNetUserId1 = c.AspNetUserId;
-                        nController.Create(notification);
+                        //check if the user turned off notifications for the event
+                        if (db.UserEventNotifications.Where(uen =>
+                            uen.AspNetUsersId == c.AspNetUserId &&
+                            uen.EventsId == comment.EventId &&
+                            uen.AllowNotifications).Any())
+                        {
+                            notification.AspNetUserId1 = c.AspNetUserId;
+                            nController.Create(notification);
+                        }
                     }
                 }
 
