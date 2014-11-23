@@ -144,7 +144,7 @@ namespace EventHub.Controllers
                 db.Events.Add(myEvent);
                 db.SaveChanges();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Details", "Group", new { id = myEvent.GroupId });
             }
             catch
             {
@@ -189,27 +189,34 @@ namespace EventHub.Controllers
             }
         }
 
+        /*
         //
         // GET: /Event/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
-
+        */
         //
         // POST: /Event/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
                 // TODO: Add delete logic here
+                var ev = db.Events.Single(e => e.Id == id);
 
-                return RedirectToAction("Index");
+                if (ev != null)
+                {
+                    db.Events.Remove(ev);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index", "Home", new { success = true });
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", "Home", new { success = true });
             }
         }
 

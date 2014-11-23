@@ -90,6 +90,9 @@
         @if (isAdmin == true)
         {
             <button onclick="EditEventDialog()" class="btn btn-default">Edit Event</button>
+            <br />
+            <br />
+            <button onclick="DeleteEventDialog()" class="btn btn-default">Delete Event</button>
         }
 
     </p>
@@ -97,37 +100,63 @@
 <div id="UploadImageDialog" title="Upload Account Picture">
     @Html.Partial("UploadPicture", new EventHub.Models.UploadViewModel() { AllowMultiple = true, Action = "UploadPictures", Controller = "Event" })
 </div>
+<div id="DeleteEventDialog" title="Delete Event?">
+
+</div>
 @section scripts
 {
     <script type="text/javascript">
-        var eventDialog = $("#EditEventDialog").dialog({
-            autoOpen: false,
-            height: 500,
-            width: 750
+    var eventDialog = $("#EditEventDialog").dialog({
+        autoOpen: false,
+        height: 500,
+        width: 750
+    });
+
+    function EditEventDialog() {
+        $.ajax({
+            url: '/Event/Edit?id=@Model.AnEvent.Id',
+            contentType: 'Application/html; charset=utf-8',
+            type: 'Get',
+            dataType: 'html'
+        }).success(function (result) {
+            $("#EditEventDialog").html(result);
         });
 
-        function EditEventDialog() {
-            $.ajax({
-                url: '/Event/Edit?id=@Model.AnEvent.Id',
-                contentType: 'Application/html; charset=utf-8',
-                type: 'Get',
-                dataType: 'html'
-            }).success(function (result) {
-                $("#EditEventDialog").html(result);
-            });
+        eventDialog.dialog("open");
+    }
 
-            eventDialog.dialog("open");
+    var uploadImageDialog = $("#UploadImageDialog").dialog({
+        autoOpen: false,
+        height: 200,
+        width: 500
+    });
+
+    function UploadImageDialog() {
+        uploadImageDialog.dialog("open");
+    }
+
+    var deleteEventDialog = $("#DeleteEventDialog").dialog({
+        autoOpen: false,
+        height: 200,
+        width: 500,
+        buttons: {
+            "Delete": function () {
+                $.ajax({
+                    url: '/Event/Delete?id=@Model.AnEvent.Id',
+                    type: 'Post',
+                }).success(function (result) {
+                    window.location.href = "/Home/Index?success=true";
+                });
+            },
+            "Cancel": function () {
+                deleteEventDialog.dialog("close");
+            }
         }
+    });
 
-        var uploadImageDialog = $("#UploadImageDialog").dialog({
-            autoOpen: false,
-            height: 200,
-            width: 500
-        });
-
-        function UploadImageDialog() {
-            uploadImageDialog.dialog("open");
-        }
+    function DeleteEventDialog() {
+        deleteEventDialog.dialog("open");
+    }
 
     </script>
 }

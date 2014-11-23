@@ -229,14 +229,12 @@ namespace EventHub.Controllers
 
 
 
-        // POST: Group/Delete/5
-        [HttpPost]
+        // GET: Group/Delete/5
         public ActionResult Delete(int id)
         {
             try
             {
                 // TODO: Add delete logic here
-                //var group = db.Groups.Find(id);
                 var group = db.Groups.Single(a => a.Id == id);
 
                 if (group != null)
