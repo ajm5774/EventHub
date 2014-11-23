@@ -85,7 +85,32 @@ namespace EventHub.Controllers
         {
             var user = userManager.FindById(User.Identity.GetUserId());
             var school = db.Schools.Where(s => s.Id == user.SchoolId).Single();
-            return PartialView(new GroupSuggestionsViewModel() { Groups = school.Groups.ToList(), School = school });
+            List<Group> Groups = new List<Group>();
+            List<Group> temp = new List<Group>(school.Groups.ToList());
+            /*
+            if(temp.Count > 10)
+            {
+                for(int i = 0; i < 10; i++)
+                {
+                    Groups.Add(temp.ElementAt(i));
+                }
+            }
+            else
+            {
+                Groups = temp;
+            }
+            */
+            int n = 0;
+            foreach (Group g in temp)
+            {
+                if (n > 10)
+                {
+                    break;
+                }
+                Groups.Add(temp.ElementAt(n));
+                n++;
+            }
+            return PartialView(new GroupSuggestionsViewModel() { Groups = Groups, School = school });
         }
 
         [Authorize]
