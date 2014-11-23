@@ -36,7 +36,10 @@
     </div>
 
     <div id="Events" class="col-md-6">
+        <center><h3>Upcoming Events</h3></center>
         @{Html.RenderAction("GroupEventFeed", "Event");}
+        <br />
+        <center><h3>Past Events</h3></center>
         @{Html.RenderAction("GroupEventFeedPast", "Event");}
     </div>
 

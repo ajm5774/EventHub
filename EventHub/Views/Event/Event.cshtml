@@ -34,8 +34,9 @@
                                 <td>
                                     <img src="@comment.AspNetUser.PicturePath" class="pictureBorder" height="50" width="50" />
                                 </td>
-                                <td>
-                                    @comment.Message
+                                <td class="col-md-12">
+                                    <div><b>@comment.AspNetUser.FirstName @comment.AspNetUser.LastName:</b> @comment.Message</div>
+                                    <div class="pull-right"><h6>At @comment.DateTime</h6></div>
                                 </td>
                             </tr>
                         </table>
