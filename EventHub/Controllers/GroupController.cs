@@ -87,7 +87,26 @@ namespace EventHub.Controllers
             var school = db.Schools.Where(s => s.Id == user.SchoolId).Single();
             List<Group> Groups = new List<Group>();
             List<Group> temp = new List<Group>(school.Groups.ToList());
-            /*
+            int index = 0;
+            //remove groups that the user is already subscribed to
+            foreach(GroupSubscription gs in user.GroupSubscriptions)
+            {
+                bool subscribed = false;
+                foreach(Group g in temp)
+                {
+                    if (g.Id == gs.GroupId)
+                    {
+                        index = temp.IndexOf(g);
+                        subscribed = true;
+                        break;
+                    }
+                }
+                if (subscribed)
+                {
+                    temp.RemoveAt(index);
+                }
+            }
+            //if suggested groups is still more than 10, limit it
             if(temp.Count > 10)
             {
                 for(int i = 0; i < 10; i++)
@@ -98,17 +117,6 @@ namespace EventHub.Controllers
             else
             {
                 Groups = temp;
-            }
-            */
-            int n = 0;
-            foreach (Group g in temp)
-            {
-                if (n > 10)
-                {
-                    break;
-                }
-                Groups.Add(temp.ElementAt(n));
-                n++;
             }
             return PartialView(new GroupSuggestionsViewModel() { Groups = Groups, School = school });
         }
