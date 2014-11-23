@@ -178,7 +178,7 @@ namespace EventHub.Controllers
                 //picture path info?
                 db.Groups.Add(group);
                 //Add user to group subscription
-                GroupSubscription gs = new GroupSubscription() { GroupId = group.Id, AspNetUserId = user.Id };
+                GroupSubscription gs = new GroupSubscription() { GroupId = group.Id, AspNetUserId = user.Id, IsAdministrator = true};
                 db.GroupSubscriptions.Add(gs);
 
                 db.SaveChanges();
@@ -229,7 +229,8 @@ namespace EventHub.Controllers
 
 
 
-        // GET: Group/Delete/5
+        // POST: Group/Delete/5
+        [HttpPost]
         public ActionResult Delete(int id)
         {
             try
@@ -240,6 +241,9 @@ namespace EventHub.Controllers
 
                 if (group != null)
                 {
+                    var user = userManager.FindById(User.Identity.GetUserId());
+                    var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == user.Id && gs.GroupId == id).First();
+                    db.GroupSubscriptions.Remove(groupSub);
                     db.Groups.Remove(group);
                     db.SaveChanges();
                 }

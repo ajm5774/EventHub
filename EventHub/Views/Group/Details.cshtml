@@ -24,6 +24,9 @@
             <br />
             <br />
             <button onclick="CreateEventDialog()" class="btn btn-default">Create Event</button>
+            <br />
+            <br />
+            <button onclick="DeleteGroupDialog()" class="btn btn-default">Delete Group</button>
         }
         
         <br />
@@ -56,20 +59,22 @@
 <div id="UploadImageDialog" title="Upload Account Picture">
     @Html.Partial("UploadPicture", new EventHub.Models.UploadViewModel() { AllowMultiple = false, Action = "UploadPicture", Controller = "Group", id = Model.Id })
 </div>
+<div id="DeleteGroupDialog" title="Delete @Model.Name?">
+</div>
 
 @*Move this section to the group main page once that page is created*@
 @section scripts
 {
     <script type="text/javascript">
-        var dialog = $("#CreateEventDialog").dialog({
-            autoOpen: false,
-            height: 350,
-            width: 500
-        });
+    var dialog = $("#CreateEventDialog").dialog({
+        autoOpen: false,
+        height: 350,
+        width: 500
+    });
 
-        function CreateEventDialog() {
-            $.ajax({
-                url: '/Event/Create?groupId=@Model.Id',
+    function CreateEventDialog() {
+        $.ajax({
+            url: '/Event/Create?groupId=@Model.Id',
                 contentType: 'Application/html; charset=utf-8',
                 type: 'Get',
                 dataType: 'html'
@@ -89,5 +94,30 @@
         function UploadImageDialog() {
             uploadImageDialog.dialog("open");
         }
+
+        var deleteGroupDialog = $("#DeleteGroupDialog").dialog({
+            autoOpen: false,
+            height: 200,
+            width: 500,
+            buttons: {
+                "Delete": function () {
+                    $.ajax({
+                        url: '/Group/Delete?id=@Model.Id',
+                        type: 'Post',
+                    }).success(function (result) {
+                        window.location.href = "/Home/Index?success=true";
+                    });   
+                },
+                "Cancel": function(){
+                    deleteGroupDialog.dialog("close");
+                }
+            }
+        });
+
+        function DeleteGroupDialog() {
+            deleteGroupDialog.dialog("open");
+        }
+
+        
     </script>
 }
