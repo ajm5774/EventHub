@@ -5,7 +5,6 @@
 <div>
     <div class="col-md-3">
         <img src="@Model.PicturePath" class="mainPicture" />
-
         <br />
 
         @{bool isAdmin = false;
@@ -21,7 +20,10 @@
 
         @if (isAdmin == true)
         {
-        <button onclick="CreateEventDialog()" class="btn btn-default">Create Event</button>
+            <button onclick="UploadImageDialog()" class="btn btn-default">Change Picture</button>
+            <br />
+            <br />
+            <button onclick="CreateEventDialog()" class="btn btn-default">Create Event</button>
         }
         
         <br />
@@ -51,6 +53,9 @@
 </p>
 <div id="CreateEventDialog" title="Create New Event">
 </div>
+<div id="UploadImageDialog" title="Upload Account Picture">
+    @Html.Partial("UploadPicture", new EventHub.Models.UploadViewModel() { AllowMultiple = false, Action = "UploadPicture", Controller = "Group", id = Model.Id })
+</div>
 
 @*Move this section to the group main page once that page is created*@
 @section scripts
@@ -73,6 +78,16 @@
             });
 
             dialog.dialog("open");
+        }
+
+        var uploadImageDialog = $("#UploadImageDialog").dialog({
+            autoOpen: false,
+            height: 200,
+            width: 500
+        });
+
+        function UploadImageDialog() {
+            uploadImageDialog.dialog("open");
         }
     </script>
 }

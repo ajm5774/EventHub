@@ -83,8 +83,8 @@ input[type="checkbox"].input-validation-error {
 
 .mainPicture{
     margin:10px 5px 5px 5px;
-    width: 175px;
-    height: 175px;
+    max-height: 250px;
+    max-width: 250px;
 }
 
 .groupList{

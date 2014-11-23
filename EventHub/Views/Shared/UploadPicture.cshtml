@@ -1,0 +1,25 @@
+﻿
+@model EventHub.Models.UploadViewModel
+
+@using (Html.BeginForm(Model.Action, Model.Controller, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <center>
+
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.id, new {@value = Model.id})
+        <div class="form-group">
+            @if (Model.AllowMultiple)
+            {
+                @Html.TextBoxFor(m => m.Files, new { @class = "form-control", @type = "file", @multiple = "muliple" })
+                @Html.ValidationMessageFor(m => m.Files)
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.File, new { @class = "form-control", @type = "file" })
+                 @Html.ValidationMessageFor(m => m.File)
+            }
+        </div>
+
+        <input type="submit" value="Upload" class="btn btn-default" />
+    </center>
+}

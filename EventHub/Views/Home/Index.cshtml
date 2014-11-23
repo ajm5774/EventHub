@@ -6,9 +6,9 @@
 <div >
     <div class="col-md-3">
         <img src="@Model.PicturePath" class="mainPicture"/>
-        
-        <br />
-        <a href ="#" onclick="UserInfoDialog()">@Model.FirstName @Model.LastName </a>
+        <div class="pull-right">
+            <button onclick="UploadImageDialog()" class="btn btn-default">Change Picture</button>
+        </div>
         <br />
         <br />
         <button onclick="CreateGroupDialog()" class="btn btn-default">Create New Group</button>
@@ -29,10 +29,10 @@
     <div id="CreateGroupDialog" title="Create New Group">
     </div>
 
-    <div id="UserInfoDialog" title="User Info">
+    <div id="UploadImageDialog" title="Upload Account Picture">
+        @Html.Partial("UploadPicture", new EventHub.Models.UploadViewModel() { AllowMultiple = false, Action = "UploadPicture", Controller="Account"})
     </div>
 
-    
 </div>
 @section scripts
 {
@@ -56,13 +56,23 @@
             groupDialog.dialog("open");
         }
 
-        var userDialog = $("#UserInfoDialog").dialog({
+        var uploadImageDialog = $("#UploadImageDialog").dialog({
             autoOpen: false,
-            height: 500,
-            width: 750
+            height: 200,
+            width: 500
         });
 
-        function UserInfoDialog() {
+        function UploadImageDialog() {
+            uploadImageDialog.dialog("open");
+        }
+
+        //var userDialog = $("#UserInfoDialog").dialog({
+        //    autoOpen: false,
+        //    height: 500,
+        //    width: 750
+        //});
+
+        @*function UserInfoDialog() {
             $.ajax({
                 url: '/User/Details?id=@Model.UserId',
                 contentType: 'Application/html; charset=utf-8',
@@ -73,7 +83,7 @@
             });
 
             userDialog.dialog("open");
-        }
+        }*@
     </script>
 }
 @*@section scripts

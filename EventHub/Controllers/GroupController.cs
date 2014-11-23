@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,6 +18,31 @@ namespace EventHub.Controllers
         public GroupController()
         {
             userManager = new UserManager<AspNetUser>(new UserStore<AspNetUser>(authDb));
+        }
+
+        // This action handles the form POST and the upload
+        [HttpPost]
+        public ActionResult UploadPicture(UploadViewModel uploadModel)
+        {
+            var file = uploadModel.File;
+            var groupid = uploadModel.id;
+            // Verify that the user selected a file
+            if (file != null && file.ContentLength > 0)
+            {
+                // store the file inside ~/App_Data/uploads folder
+                var modelPath = Path.Combine("\\Content\\Images\\Uploads", Guid.NewGuid().ToString() + Path.GetExtension(file.FileName));
+                var serverPath = Path.Combine(Server.MapPath(modelPath));
+                if (!Directory.Exists(serverPath))
+                    Directory.CreateDirectory(Path.GetDirectoryName(serverPath));
+                file.SaveAs(serverPath);
+
+                Group group = db.Groups.Where(g => g.Id == groupid).Single();
+                group.PicturePath = modelPath;
+            }
+
+            db.SaveChanges();
+            // redirect back to the index action to show the form once again
+            return RedirectToAction("Details", "Group", new { id = groupid});
         }
 
         // GET:  Group/Details/5

@@ -9,12 +9,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using EventHub.Models;
+using System.IO;
 
 namespace EventHub.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        Entities db = new Entities();
+
         public AccountController()
             : this(new UserManager<AspNetUser>(new UserStore<AspNetUser>(new ApplicationDbContext())))
         {
@@ -25,6 +28,31 @@ namespace EventHub.Controllers
             UserManager = userManager;
             var userValidator = UserManager.UserValidator as UserValidator<AspNetUser>;
             userValidator.AllowOnlyAlphanumericUserNames = false;
+        }
+
+        // This action handles the form POST and the upload
+        [HttpPost]
+        public ActionResult UploadPicture(UploadViewModel uploadModel)
+        {
+            var file = uploadModel.File;
+            var userId = User.Identity.GetUserId();
+            // Verify that the user selected a file
+            if (file != null && file.ContentLength > 0)
+            {
+                // store the file inside ~/App_Data/uploads folder
+                var modelPath = Path.Combine("\\Content\\Images\\Uploads", Guid.NewGuid().ToString() + Path.GetExtension(file.FileName));
+                var serverPath = Path.Combine(Server.MapPath(modelPath));
+                if (!Directory.Exists(serverPath))
+                    Directory.CreateDirectory(Path.GetDirectoryName(serverPath));
+                file.SaveAs(serverPath);
+
+                AspNetUser ep = db.AspNetUsers.Where(u => u.Id == userId).Single();
+                ep.PicturePath = modelPath;
+            }
+
+            db.SaveChanges();
+            // redirect back to the index action to show the form once again
+            return RedirectToAction("Index", "Home");
         }
 
         public UserManager<AspNetUser> UserManager { get; private set; }

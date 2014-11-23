@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EventHub.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.IO;
 
 namespace EventHub.Controllers
 {
@@ -51,22 +52,38 @@ namespace EventHub.Controllers
 
         public PartialViewResult GroupEventFeed(int id)
         {
-            List<Event> events = new List<Event>();
+            var userid = User.Identity.GetUserId();
+            List<EventViewModel> events = new List<EventViewModel>();
 
             var egroup = db.Groups.Where(g => g.Id == id).Single();
-            events.AddRange(egroup.Events.Where(e => e.DateTime > DateTime.Now).ToList());
-            events = events.OrderBy(e => e.DateTime).ToList();
+
+            bool receiveNotifications;
+            UserEventNotification userEventNotification;
+            foreach (var anEvent in egroup.Events.Where(e => e.DateTime > DateTime.Now).ToList())
+            {
+                userEventNotification = anEvent.UserEventNotifications.Where(uen => uen.AspNetUsersId == userid).FirstOrDefault();
+                receiveNotifications = userEventNotification == null? true : userEventNotification.AllowNotifications;
+                events.Add( new EventViewModel(){ AnEvent = anEvent, ReceiveNotifications = receiveNotifications});
+            }
+            events = events.OrderBy(e => e.AnEvent.DateTime).ToList();
             return PartialView(events);
         }
 
         public PartialViewResult GroupEventFeedPast(int id)
         {
-            List<Event> events = new List<Event>();
+            var userid = User.Identity.GetUserId();
+            List<EventViewModel> events = new List<EventViewModel>();
 
             var egroup = db.Groups.Where(g => g.Id == id).Single();
-            events.AddRange(egroup.Events.Where(e => e.DateTime <= DateTime.Now).ToList());
-            events = events.OrderBy(e => e.DateTime).ToList();
-            events.Reverse();
+            bool receiveNotifications;
+            UserEventNotification userEventNotification;
+            foreach (var anEvent in egroup.Events.Where(e => e.DateTime <= DateTime.Now).ToList())
+            {
+                userEventNotification = anEvent.UserEventNotifications.Where(uen => uen.AspNetUsersId == userid).FirstOrDefault();
+                receiveNotifications = userEventNotification == null ? true : userEventNotification.AllowNotifications;
+                events.Add(new EventViewModel() { AnEvent = anEvent, ReceiveNotifications = receiveNotifications });
+            }
+            events = events.OrderByDescending(e => e.AnEvent.DateTime).ToList();
             return PartialView(events);
         }
 
@@ -244,6 +261,30 @@ namespace EventHub.Controllers
             return RedirectToAction("Details", "Event", new { id = reply.EventId });
         }
 
-        
+        // This action handles the form POST and the upload
+        [HttpPost]
+        public ActionResult UploadPictures(UploadViewModel uploadModel)
+        {
+            foreach (var file in uploadModel.Files)
+            {
+                // Verify that the user selected a file
+                if (file != null && file.ContentLength > 0)
+                {
+                    // store the file inside ~/App_Data/uploads folder
+                    var modelPath = Path.Combine("\\Content\\Images\\Uploads", Guid.NewGuid().ToString() + Path.GetExtension(file.FileName));
+                    var serverPath = Path.Combine(Server.MapPath(modelPath));
+                    if (!Directory.Exists(serverPath))
+                        Directory.CreateDirectory(Path.GetDirectoryName(serverPath));
+                    file.SaveAs(serverPath);
+
+                    EventPicture ep = new EventPicture() { EventId = uploadModel.id, PicturePath = modelPath };
+                    db.EventPictures.Add(ep);
+                }
+            }
+            db.SaveChanges();
+            // redirect back to the index action to show the form once again
+            return RedirectToAction("Index");
+        }
+
     }
 }

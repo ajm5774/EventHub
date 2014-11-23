@@ -99,7 +99,7 @@ namespace EventHub.Models
                 //EventPictures
                 new List<EventPicture>
                 {
-                    new EventPicture() { Id = 1, EventId = 1, PicturePath = "/testEventPicture.jpg" }
+                    new EventPicture() { Id = 1, EventId = 1, PicturePath = "\\Content\\Images\\testImages\\group_default.png" }
                 }.ForEach(eventPicture => context.EventPictures.Add(eventPicture));
                 context.SaveChanges();
 

@@ -1,6 +1,6 @@
-﻿@model List<EventHub.Models.Event>
+﻿@model List<EventHub.Models.EventViewModel>
 <div id="events">
-    @foreach (EventHub.Models.Event anEvent in Model)
+    @foreach (EventHub.Models.EventViewModel anEvent in Model)
     {
         @Html.Partial("Event", anEvent);
     }
