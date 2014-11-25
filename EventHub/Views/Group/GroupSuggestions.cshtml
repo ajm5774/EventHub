@@ -1,26 +1,15 @@
 ﻿@model EventHub.Models.GroupSuggestionsViewModel
 
 <div>
-    <div>
-        <h3>Suggested groups For:</h3>
-        <h4>@Model.School.Name</h4>
-    </div>
-
-    @*<div class="col-md-12">
-        <form class="navbar-form navbar-left" role="search">
-            <input type="text" class="col-md-8" placeholder="Search">
-            <button type="submit" class="btn btn-default col-md-4">Submit</button>
-        </form>
-    </div>
-    <br />*@
-    <div>
-        @foreach (var group in Model.Groups)
+    @if (Model.Groups.Count > 0)
+    {
+        foreach (var group in Model.Groups)
         {
             <div class="group">
                 @using (Html.BeginForm("Add", "Group", FormMethod.Post))
                 {
                     <img src="@group.PicturePath" class="pictureBorder" width="40" height="40" />
-           
+
                     @Html.ActionLink(@group.Name, "Details", "Group", new { id = @group.Id }, htmlAttributes: new { })
                     @Html.AntiForgeryToken()
                     @Html.Hidden("GroupId", @group.Id, new { @class = "form-control commentTextArea" })
@@ -29,7 +18,12 @@
                 }
             </div>
         }
-    </div>
-    @*Html.ActionLink("+ New Group", "Create", "Group", routeValues: null, htmlAttributes: new { })*@
+    }
+    else
+    {
+        <h4>No Suggestions</h4>
+    }
+    
 
 </div>
+

@@ -121,6 +121,48 @@ namespace EventHub.Controllers
             return PartialView(new GroupSuggestionsViewModel() { Groups = Groups, School = school });
         }
 
+
+        [Authorize]
+        public PartialViewResult GroupSearch(string searchTerm)
+        {
+            var user = userManager.FindById(User.Identity.GetUserId());
+            var school = db.Schools.Where(s => s.Id == user.SchoolId).Single();
+            List<Group> Groups = new List<Group>();
+            List<Group> temp = new List<Group>(school.Groups.Where(s => s.Name.Contains(searchTerm)));
+            int index = 0;
+            //remove groups that the user is already subscribed to
+            foreach (GroupSubscription gs in user.GroupSubscriptions)
+            {
+                bool subscribed = false;
+                foreach (Group g in temp)
+                {
+                    if (g.Id == gs.GroupId)
+                    {
+                        index = temp.IndexOf(g);
+                        subscribed = true;
+                        break;
+                    }
+                }
+                if (subscribed)
+                {
+                    temp.RemoveAt(index);
+                }
+            }
+            //if suggested groups is still more than 10, limit it
+            if (temp.Count > 10)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Groups.Add(temp.ElementAt(i));
+                }
+            }
+            else
+            {
+                Groups = temp;
+            }
+            return PartialView(new GroupSuggestionsViewModel() { Groups = Groups, School = school });
+        }
+
         [Authorize]
         public ActionResult Add(FormCollection collection)
         {

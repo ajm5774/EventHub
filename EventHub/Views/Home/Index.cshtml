@@ -25,7 +25,23 @@
     </div>
 
     <div id="GroupSuggestions" class="groupList col-md-3" >
-        @{Html.RenderAction("GroupSuggestions", "Group");}
+        <div>
+            <h3>Suggested groups For:</h3>
+            <h4>@Model.School.Name</h4>
+        </div>
+
+        <div class="col-md-12">
+            <form class="navbar-form navbar-left" role="search">
+                <input id="searchBar" type="text" class="col-md-8" placeholder="Search">
+                <button onclick="SearchGroups()" class="btn btn-default col-md-4">Search</button>
+            </form>
+        </div>
+        <br />
+        <br />
+        <div id="suggestionList" class="group">
+            @{Html.RenderAction("GroupSuggestions", "Group");}
+        </div>
+             
     </div>
 
     <div id="CreateGroupDialog" title="Create New Group">
@@ -44,6 +60,21 @@
             height: 500,
             width: 750
         });
+
+        function SearchGroups() {
+            var searchValue = $("#searchBar").val();
+           // $("#suggestionList").html(Html.Action("GroupSearch", "Group", new {searchTerm = searchValue}));
+            $.ajax({
+                url: '/Group/GroupSearch?searchTerm=' + searchValue,
+                contentType: 'Application/html; charset=utf-8',
+                type: 'Get',
+                dataType: 'html'
+            }).success(function (result) {
+                $("#suggestionList").html(result);
+            });
+
+            groupDialog.dialog("open");
+        }
 
         function CreateGroupDialog() {
             $.ajax({

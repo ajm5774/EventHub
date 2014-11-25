@@ -12,5 +12,6 @@ namespace EventHub.Models
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string UserId { get; set; }
+        public School School { get; set; }
     }
 }

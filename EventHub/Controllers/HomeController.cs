@@ -23,7 +23,7 @@ namespace EventHub.Controllers
         public ActionResult Index()
         {
             var user = userManager.FindById(User.Identity.GetUserId());
-            return View(new IndexViewModel() { PicturePath = user.PicturePath, UserName = user.UserName, FirstName = user.FirstName, LastName = user.LastName, UserId = User.Identity.GetUserId() });
+            return View(new IndexViewModel() { PicturePath = user.PicturePath, UserName = user.UserName, FirstName = user.FirstName, LastName = user.LastName, UserId = User.Identity.GetUserId(), School = user.School });
         }
 
         public ActionResult About()
