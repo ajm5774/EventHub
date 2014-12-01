@@ -22,7 +22,9 @@
 
     <div id="EventFeed" class=" col-md-6">
         <div id="events">
-            @{Html.RenderAction("EventFeed", "Event");}
+        </div>
+        <div id="noEvents" style="display: none;">
+            <h4>There are no events. Subscribe to a group to see their events!</h4>
         </div>
         <div id="loadingDiv" style="display: none;">
             <center>
@@ -61,6 +63,7 @@
 @section scripts
 {
     <script type="text/javascript">
+
         var groupDialog = $("#CreateGroupDialog").dialog({
             autoOpen: false,
             height: 500,
@@ -69,7 +72,7 @@
 
         function SearchGroups() {
             var searchValue = $("#searchBar").val();
-           // $("#suggestionList").html(Html.Action("GroupSearch", "Group", new {searchTerm = searchValue}));
+            // $("#suggestionList").html(Html.Action("GroupSearch", "Group", new {searchTerm = searchValue}));
             $.ajax({
                 url: '/Group/GroupSearch?searchTerm=' + searchValue,
                 contentType: 'Application/html; charset=utf-8',
@@ -107,28 +110,37 @@
 
 
         //--------infinite scroll---------
-        var BlockNumber = 2;  //Infinite Scroll starts from second block
+        var BlockNumber = 1;  //Infinite Scroll starts from second block
         var NoMoreData = false;
         var inProgress = false;
-        $("#loadingDiv").hide();
-        $(window).scroll(function () {
-            if ($(window).scrollTop() == $(document).height() - 
-            $(window).height() && !NoMoreData && !inProgress) {
 
-                inProgress = true;
-                $("#loadingDiv").show();
-            
-                $.post("@Url.Action("EventFeed", 
-                "Event")", { "BlockNumber": BlockNumber },
+        $(document).ready(function () { loadEvents(); });
+
+        function loadEvents() {
+            inProgress = true;
+            $("#loadingDiv").show();
+
+            $.post("@Url.Action("EventFeed",
+                        "Event")", { "BlockNumber": BlockNumber },
                 function (data) {
-                    if (String(data).trim() == "")
+                    if (String(data).trim() == "") {
                         NoMoreData = true;
+                        if(BlockNumber == 1)
+                            $("#noEvents").show();
+                    }
                     console.log(String(data));
                     BlockNumber++;
                     $("#events").append(data);
                     $("#loadingDiv").hide();
                     inProgress = false;
                 });
+        }
+
+        $("#loadingDiv").hide();
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() -
+            $(window).height() && !NoMoreData && !inProgress) {
+                loadEvents();
             }
         });
     </script>
