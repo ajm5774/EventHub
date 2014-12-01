@@ -7,16 +7,19 @@
 
 <div >
     <div class="col-md-3">
-        <img src="@Model.PicturePath" class="mainPicture"/>
-        <div class="pull-right">
-            <button onclick="UploadImageDialog()" class="btn btn-default">Change Picture</button>
+        <div id="profile-pic" class="row">
+            <div class="text-center">
+                <img src="@Model.PicturePath" class="mainPicture"/>
+                <br />
+                <button onclick="UploadImageDialog()" id="upload-img-btn"class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> change picture</button>
+            </div>
         </div>
-        <br />
-        <br />
-        <button onclick="CreateGroupDialog()" class="btn btn-default">Create New Group</button>
+        <div class="row">
+            <button onclick="CreateGroupDialog()" class="btn btn-default">Create New Group</button>
         
-        <div class="groupList">
-            @{Html.RenderAction("MyGroups", "Group");}
+            <div class="groupList">
+                @{Html.RenderAction("MyGroups", "Group");}
+            </div>
         </div>
     </div>
 

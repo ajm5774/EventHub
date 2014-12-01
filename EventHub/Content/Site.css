@@ -9,12 +9,13 @@
     padding-left: 15px;
     padding-right: 15px;
 }
-.navbar{
-
-}
 a{
-    color:#999C97;
+    color:#AFB3A8;
 }
+.btn-default{
+    background-color:#C7DBA4;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -113,7 +114,14 @@ input[type="checkbox"].input-validation-error {
 .valign{
     vertical-align:middle;
 }
-
+#profile-pic{
+    background-color:#ffffff;
+    margin-top:10px;
+    padding:25px;
+}
+#upload-img-btn{
+  
+}
 .groupPicture{
 
 }
