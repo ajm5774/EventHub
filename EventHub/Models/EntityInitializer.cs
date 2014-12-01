@@ -45,13 +45,6 @@ namespace EventHub.Models
                         Title = "Rock Climbing Trip",
                         Description = "We are going rock climbing at some awesome place, join us!" },
                     new Event() {
-                        Id = 2,
-                        DateTime = DateTime.Now.AddDays(-10),
-                        GroupId = 2,
-                        Place = "Clark Gym",
-                        Title = "Dodgeball Tournament",
-                        Description = "This tourny is gonna be awesome. Have teams of 6 register an hour before the event!" },
-                    new Event() {
                         Id = 3,
                         DateTime = DateTime.Now.AddDays(10),
                         GroupId = 1,
@@ -66,7 +59,7 @@ namespace EventHub.Models
                     events.Add(new Event()
                     {
                         Id = id+3,
-                        DateTime = DateTime.Now.AddDays(id),
+                        DateTime = DateTime.Now.AddDays(id - 12),
                         GroupId = 2,
                         Place = "Clark Gym 1",
                         Title = "Dodgeball Tournament " + id,

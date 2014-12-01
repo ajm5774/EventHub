@@ -51,37 +51,6 @@ namespace EventHub.Controllers
             return PartialView(events);
         }
 
-        //[Authorize]
-        //public PartialViewResult EventFeed(int BlockNumber = 1, int BlockSize = 5)
-        //{
-        //    var id = User.Identity.GetUserId();
-        //    int startIndex = (BlockNumber - 1) * BlockSize;
-
-        //    var eventGroups = from gs in db.GroupSubscriptions.Where(s => s.AspNetUserId == id).ToList()
-        //                     join g in db.Groups on gs.GroupId equals g.Id
-        //                     select new
-        //                     {
-        //                         Events = g.Events
-        //                     };
-        //    var eventGroupsList = eventGroups.ToList();
-
-        //    List<EventViewModel> events = new List<EventViewModel>();
-        //    bool receiveNotifications;
-        //    UserEventNotification userEventNotification;
-        //    foreach (var anEvent in db.Events.OrderBy(e => e.DateTime).Skip(startIndex).Take(BlockSize).ToList())
-        //    {
-        //        userEventNotification = anEvent.UserEventNotifications.Where( uen => uen.AspNetUsersId == id).FirstOrDefault();
-        //        receiveNotifications = userEventNotification == null? true : userEventNotification.AllowNotifications;
-
-        //        events.Add(new EventViewModel()
-        //        {
-        //            AnEvent = anEvent,
-        //            ReceiveNotifications = receiveNotifications
-        //        });
-        //    }
-        //    return PartialView(events);
-        //}
-
         public PartialViewResult GroupEventFeed(int id)
         {
             var userid = User.Identity.GetUserId();
@@ -101,8 +70,9 @@ namespace EventHub.Controllers
             return PartialView(events);
         }
 
-        public PartialViewResult GroupEventFeedPast(int id)
+        public PartialViewResult GroupEventFeedPast(int id, int BlockNumber = 1, int BlockSize = 5)
         {
+            int startIndex = (BlockNumber - 1) * BlockSize;
             var userid = User.Identity.GetUserId();
             List<EventViewModel> events = new List<EventViewModel>();
 
@@ -115,7 +85,7 @@ namespace EventHub.Controllers
                 receiveNotifications = userEventNotification == null ? true : userEventNotification.AllowNotifications;
                 events.Add(new EventViewModel() { AnEvent = anEvent, ReceiveNotifications = receiveNotifications });
             }
-            events = events.OrderByDescending(e => e.AnEvent.DateTime).ToList();
+            events = events.OrderByDescending(e => e.AnEvent.DateTime).Skip(startIndex).Take(BlockSize).ToList();
             return PartialView(events);
         }
 
