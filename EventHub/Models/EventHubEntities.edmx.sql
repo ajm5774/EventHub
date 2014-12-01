@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/20/2014 09:48:08
+-- Date Created: 12/01/2014 11:45:09
 -- Generated from EDMX file: C:\Users\Andrew\Source\Repos\EventHub\EventHub\Models\EventHubEntities.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [aspnet-EventHub-20141011031737];
+USE [aspnet-EventHub-20141011031738];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -17,11 +17,23 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserClaims] DROP CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id];
+IF OBJECT_ID(N'[dbo].[FK_AspNetRoleAspNetUserRoles]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetRoleAspNetUserRoles];
 GO
-IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserLogins] DROP CONSTRAINT [FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId];
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserAdminRequest]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AdminRequests] DROP CONSTRAINT [FK_AspNetUserAdminRequest];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserAspNetUserRoles]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserAspNetUserRoles];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserComment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_AspNetUserComment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserEventUserReply]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[EventUserReplies] DROP CONSTRAINT [FK_AspNetUserEventUserReply];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AspNetUserNotification]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUserNotification];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersNotifications1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUsersNotifications1];
@@ -35,6 +47,15 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_AspNetUsersUserEventNotifications]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserEventNotifications] DROP CONSTRAINT [FK_AspNetUsersUserEventNotifications];
 GO
+IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserClaims] DROP CONSTRAINT [FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id];
+GO
+IF OBJECT_ID(N'[dbo].[FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AspNetUserLogins] DROP CONSTRAINT [FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId];
+GO
+IF OBJECT_ID(N'[dbo].[FK_EventEventUserReply]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[EventUserReplies] DROP CONSTRAINT [FK_EventEventUserReply];
+GO
 IF OBJECT_ID(N'[dbo].[FK_EventsComments]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_EventsComments];
 GO
@@ -44,38 +65,26 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_EventsUserEventNotifications]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserEventNotifications] DROP CONSTRAINT [FK_EventsUserEventNotifications];
 GO
+IF OBJECT_ID(N'[dbo].[FK_GroupAdminRequest]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AdminRequests] DROP CONSTRAINT [FK_GroupAdminRequest];
+GO
 IF OBJECT_ID(N'[dbo].[FK_GroupsEvents]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Events] DROP CONSTRAINT [FK_GroupsEvents];
 GO
 IF OBJECT_ID(N'[dbo].[FK_GroupsSubscribers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[GroupSubscriptions] DROP CONSTRAINT [FK_GroupsSubscribers];
 GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserComment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Comments] DROP CONSTRAINT [FK_AspNetUserComment];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserNotification]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Notifications] DROP CONSTRAINT [FK_AspNetUserNotification];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetRoleAspNetUserRoles]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetRoleAspNetUserRoles];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserAspNetUserRoles]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[AspNetUserRoles] DROP CONSTRAINT [FK_AspNetUserAspNetUserRoles];
-GO
 IF OBJECT_ID(N'[dbo].[FK_SchoolGroup]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Groups] DROP CONSTRAINT [FK_SchoolGroup];
-GO
-IF OBJECT_ID(N'[dbo].[FK_AspNetUserEventUserReply]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EventUserReplies] DROP CONSTRAINT [FK_AspNetUserEventUserReply];
-GO
-IF OBJECT_ID(N'[dbo].[FK_EventEventUserReply]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EventUserReplies] DROP CONSTRAINT [FK_EventEventUserReply];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[AdminRequests]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AdminRequests];
+GO
 IF OBJECT_ID(N'[dbo].[AspNetRoles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetRoles];
 GO
@@ -84,6 +93,9 @@ IF OBJECT_ID(N'[dbo].[AspNetUserClaims]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[AspNetUserLogins]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUserLogins];
+GO
+IF OBJECT_ID(N'[dbo].[AspNetUserRoles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AspNetUserRoles];
 GO
 IF OBJECT_ID(N'[dbo].[AspNetUsers]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUsers];
@@ -100,6 +112,9 @@ GO
 IF OBJECT_ID(N'[dbo].[Events]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Events];
 GO
+IF OBJECT_ID(N'[dbo].[EventUserReplies]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EventUserReplies];
+GO
 IF OBJECT_ID(N'[dbo].[Groups]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Groups];
 GO
@@ -114,12 +129,6 @@ IF OBJECT_ID(N'[dbo].[Schools]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[UserEventNotifications]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserEventNotifications];
-GO
-IF OBJECT_ID(N'[dbo].[AspNetUserRoles]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[AspNetUserRoles];
-GO
-IF OBJECT_ID(N'[dbo].[EventUserReplies]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[EventUserReplies];
 GO
 
 -- --------------------------------------------------
@@ -264,6 +273,14 @@ CREATE TABLE [dbo].[EventUserReplies] (
 );
 GO
 
+-- Creating table 'AdminRequests'
+CREATE TABLE [dbo].[AdminRequests] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [AspNetUserId] nvarchar(128)  NOT NULL,
+    [GroupId] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -355,6 +372,12 @@ GO
 -- Creating primary key on [Id] in table 'EventUserReplies'
 ALTER TABLE [dbo].[EventUserReplies]
 ADD CONSTRAINT [PK_EventUserReplies]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'AdminRequests'
+ALTER TABLE [dbo].[AdminRequests]
+ADD CONSTRAINT [PK_AdminRequests]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -624,6 +647,36 @@ GO
 CREATE INDEX [IX_FK_EventEventUserReply]
 ON [dbo].[EventUserReplies]
     ([EventId]);
+GO
+
+-- Creating foreign key on [AspNetUserId] in table 'AdminRequests'
+ALTER TABLE [dbo].[AdminRequests]
+ADD CONSTRAINT [FK_AspNetUserAdminRequest]
+    FOREIGN KEY ([AspNetUserId])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserAdminRequest'
+CREATE INDEX [IX_FK_AspNetUserAdminRequest]
+ON [dbo].[AdminRequests]
+    ([AspNetUserId]);
+GO
+
+-- Creating foreign key on [GroupId] in table 'AdminRequests'
+ALTER TABLE [dbo].[AdminRequests]
+ADD CONSTRAINT [FK_GroupAdminRequest]
+    FOREIGN KEY ([GroupId])
+    REFERENCES [dbo].[Groups]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_GroupAdminRequest'
+CREATE INDEX [IX_FK_GroupAdminRequest]
+ON [dbo].[AdminRequests]
+    ([GroupId]);
 GO
 
 -- --------------------------------------------------

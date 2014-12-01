@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8531273ad3b84438975ed3a88a578a8d" Name="Diagram1" ZoomLevel="74">
+      <Diagram DiagramId="8531273ad3b84438975ed3a88a578a8d" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="Model.AspNetRole" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.AspNetUserClaim" Width="1.875" PointX="3.125" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.AspNetUserLogin" Width="1.75" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.AspNetUserLogin" Width="1.75" PointX="2.75" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.AspNetUser" Width="1.875" PointX="5.875" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.C__MigrationHistory" Width="1.5" PointX="1.125" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Comment" Width="1.5" PointX="10.625" PointY="8" IsExpanded="true" />
@@ -45,6 +45,9 @@
         <EntityTypeShape EntityType="Model.EventUserReply" Width="1.5" PointX="8.5" PointY="1" />
         <AssociationConnector Association="Model.AspNetUserEventUserReply" />
         <AssociationConnector Association="Model.EventEventUserReply" />
+        <EntityTypeShape EntityType="Model.AdminRequest" Width="1.5" PointX="3" PointY="2.5" />
+        <AssociationConnector Association="Model.AspNetUserAdminRequest" />
+        <AssociationConnector Association="Model.GroupAdminRequest" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

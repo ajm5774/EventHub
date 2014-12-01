@@ -40,5 +40,6 @@ namespace EventHub.Models
         public virtual DbSet<UserEventNotification> UserEventNotifications { get; set; }
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<EventUserReply> EventUserReplies { get; set; }
+        public virtual DbSet<AdminRequest> AdminRequests { get; set; }
     }
 }

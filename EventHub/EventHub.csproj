@@ -193,6 +193,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AdminRequest.cs">
+      <DependentUpon>EvenutHubEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>EvenutHubEntities.tt</DependentUpon>
     </Compile>
@@ -308,7 +311,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Models\EventHubEntities.edmx.sql" />
-    <Content Include="Models\EvenutHubEntities.edmx.sql" />
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
