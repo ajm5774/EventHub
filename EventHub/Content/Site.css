@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color:#DCE0AC;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -8,7 +9,12 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+.navbar{
 
+}
+a{
+    color:#999C97;
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -45,7 +51,6 @@ input[type="checkbox"].input-validation-error {
 }
 .notification{
     margin:2px;
-    border-radius:4px;
     padding:2px;
     background-color:#FFFFFF;
 }
@@ -57,13 +62,11 @@ input[type="checkbox"].input-validation-error {
     margin:5px 0;
 }
 .event-info{
-    background-color:#D3E8D8;
-    border-radius:10px;
-    padding:8px;
+    background-color:#ffffff;
+    padding:20px;
 }
 
 .comments{
-    padding: 5px;
     border-radius:5px;
 }
 .comment{
@@ -89,8 +92,7 @@ input[type="checkbox"].input-validation-error {
 
 .groupList{
     margin-top:10px;
-    background-color:#D3E8D8;
-    border-radius:10px;
+    background-color:#ffffff;
     padding:5px;
 }
 
