@@ -12,6 +12,9 @@
 a{
     color:#AFB3A8;
 }
+h1,h2,h3{
+    color:#ffffff;
+}
 .btn-primary{
     background-color:#C7DBA4;
     border:0px;
@@ -50,7 +53,9 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
-
+#greeting{
+    color:#ffffff;
+}
 #NotificationFeed{
     background-color:#D3E8D8;
 }
@@ -102,7 +107,7 @@ input[type="checkbox"].input-validation-error {
 }
 
 .groupList{
-    
+    background-color:#FDFDFD;
 }
 
 .group{
@@ -114,6 +119,17 @@ input[type="checkbox"].input-validation-error {
     min-height: 60px;
     background-color:white;
     border-bottom:1px solid #C7DBA4;
+}
+
+.group-details{
+    background-color:#ffffff;
+    margin-top:65px;
+    padding:20px;
+}
+.group-details-actions{
+    background-color:#ffffff;
+    padding:5px;
+    margin-top:65px;
 }
 .group >form > input{
     margin-right: 10px;
