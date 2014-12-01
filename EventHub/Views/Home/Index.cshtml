@@ -11,16 +11,17 @@
             <div class="text-center">
                 <img src="@Model.PicturePath" class="mainPicture"/>
                 <br />
-                <button onclick="UploadImageDialog()" id="upload-img-btn"class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> change picture</button>
+                <button onclick="UploadImageDialog()" id="upload-img-btn"class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> change picture</button>
             </div>
         </div>
-        <div class="row">
-            <button onclick="CreateGroupDialog()" class="btn btn-default">Create New Group</button>
-        
+        <div class="row groups">
             <div class="groupList">
                 @{Html.RenderAction("MyGroups", "Group");}
             </div>
-        </div>
+            <div class="row text-center">
+                <button onclick="CreateGroupDialog()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create New Group</button>
+            </div>
+         </div>
     </div>
 
     <div id="EventFeed" class=" col-md-6">
