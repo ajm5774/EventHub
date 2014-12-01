@@ -21,9 +21,15 @@
     </div>
 
     <div id="EventFeed" class=" col-md-6">
-        @{Html.RenderAction("EventFeed", "Event");}
+        <div id="events">
+            @{Html.RenderAction("EventFeed", "Event");}
+        </div>
+        <div id="loadingDiv" style="display: none;">
+            <center>
+                <img alt="Loading" src="@Url.Content("~/Content/Images/ajax-loader.gif")" height="75" width="75" />
+            </center>
+        </div>
     </div>
-
     <div id="GroupSuggestions" class="groupList col-md-3" >
         <div>
             <h3>Suggested groups For:</h3>
@@ -99,57 +105,31 @@
             uploadImageDialog.dialog("open");
         }
 
-        //var userDialog = $("#UserInfoDialog").dialog({
-        //    autoOpen: false,
-        //    height: 500,
-        //    width: 750
-        //});
 
-        @*function UserInfoDialog() {
-            $.ajax({
-                url: '/User/Details?id=@Model.UserId',
-                contentType: 'Application/html; charset=utf-8',
-                type: 'Get',
-                dataType: 'html'
-            }).success(function (result) {
-                $("#UserInfoDialog").html(result);
-            });
+        //--------infinite scroll---------
+        var BlockNumber = 2;  //Infinite Scroll starts from second block
+        var NoMoreData = false;
+        var inProgress = false;
+        $("#loadingDiv").hide();
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - 
+            $(window).height() && !NoMoreData && !inProgress) {
 
-            userDialog.dialog("open");
-        }*@
+                inProgress = true;
+                $("#loadingDiv").show();
+            
+                $.post("@Url.Action("EventFeed", 
+                "Event")", { "BlockNumber": BlockNumber },
+                function (data) {
+                    if (String(data).trim() == "")
+                        NoMoreData = true;
+                    console.log(String(data));
+                    BlockNumber++;
+                    $("#events").append(data);
+                    $("#loadingDiv").hide();
+                    inProgress = false;
+                });
+            }
+        });
     </script>
 }
-@*@section scripts
-{
-    <script type="text/javascript">
-        //refresh the eventfeed every 20 seconds
-        $(document).ready(function () {
-            LoadFeed();
-            setInterval(LoadFeed, 20000);
-
-            LoadGroupSuggestions();
-            setInterval(LoadGroupSuggestions, 60000);
-        });
-
-        function LoadFeed() {
-            $.ajax({
-                url: '/Event/EventFeed',
-                contentType: 'Application/html; charset=utf-8',
-                type: 'Get',
-                dataType: 'html'
-            }).success(function (result) {
-                $("#EventFeed").html(result);
-            });
-        }
-
-        function LoadGroupSuggestions() {
-            $.ajax({
-                url: '/Group/GroupSuggestions',
-                contentType: 'Application/html; charset=utf-8',
-                type: 'Get',
-                dataType: 'html'
-            }).success(function (result) {
-                $("#GroupSuggestions").html(result);
-            });
-        }
-    </script>}*@
