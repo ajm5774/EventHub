@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using EventHub.Models;
 using System.IO;
+using System.Data.Entity;
 
 namespace EventHub.Controllers
 {
@@ -313,19 +314,24 @@ namespace EventHub.Controllers
         //
         // Post: /Account/ChangeInfo
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ChangeInfo(ChangeInfoModel model)
+        public async Task<ActionResult> ChangeInfo(ChangeInfoModel model)
         {
             string userID = User.Identity.GetUserId();
             if (ModelState.IsValid)
             {
                 try
                 {
-                    AspNetUser u = db.AspNetUsers.Where(z => z.Id == userID).Single();
-                    u.UserName = model.UserName;
-                    u.SchoolId = model.SelectedSchoolId;
-                    db.SaveChanges();
-                    return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+                    var res = await UserManager.FindByIdAsync(userID);
+                    res.UserName = model.UserName;
+                    res.SchoolId = model.SelectedSchoolId;
+                    var result = await UserManager.UpdateAsync(res);
+
+                    if (!result.Succeeded)
+                    {
+                        AddErrors(result);
+                    }
+
+                    return RedirectToAction("Manage");
                 }
                 catch
                 {

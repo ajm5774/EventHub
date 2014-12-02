@@ -15,11 +15,9 @@
         </div>
     </div>
     <div class="form-group">
-        <div class = "col-md-2 control-label">
-            School
-        </div>
+        <label class="col-md-2 control-label">School</label>
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.SelectedSchoolId, new SelectList(Model.Schools, "Id", "Name"))
+            @Html.DropDownListFor(m => m.SelectedSchoolId, new SelectList(Model.Schools, "Id", "Name"), new { @class = "form-control" })
         </div>
     </div>
     
