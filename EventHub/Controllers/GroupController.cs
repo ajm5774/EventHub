@@ -1,4 +1,5 @@
 ﻿using EventHub.Models;
+using EventHub.Models.ViewModels.Group;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -48,8 +49,11 @@ namespace EventHub.Controllers
         // GET:  Group/Details/5
         public ActionResult Details(int id)
         {
+            var user = userManager.FindById(User.Identity.GetUserId());
             var group = db.Groups.Where(i => i.Id == id).Single();
-            return View(group);
+            var requests = db.AdminRequests.Where(r => r.GroupId == id).ToList();
+
+            return View(new GroupDetailsViewModel() { Group = group, AdminRequests = requests, ViewingUserId = user.Id });
         }
 
         [Authorize]

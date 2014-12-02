@@ -1,30 +1,61 @@
-﻿@model EventHub.Models.Group
+﻿@model EventHub.Models.GroupDetailsViewModel
 
 
 
 <div>
     <div class="group-details col-md-3" >
         
-        <h4 class="text-center">@Html.DisplayFor(model => model.Name)</h4>
+        <h4 class="text-center">@Html.DisplayFor(model => model.Group.Name)</h4>
 
-        <img src="@Model.PicturePath" class="pull-left mainPicture"  />
+        <img src="@Model.Group.PicturePath" class="pull-left mainPicture"  />
         <br />
 
         @{bool isAdmin = false;
-            foreach(EventHub.Models.GroupSubscription gsub in Model.GroupSubscriptions)
+          bool permRequested = false;
+            foreach(EventHub.Models.GroupSubscription gsub in Model.Group.GroupSubscriptions)
             {
                 if(gsub.AspNetUser.UserName == User.Identity.Name && gsub.IsAdministrator == true)
                 {
                     isAdmin = true;
+                    break;
 
                 }
+                else
+                {
+                    foreach (EventHub.Models.AdminRequest req in Model.AdminRequests)
+                    {
+                        if (req.AspNetUserId == Model.ViewingUserId)
+                        {
+                            permRequested = true;
+                            break;
+                        }
+                    }
+                    break;
+                }
             }
+            
         }
 
         @if (isAdmin == true)
         {
             <button onclick="UploadImageDialog()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Change Picture</button>
             <br/>
+            <button onclick="AdminRequestsDialog()" class="btn btn-default">View Admin Requests</button>
+            <br />
+        }
+        else
+        {
+            if (permRequested == false)
+            {
+                <button onclick="AdminRequest()" class="btn btn-default">Request Admin Permissions</button>
+                <br />
+            }
+            else
+            {
+                <button class="btn btn-default">Admin Permissions Requested</button>
+                <br />
+            }
+
         }
         
         <br />
@@ -32,7 +63,7 @@
         <div class="groupList">
             <p>
                 <strong>Description </strong>
-                @Html.DisplayFor(model => model.Description)
+                @Html.DisplayFor(model => model.Group.Description)
             </p>
         </div>
 
@@ -77,8 +108,8 @@
     @if (isAdmin == true)
     {
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Group.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Group.Id }) |
             @Html.ActionLink("Back to List", "Index")
         </p>
     }
@@ -92,7 +123,7 @@
 <div id="CreateEventDialog" title="Create New Event">
 </div>
 <div id="UploadImageDialog" title="Upload Account Picture">
-    @Html.Partial("UploadPicture", new EventHub.Models.UploadViewModel() { AllowMultiple = false, Action = "UploadPicture", Controller = "Group", id = Model.Id })
+    @Html.Partial("UploadPicture", new EventHub.Models.UploadViewModel() { AllowMultiple = false, Action = "UploadPicture", Controller = "Group", id = Model.Group.Id })
 </div>
 
 @*Move this section to the group main page once that page is created*@
@@ -107,7 +138,7 @@
 
     function CreateEventDialog() {
         $.ajax({
-            url: '/Event/Create?groupId=@Model.Id',
+            url: '/Event/Create?groupId=@Model.Group.Id',
                 contentType: 'Application/html; charset=utf-8',
                 type: 'Get',
                 dataType: 'html'
@@ -140,7 +171,7 @@
             $("#loadingDiv").show();
 
             $.post("@Url.Action("GroupEventFeedPast",
-                        "Event")", {"BlockNumber": BlockNumber, "id": @Model.Id },
+                        "Event")", {"BlockNumber": BlockNumber, "id": @Model.Group.Id },
             function (data) {
                 if (String(data).trim() == "") {
                     NoMoreData = true;

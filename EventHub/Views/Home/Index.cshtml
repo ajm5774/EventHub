@@ -80,7 +80,6 @@
 
         function SearchGroups() {
             var searchValue = $("#searchBar").val();
-            // $("#suggestionList").html(Html.Action("GroupSearch", "Group", new {searchTerm = searchValue}));
             $.ajax({
                 url: '/Group/GroupSearch?searchTerm=' + searchValue,
                 contentType: 'Application/html; charset=utf-8',

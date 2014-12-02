@@ -266,6 +266,7 @@
     </Compile>
     <Compile Include="Models\ViewModels\Accounts\SchoolListViewModel.cs" />
     <Compile Include="Models\ViewModels\Event\EventViewModels.cs" />
+    <Compile Include="Models\ViewModels\Group\GroupDetailsViewModel.cs" />
     <Compile Include="Models\ViewModels\Group\EditGroupViewModel.cs" />
     <Compile Include="Models\ViewModels\Group\GroupSuggestionsViewModel.cs" />
     <Compile Include="Models\ViewModels\UploadViewModel.cs" />
