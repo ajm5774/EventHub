@@ -3,21 +3,25 @@
     ViewBag.Title = "Home Page";
 }
 
-<h2>Hello @Model.FirstName @Model.LastName!</h2>
+<h2 id="greeting" class="text-center" >Welcome Back @Model.FirstName @Model.LastName!</h2>
 
 <div >
     <div class="col-md-3">
-        <img src="@Model.PicturePath" class="mainPicture"/>
-        <div class="pull-right">
-            <button onclick="UploadImageDialog()" class="btn btn-default">Change Picture</button>
+        <div id="profile-pic" class="row">
+            <div class="text-center">
+                <img src="@Model.PicturePath" class="mainPicture"/>
+                <br />
+                <button onclick="UploadImageDialog()" id="upload-img-btn"class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> change picture</button>
+            </div>
         </div>
-        <br />
-        <br />
-        <button onclick="CreateGroupDialog()" class="btn btn-default">Create New Group</button>
-        
-        <div class="groupList">
-            @{Html.RenderAction("MyGroups", "Group");}
-        </div>
+        <div class="row groups">
+            <div class="groupList">
+                @{Html.RenderAction("MyGroups", "Group");}
+            </div>
+            <div class="row text-center">
+                <button onclick="CreateGroupDialog()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create New Group</button>
+            </div>
+         </div>
     </div>
 
     <div id="EventFeed" class=" col-md-6">
@@ -34,14 +38,18 @@
     </div>
     <div id="GroupSuggestions" class="groupList col-md-3" >
         <div>
-            <h3>Suggested groups For:</h3>
-            <h4>@Model.School.Name</h4>
+            <h4 class="text-center">Suggested Groups</h4>
+            <h5 class="text-center">@Model.School.Name</h5>
         </div>
 
         <div class="col-md-12">
             <form class="navbar-form navbar-left" role="search">
-                <input id="searchBar" type="text" class="col-md-8" placeholder="Search">
-                <button onclick="SearchGroups()" class="btn btn-default col-md-4">Search</button>
+                <div class="col-md-8">
+                    <input id="searchBar" type="text" placeholder="Search">
+                </div>
+                <div class="col-md-4">
+                    <button onclick="SearchGroups()" id="search-groups-btn" class="btn btn-primary">Search</button>
+                </div>
             </form>
         </div>
         <br />
@@ -81,8 +89,6 @@
             }).success(function (result) {
                 $("#suggestionList").html(result);
             });
-
-            groupDialog.dialog("open");
         }
 
         function CreateGroupDialog() {
