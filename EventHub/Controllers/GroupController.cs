@@ -131,7 +131,7 @@ namespace EventHub.Controllers
             var user = userManager.FindById(User.Identity.GetUserId());
             var school = db.Schools.Where(s => s.Id == user.SchoolId).Single();
             List<Group> Groups = new List<Group>();
-            List<Group> temp = new List<Group>(school.Groups.Where(s => s.Name.Contains(searchTerm)));
+            List<Group> temp = new List<Group>(school.Groups.Where(s => (s.Name.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0)));
             int index = 0;
             //remove groups that the user is already subscribed to
             foreach (GroupSubscription gs in user.GroupSubscriptions)
