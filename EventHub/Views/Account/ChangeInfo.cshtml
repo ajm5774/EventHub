@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNet.Identity
+@model EventHub.Models.ChangeInfoModel
+
+
+@using (Html.BeginForm("ChangeInfo", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Change User Information</h4>
+    <hr />
+    @Html.ValidationSummary()
+    <div class="form-group">
+        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control"})
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">School</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.SelectedSchoolId, new SelectList(Model.Schools, "Id", "Name"), new { @class = "form-control" })
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Change Info" />
+        </div>
+    </div>
+}

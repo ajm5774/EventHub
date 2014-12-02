@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using EventHub.Models;
 using System.IO;
+using System.Data.Entity;
 
 namespace EventHub.Controllers
 {
@@ -290,6 +291,54 @@ namespace EventHub.Controllers
                 return RedirectToAction("Manage");
             }
             return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+        }
+
+        public ActionResult ChangeInfo()
+        {
+            List<School> schoolList = (from data in db.Schools select data).ToList();
+
+            List<SchoolListViewModel> sList = new List<SchoolListViewModel>();
+            foreach (School s in schoolList)
+            {
+                SchoolListViewModel model = new SchoolListViewModel();
+                model.Id = s.Id;
+                model.Name = s.Name;
+                sList.Add(model);
+            }
+            ChangeInfoModel CIM = new ChangeInfoModel();
+            CIM.Schools = sList;
+            CIM.UserName = User.Identity.GetUserName();
+            return View(CIM);
+        }
+
+        //
+        // Post: /Account/ChangeInfo
+        [HttpPost]
+        public async Task<ActionResult> ChangeInfo(ChangeInfoModel model)
+        {
+            string userID = User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var res = await UserManager.FindByIdAsync(userID);
+                    res.UserName = model.UserName;
+                    res.SchoolId = model.SelectedSchoolId;
+                    var result = await UserManager.UpdateAsync(res);
+
+                    if (!result.Succeeded)
+                    {
+                        AddErrors(result);
+                    }
+
+                    return RedirectToAction("Manage");
+                }
+                catch
+                {
+                    return View(model);
+                }
+            }
+            return View(model);
         }
 
         //
