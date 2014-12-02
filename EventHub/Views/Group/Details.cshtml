@@ -47,12 +47,12 @@
         {
             if (permRequested == false)
             {
-                <button onclick="AdminRequest()" class="btn btn-default">Request Admin Permissions</button>
+                <button id="adminButton" onclick="AdminRequest()" class="btn btn-default">Request Admin Permissions</button>
                 <br />
             }
             else
             {
-                <button class="btn btn-default">Admin Permissions Requested</button>
+                <button id="adminButton" class="btn btn-default">Admin Permissions Requested</button>
                 <br />
             }
 
@@ -122,6 +122,8 @@
 </div>
 <div id="CreateEventDialog" title="Create New Event">
 </div>
+<div id="AdminRequestDialog" title="Admin Requests">
+</div>
 <div id="UploadImageDialog" title="Upload Account Picture">
     @Html.Partial("UploadPicture", new EventHub.Models.UploadViewModel() { AllowMultiple = false, Action = "UploadPicture", Controller = "Group", id = Model.Group.Id })
 </div>
@@ -136,6 +138,17 @@
         width: 500
     });
 
+    function AdminRequest(){
+        $.ajax({
+            url: '/Group/AdminRequest?groupId=@Model.Group.Id?userId=@Model.ViewingUserId',
+            contentType: 'Application/html; charset=utf-8',
+            type: 'Get',
+            dataType: 'html'
+        }).success(function (result) {
+            $("#CreateEventDialog").html(result);
+        });
+    }
+
     function CreateEventDialog() {
         $.ajax({
             url: '/Event/Create?groupId=@Model.Group.Id',
@@ -147,7 +160,7 @@
             });
 
             dialog.dialog("open");
-        }
+    }
 
         var uploadImageDialog = $("#UploadImageDialog").dialog({
             autoOpen: false,

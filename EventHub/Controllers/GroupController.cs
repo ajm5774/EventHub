@@ -1,5 +1,4 @@
 ﻿using EventHub.Models;
-using EventHub.Models.ViewModels.Group;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
