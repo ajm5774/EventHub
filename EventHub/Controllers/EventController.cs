@@ -292,7 +292,7 @@ namespace EventHub.Controllers
             }
             db.SaveChanges();
             // redirect back to the index action to show the form once again
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Event", new { id = uploadModel.id });
         }
 
     }
