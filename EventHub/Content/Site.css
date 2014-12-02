@@ -1,12 +1,26 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color:#DCE0AC;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+}
+a{
+    color:#AFB3A8;
+}
+h1,h2,h3{
+    color:#ffffff;
+}
+.btn-primary{
+    background-color:#C7DBA4;
+    border:0px;
+}
+.btn-default{
+    border:1px solid #C7DBA4;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -39,13 +53,14 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
-
+#greeting{
+    color:#ffffff;
+}
 #NotificationFeed{
     background-color:#D3E8D8;
 }
 .notification{
     margin:2px;
-    border-radius:4px;
     padding:2px;
     background-color:#FFFFFF;
 }
@@ -57,13 +72,11 @@ input[type="checkbox"].input-validation-error {
     margin:5px 0;
 }
 .event-info{
-    background-color:#D3E8D8;
-    border-radius:10px;
-    padding:8px;
+    background-color:#ffffff;
+    padding:20px;
 }
 
 .comments{
-    padding: 5px;
     border-radius:5px;
 }
 .comment{
@@ -87,11 +100,18 @@ input[type="checkbox"].input-validation-error {
     max-width: 250px;
 }
 
-.groupList{
+#GroupSuggestions{
     margin-top:10px;
-    background-color:#D3E8D8;
-    border-radius:10px;
-    padding:5px;
+}
+
+.groups{
+    margin-top:10px;
+    background-color:#FDFDFD;
+    padding:25px;
+}
+
+.groupList{
+    background-color:#FDFDFD;
 }
 
 .group{
@@ -102,16 +122,36 @@ input[type="checkbox"].input-validation-error {
     margin-bottom:3px;
     min-height: 60px;
     background-color:white;
+    border-bottom:1px solid #C7DBA4;
+}
+
+.group-details{
+    background-color:#ffffff;
+    margin-top:65px;
+    padding:20px;
+}
+.group-details-actions{
+    background-color:#ffffff;
+    padding:5px;
+    margin-top:65px;
 }
 .group >form > input{
     margin-right: 10px;
     vertical-align:middle;
 }
 
+
 .valign{
     vertical-align:middle;
 }
-
+#profile-pic{
+    background-color:#ffffff;
+    margin-top:10px;
+    padding:25px;
+}
+#search-groups-btn{
+  margin-left:5px;
+}
 .groupPicture{
 
 }

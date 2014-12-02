@@ -18,6 +18,7 @@ namespace EventHub.Models
         {
             this.Events = new HashSet<Event>();
             this.GroupSubscriptions = new HashSet<GroupSubscription>();
+            this.AdminRequests = new HashSet<AdminRequest>();
         }
     
         public int Id { get; set; }
@@ -29,5 +30,6 @@ namespace EventHub.Models
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<GroupSubscription> GroupSubscriptions { get; set; }
         public virtual School School { get; set; }
+        public virtual ICollection<AdminRequest> AdminRequests { get; set; }
     }
 }

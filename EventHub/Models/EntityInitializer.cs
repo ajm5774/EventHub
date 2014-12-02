@@ -35,7 +35,7 @@ namespace EventHub.Models
                 context.SaveChanges();
 
                 //Events
-                new List<Event>
+                List<Event> events = new List<Event>
                 {
                     new Event() {
                         Id = 1,
@@ -45,27 +45,29 @@ namespace EventHub.Models
                         Title = "Rock Climbing Trip",
                         Description = "We are going rock climbing at some awesome place, join us!" },
                     new Event() {
-                        Id = 2,
-                        DateTime = DateTime.Now.AddDays(-10),
-                        GroupId = 2,
-                        Place = "Clark Gym",
-                        Title = "Dodgeball Tournament",
-                        Description = "This tourny is gonna be awesome. Have teams of 6 register an hour before the event!" },
-                    new Event() {
                         Id = 3,
                         DateTime = DateTime.Now.AddDays(10),
                         GroupId = 1,
                         Place = "Red Barn 1",
                         Title = "Rock Climbing Trip 1",
                         Description = "We are going rock climbing at some awesome place, join us, again!" },
-                    new Event() {
-                        Id = 4,
-                        DateTime = DateTime.Now.AddDays(5),
+                };
+
+                for (int i = 0; i < 25; i++ )
+                {
+                    int id = i+1;
+                    events.Add(new Event()
+                    {
+                        Id = id+3,
+                        DateTime = DateTime.Now.AddDays(id - 12),
                         GroupId = 2,
                         Place = "Clark Gym 1",
-                        Title = "Dodgeball Tournament 1",
-                        Description = "This tourny is gonna be awesome. Have teams of 6 register an hour before the event!" },
-                }.ForEach(e => context.Events.Add(e));
+                        Title = "Dodgeball Tournament " + id,
+                        Description = "This tourny is gonna be awesome. Have teams of 6 register an hour before the event!"
+                    });
+                }
+
+                events.ForEach(e => context.Events.Add(e));
                 context.SaveChanges();
 
                 //Roles

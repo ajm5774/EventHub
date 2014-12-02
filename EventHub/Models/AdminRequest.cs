@@ -12,16 +12,13 @@ namespace EventHub.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetRole
+    public partial class AdminRequest
     {
-        public AspNetRole()
-        {
-            this.AspNetUserRoles = new HashSet<AspNetUserRoles>();
-        }
+        public int Id { get; set; }
+        public string AspNetUserId { get; set; }
+        public int GroupId { get; set; }
     
-        public string Id { get; set; }
-        public string Name { get; set; }
-    
-        public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public virtual AspNetUser Requester { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

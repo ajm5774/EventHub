@@ -1,10 +1,13 @@
 ﻿@model EventHub.Models.Group
 
-<h2>@Html.DisplayFor(model => model.Name)</h2>
+
 
 <div>
-    <div class="col-md-3">
-        <img src="@Model.PicturePath" class="mainPicture" />
+    <div class="group-details col-md-3" >
+        
+        <h4 class="text-center">@Html.DisplayFor(model => model.Name)</h4>
+
+        <img src="@Model.PicturePath" class="pull-left mainPicture"  />
         <br />
 
         @{bool isAdmin = false;
@@ -20,27 +23,49 @@
 
         @if (isAdmin == true)
         {
-            <button onclick="UploadImageDialog()" class="btn btn-default">Change Picture</button>
-            <br />
-            <br />
-            <button onclick="CreateEventDialog()" class="btn btn-default">Create Event</button>
+            <button onclick="UploadImageDialog()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Change Picture</button>
+            <br/>
         }
         
         <br />
+
         <div class="groupList">
             <p>
+                <strong>Description </strong>
                 @Html.DisplayFor(model => model.Description)
             </p>
-
         </div>
+
+        <br/>
+
+        @if (isAdmin == true)
+        {
+            <button onclick="CreateEventDialog()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Event</button>
+        }
+
+
     </div>
 
     <div id="Events" class="col-md-6">
-        <center><h3>Upcoming Events</h3></center>
-        @{Html.RenderAction("GroupEventFeed", "Event");}
-        <br />
-        <center><h3>Past Events</h3></center>
-        @{Html.RenderAction("GroupEventFeedPast", "Event");}
+        <div class="row text-center">
+            <h3>Upcoming Events</h3>
+        </div>
+
+        <div id="events">    
+            @{Html.RenderAction("GroupEventFeed", "Event");}
+            <br />
+            <center><h3>Past Events</h3></center>
+            <div id="pastEvents">
+                <div id="noEvents" style="display: none;">
+                    <h4>There are no past events.</h4>
+                </div>
+                <div id="loadingDiv" style="display: none;">
+                    <center>
+                        <img alt="Loading" src="@Url.Content("~/Content/Images/ajax-loader.gif")" height="75" width="75" />
+                    </center>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -48,22 +73,22 @@
 
     </div>
 </div>
-
-@if (isAdmin == true)
-{
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-}
-else
-{
-    <p>
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-}
-
+<div class="group-details-actions col-md-3 text-center">
+    @if (isAdmin == true)
+    {
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }
+    else
+    {
+        <p>
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }
+</div>
 <div id="CreateEventDialog" title="Create New Event">
 </div>
 <div id="UploadImageDialog" title="Upload Account Picture">
@@ -102,9 +127,41 @@ else
         function UploadImageDialog() {
             uploadImageDialog.dialog("open");
         }
-
         
+        //--------infinite scroll---------
+        var BlockNumber = 1;  //Infinite Scroll starts from second block
+        var NoMoreData = false;
+        var inProgress = false;
 
+        $(document).ready(function () { loadEvents(); });
+
+        function loadEvents() {
+            inProgress = true;
+            $("#loadingDiv").show();
+
+            $.post("@Url.Action("GroupEventFeedPast",
+                        "Event")", {"BlockNumber": BlockNumber, "id": @Model.Id },
+            function (data) {
+                if (String(data).trim() == "") {
+                    NoMoreData = true;
+                    if(BlockNumber == 1)
+                        $("#noEvents").show();
+                }
+                console.log(String(data));
+                BlockNumber++;
+                $("#pastEvents").append(data);
+                $("#loadingDiv").hide();
+                inProgress = false;
+            });
+        }
+
+        $("#loadingDiv").hide();
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() -
+            $(window).height() && !NoMoreData && !inProgress) {
+                loadEvents();
+            }
+        });
         
     </script>
 }

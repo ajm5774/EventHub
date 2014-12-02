@@ -21,6 +21,7 @@
     <EntitySet Name="UserEventNotifications" EntityType="Model.Store.UserEventNotifications" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AspNetUserRoles" EntityType="Model.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="EventUserReplies" EntityType="Model.Store.EventUserReplies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AdminRequests" EntityType="Model.Store.AdminRequests" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Model.Store.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -92,6 +93,14 @@
     <AssociationSet Name="EventEventUserReply" Association="Model.Store.EventEventUserReply">
       <End Role="Event" EntitySet="Events" />
       <End Role="EventUserReply" EntitySet="EventUserReplies" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserAdminRequest" Association="Model.Store.AspNetUserAdminRequest">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AdminRequest" EntitySet="AdminRequests" />
+    </AssociationSet>
+    <AssociationSet Name="GroupAdminRequest" Association="Model.Store.GroupAdminRequest">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="AdminRequest" EntitySet="AdminRequests" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="AspNetRoles">
@@ -234,6 +243,14 @@
     <Property Name="Reply" Type="int" Nullable="false" />
     <Property Name="AspNetUserId" Type="nvarchar" Nullable="false" MaxLength="128" />
     <Property Name="EventId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdminRequests">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AspNetUserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="GroupId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
     <End Role="AspNetUsers" Type="Model.Store.AspNetUsers" Multiplicity="1">
@@ -455,6 +472,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="AspNetUserAdminRequest">
+    <End Role="AspNetUser" Type="Model.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="AdminRequest" Type="Model.Store.AdminRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminRequest">
+        <PropertyRef Name="AspNetUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GroupAdminRequest">
+    <End Role="Group" Type="Model.Store.Groups" Multiplicity="1" />
+    <End Role="AdminRequest" Type="Model.Store.AdminRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminRequest">
+        <PropertyRef Name="GroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -509,6 +550,7 @@
           <NavigationProperty Name="Comments" Relationship="Model.AspNetUserComment" FromRole="AspNetUser" ToRole="Comment" />
           <NavigationProperty Name="AspNetUserRoles" Relationship="Model.AspNetUserAspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetUserRoles" />
           <NavigationProperty Name="EventReplies" Relationship="Model.AspNetUserEventUserReply" FromRole="AspNetUser" ToRole="EventUserReply" />
+          <NavigationProperty Name="AdminRequests" Relationship="Model.AspNetUserAdminRequest" FromRole="AspNetUser" ToRole="AdminRequest" />
         </EntityType>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -530,7 +572,7 @@
           <NavigationProperty Name="Event" Relationship="Self.FK_EventsComments" FromRole="Comments" ToRole="Events" />
           <NavigationProperty Name="AspNetUser" Relationship="Model.AspNetUserComment" FromRole="Comment" ToRole="AspNetUser" />
           <Property Name="AspNetUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="EventPicture">
           <Key>
@@ -569,6 +611,7 @@
           <NavigationProperty Name="GroupSubscriptions" Relationship="Self.FK_GroupsSubscribers" FromRole="Groups" ToRole="GroupSubscriptions" />
           <NavigationProperty Name="School" Relationship="Model.SchoolGroup" FromRole="Group" ToRole="School" />
           <Property Name="SchoolId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdminRequests" Relationship="Model.GroupAdminRequest" FromRole="Group" ToRole="AdminRequest" />
         </EntityType>
         <EntityType Name="GroupSubscription">
           <Key>
@@ -838,6 +881,15 @@
             <End Role="Event" EntitySet="Events" />
             <End Role="EventUserReply" EntitySet="EventUserReplies" />
           </AssociationSet>
+          <EntitySet Name="AdminRequests" EntityType="Model.AdminRequest" />
+          <AssociationSet Name="AspNetUserAdminRequest" Association="Model.AspNetUserAdminRequest">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AdminRequest" EntitySet="AdminRequests" />
+          </AssociationSet>
+          <AssociationSet Name="GroupAdminRequest" Association="Model.GroupAdminRequest">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="AdminRequest" EntitySet="AdminRequests" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="AspNetUserComment">
           <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -950,6 +1002,40 @@
             </Principal>
             <Dependent Role="EventUserReply">
               <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AdminRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Requester" Relationship="Model.AspNetUserAdminRequest" FromRole="AdminRequest" ToRole="AspNetUser" />
+          <Property Name="AspNetUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Group" Relationship="Model.GroupAdminRequest" FromRole="AdminRequest" ToRole="Group" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="AspNetUserAdminRequest">
+          <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="Model.AdminRequest" Role="AdminRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdminRequest">
+              <PropertyRef Name="AspNetUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupAdminRequest">
+          <End Type="Model.Group" Role="Group" Multiplicity="1" />
+          <End Type="Model.AdminRequest" Role="AdminRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdminRequest">
+              <PropertyRef Name="GroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1109,6 +1195,15 @@
           <ScalarProperty Name="Reply" ColumnName="Reply" />
           <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
           <ScalarProperty Name="EventId" ColumnName="EventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdminRequests">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.AdminRequest)">
+        <MappingFragment StoreEntitySet="AdminRequests">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
