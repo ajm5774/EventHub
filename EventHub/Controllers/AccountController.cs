@@ -292,6 +292,49 @@ namespace EventHub.Controllers
             return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
         }
 
+        public ActionResult ChangeInfo()
+        {
+            List<School> schoolList = (from data in db.Schools select data).ToList();
+
+            List<SchoolListViewModel> sList = new List<SchoolListViewModel>();
+            foreach (School s in schoolList)
+            {
+                SchoolListViewModel model = new SchoolListViewModel();
+                model.Id = s.Id;
+                model.Name = s.Name;
+                sList.Add(model);
+            }
+            ChangeInfoModel CIM = new ChangeInfoModel();
+            CIM.Schools = sList;
+            CIM.UserName = User.Identity.GetUserName();
+            return View(CIM);
+        }
+
+        //
+        // Post: /Account/ChangeInfo
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeInfo(ChangeInfoModel model)
+        {
+            string userID = User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    AspNetUser u = db.AspNetUsers.Where(z => z.Id == userID).Single();
+                    u.UserName = model.UserName;
+                    u.SchoolId = model.SelectedSchoolId;
+                    db.SaveChanges();
+                    return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+                }
+                catch
+                {
+                    return View(model);
+                }
+            }
+            return View(model);
+        }
+
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
