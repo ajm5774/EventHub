@@ -17,7 +17,7 @@
 
                     @Html.ActionLink(@req.Requester.FirstName + ' ' + @req.Requester.LastName, "Details", "User", new { id = @req.Requester.Id }, htmlAttributes: new { })
                     @Html.AntiForgeryToken()
-                    @Html.Hidden("UserId", @req.AspNetUserId, new { @class = "form-control commentTextArea" })
+                    @Html.Hidden("UserId", @req.Requester.Id)
 
                     <input type="submit" class="btn btn-default pull-right" value="Confirm Request" />
                 }
