@@ -5,7 +5,7 @@
     {
         foreach (var group in Model.Groups)
         {
-            <div >
+            <div>
                 @using (Html.BeginForm("Add", "Group", FormMethod.Post))
                 {
                     <img src="@group.PicturePath" class="pictureBorder" width="40" height="40" />
@@ -15,17 +15,14 @@
                     @Html.Hidden("GroupId", @group.Id, new { @class = "form-control commentTextArea" })
 
                     <input type="submit" class="btn btn-default pull-right" value="+Subscribe" />
-                    
                 }
             </div>
-            <br />
         }
     }
     else
     {
         <h4>No Suggestions</h4>
     }
-    
+
 
 </div>
-
