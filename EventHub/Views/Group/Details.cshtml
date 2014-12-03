@@ -109,11 +109,9 @@
     </div>
 
 
-    <div class="groupList col-md-3">
-
+    <div class="group-details-actions col-md-3">
+        @{Html.RenderAction("GetMembers", "Group", new { id = Model.Group.Id });}
     </div>
-</div>
-<div class="group-details-actions col-md-3 text-center">
 </div>
 <div id="CreateEventDialog" title="Create New Event">
 </div>
