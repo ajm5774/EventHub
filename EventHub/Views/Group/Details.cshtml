@@ -141,7 +141,7 @@
     var adminDialog = $("#AdminRequestDialog").dialog({
         autoOpen: false,
         height: 350,
-        width: 500
+        width: 500,
     });
 
     function AdminRequest(){
@@ -151,7 +151,7 @@
             type: 'Get',
             dataType: 'html'
         }).success(function (result) {
-            confirm("Admin Permissions Requested");
+            alert("Admin Permissions Requested");
             $("#adminButton").html("Admin Permissions Requested");
             $("#adminButton").attr("disabled", true);
         });
