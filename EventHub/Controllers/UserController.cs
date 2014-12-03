@@ -28,7 +28,7 @@ namespace EventHub.Controllers
             userVM.LastName = user.LastName;
             userVM.UserName = user.UserName;
             userVM.SchoolName = user.School.Name;
-            userVM.UserId = user.Id;
+            userVM.UserId = id;
             userVM.PicturePath = user.PicturePath;
 
             return View(userVM);
