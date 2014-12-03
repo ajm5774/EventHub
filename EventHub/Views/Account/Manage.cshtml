@@ -20,10 +20,6 @@
         <section id="ChangeInfo">
             @Html.Action("ChangeInfo", "Account")
         </section>
-        <section id="externalLogins">
-            @Html.Action("RemoveAccountList")
-            @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
-        </section>
     </div>
 </div>
 @section Scripts {

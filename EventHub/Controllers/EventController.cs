@@ -181,6 +181,33 @@ namespace EventHub.Controllers
                 events.Place = collection.Get("Place").ToString();
                 events.Title = collection.Get("Title").ToString();
 
+
+                //Notification Logic
+                Notification notification = new Notification();
+                notification.Message = "The event " + events.Title + " has been updated.";
+                notification.NotificationType = NotificationType.EventChanged;
+                notification.AspNetUserId = User.Identity.GetUserId();
+
+                HashSet<string> eventUserSet = new HashSet<string>();
+                List<EventUserReply> eventReplies = new List<EventUserReply>();
+                eventReplies = db.EventUserReplies.Where(e => (e.EventId == id)).ToList();
+
+                foreach (EventUserReply reply in eventReplies)
+                {
+                    if (reply.AspNetUserId != User.Identity.GetUserId())
+                    {
+                        //check if the user turned off notifications for the event
+                        if (!db.UserEventNotifications.Where(uen =>
+                            uen.AspNetUsersId == reply.AspNetUserId &&
+                            uen.EventsId == reply.EventId &&
+                            !uen.AllowNotifications).Any())
+                        {
+                            notification.AspNetUserId1 = reply.AspNetUserId;
+                            db.Notifications.Add(notification);
+                        }
+                    }
+                }
+
                 db.Entry(events).CurrentValues.SetValues(events);
                 db.SaveChanges();
                 return RedirectToAction("Details", "Event", new { id = events.Id });
@@ -238,7 +265,7 @@ namespace EventHub.Controllers
             if (exists)
             {
                 var reply = db.EventUserReplies.Where(i => i.AspNetUser.UserName == User.Identity.Name && i.EventId == eventId).First();
-                reply.Reply = EventReply.Not_Going;
+                reply.Reply = EventReply.Going;
 
                 db.Entry(reply).CurrentValues.SetValues(reply);
                 db.SaveChanges();

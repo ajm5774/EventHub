@@ -46,10 +46,22 @@
             <br />
         }
         <div class="col-md-12 col-md-offset-0">
-            @using (Html.BeginForm("Create", "Comment", FormMethod.Post))
+            @{
+                string doThisPlease = "Create";
+                if(Request.Url.AbsolutePath.Contains("/Event/Details"))
+                {
+                    doThisPlease = "EventCreate";
+                }
+                if (Request.Url.AbsolutePath.Contains("/Group/Details"))
+                {
+                    doThisPlease = "GroupCreate";
+                }
+            }
+            @using (Html.BeginForm(doThisPlease, "Comment", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 @Html.Hidden("EventId", Model.AnEvent.Id)
+                @Html.Hidden("GroupId", Model.AnEvent.GroupId)
                 @Html.TextArea("Message", new { @class = "form-control commentTextArea", @placeholder="Add Comment"})
 
                 <div class="form-group">
