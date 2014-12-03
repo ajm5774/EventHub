@@ -43,10 +43,10 @@
     </div>
     <div class="form-group">
         <div class = "col-md-2 control-label">
-            School
+            <label>School</label>
         </div>
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.SelectedSchoolId, new SelectList(Model.Schools, "Id", "Name"), "-- Select School--")
+            @Html.DropDownListFor(m => m.SelectedSchoolId, new SelectList(Model.Schools, "Id", "Name"), "-- Select School--", new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

@@ -41,10 +41,10 @@ namespace EventHub.Controllers
                     if (userid != User.Identity.GetUserId())
                     {
                         //check if the user turned off notifications for the event
-                        if (db.UserEventNotifications.Where(uen =>
+                        if (!db.UserEventNotifications.Where(uen =>
                             uen.AspNetUsersId == userid &&
                             uen.EventsId == comment.EventId &&
-                            uen.AllowNotifications).Any())
+                            !uen.AllowNotifications).Any())
                         {
                             notification.AspNetUserId1 = userid;
                             db.Notifications.Add(notification);
