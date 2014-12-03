@@ -7,7 +7,10 @@
         
         <h4 class="text-center">@Html.DisplayFor(model => model.Group.Name)</h4>
 
-        <img src="@Model.Group.PicturePath" class="pull-left mainPicture"  />
+        <div class="row text-center"> 
+            <img src="@Model.Group.PicturePath" class="mainPicture"  />
+        </div>
+        
         <br />
 
         @{bool isAdmin = false;
@@ -39,7 +42,7 @@
         @if (isAdmin == true)
         {
             <button onclick="UploadImageDialog()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Change Picture</button>
-            <br/>
+            <br/><br/>
             <button onclick="AdminRequestsDialog()" class="btn btn-default">View Admin Requests</button>
             <br />
         }
