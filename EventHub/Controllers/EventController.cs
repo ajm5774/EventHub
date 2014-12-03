@@ -238,7 +238,7 @@ namespace EventHub.Controllers
             if (exists)
             {
                 var reply = db.EventUserReplies.Where(i => i.AspNetUser.UserName == User.Identity.Name && i.EventId == eventId).First();
-                reply.Reply = EventReply.Not_Going;
+                reply.Reply = EventReply.Going;
 
                 db.Entry(reply).CurrentValues.SetValues(reply);
                 db.SaveChanges();
