@@ -51,6 +51,18 @@ namespace EventHub.Controllers
             return PartialView(events);
         }
 
+        public PartialViewResult GetAttendees(int id)
+        {
+            List<UserViewModel> attendees = new List<UserViewModel>();
+            string name;
+            foreach(var reply in db.EventUserReplies.Where(eur => eur.EventId == id && eur.Reply == EventReply.Going))
+            {
+                name = reply.AspNetUser.FirstName + " " + reply.AspNetUser.LastName ;
+                attendees.Add(new UserViewModel() { Name = name, picturePath=reply.AspNetUser.PicturePath});
+            }
+            return PartialView(attendees);
+        }
+
         public PartialViewResult GroupEventFeed(int id)
         {
             var userid = User.Identity.GetUserId();

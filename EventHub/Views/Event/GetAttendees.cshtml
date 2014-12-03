@@ -1,0 +1,19 @@
+﻿@model List<EventHub.Models.UserViewModel>
+<div>
+    <div class="row text-center">
+        <h4>Attendees</h4>
+    </div>
+    <div>
+        @if(!Model.Any())
+        {
+            <h4>No Attendees =(</h4>
+        }
+        @foreach (var user in Model)
+        {
+            <div class="group">
+                <img src="@user.picturePath" class="pictureBorder" width="40" height="40" />
+                @user.Name
+            </div>
+        }
+    </div>
+</div>

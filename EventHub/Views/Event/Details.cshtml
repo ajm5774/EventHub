@@ -120,6 +120,8 @@
                 }
 
             </p>
+
+            @{Html.RenderAction("GetAttendees", "Event", new { id = Model.AnEvent.Id});}
         </div>
     </div>
 </div>

@@ -31,7 +31,7 @@ namespace EventHub.Models
                 {
                     new Group() { Id = 1, Name = "Outting Club", Description = "People get together to do outdoor things.", PicturePath = "\\Content\\Images\\testImages\\group1Pic.jpg" , SchoolId = 1},
                     new Group() { Id = 2, Name = "Dodgeball Club", Description = "Dodge Dip Dive and Dodge", PicturePath = "\\Content\\Images\\testImages\\group2Pic.jpg", SchoolId = 1 },
-                     new Group() { Id = 3, Name = "Better Dodgeball Club", Description = "Dodge Dip Dive and Dodge", PicturePath = "\\Content\\Images\\testImages\\group2Pic.jpg", SchoolId = 2 }
+                     new Group() { Id = 3, Name = "Better DB Club", Description = "Dodge Dip Dive and Dodge", PicturePath = "\\Content\\Images\\testImages\\group2Pic.jpg", SchoolId = 2 }
                 }.ForEach(group => context.Groups.Add(group));
                 context.SaveChanges();
 
