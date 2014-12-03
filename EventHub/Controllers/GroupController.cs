@@ -46,6 +46,18 @@ namespace EventHub.Controllers
             return RedirectToAction("Details", "Group", new { id = groupid});
         }
 
+        public PartialViewResult GetMembers(int id)
+        {
+            List<UserViewModel> attendees = new List<UserViewModel>();
+            string name;
+            foreach (var sub in db.GroupSubscriptions.Where(g => g.GroupId == id))
+            {
+                name = sub.AspNetUser.FirstName + " " + sub.AspNetUser.LastName;
+                attendees.Add(new UserViewModel() { Name = name, picturePath = sub.AspNetUser.PicturePath });
+            }
+            return PartialView(attendees);
+        }
+
         // GET:  Group/Details/5
         public ActionResult Details(int id)
         {
@@ -304,8 +316,6 @@ namespace EventHub.Controllers
                 var group = db.Groups.Single(a => a.Id == id);
                 group.Name = collection.Get("Name").ToString();
                 group.Description = collection.Get("Description").ToString();
-                //picture path info?
-                group.PicturePath = "";
 
                 //db.Groups.Attach(group);
                 db.Entry(group).CurrentValues.SetValues(group);

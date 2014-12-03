@@ -6,41 +6,46 @@
 }
 
 <div>
-    <br/>
-    <div class="col-md-3">
+    <div class="col-md-3 group-details">
         @{
             int attending = 0;
             bool isAdmin = false;
-            foreach(EventHub.Models.GroupSubscription gsub in Model.AnEvent.Group.GroupSubscriptions)
+            foreach (EventHub.Models.GroupSubscription gsub in Model.AnEvent.Group.GroupSubscriptions)
             {
-                if(gsub.AspNetUser.UserName == User.Identity.Name && gsub.IsAdministrator == true)
+                if (gsub.AspNetUser.UserName == User.Identity.Name && gsub.IsAdministrator == true)
                 {
                     isAdmin = true;
-                    
+
                 }
             }
             foreach (EventHub.Models.EventUserReply reply in Model.AnEvent.EventReplies)
             {
-                if(reply.Reply == EventHub.Models.EventReply.Going)
+                if (reply.Reply == EventHub.Models.EventReply.Going)
                 {
                     attending++;
                 }
             }
         }
-
-        @if (@Model.AnEvent.EventPictures.Any())
-        {
-            <img src="@Model.AnEvent.EventPictures.First().PicturePath" class="mainPicture"/>
-        }
-        else
-        {
-            <img src="\Content\Images\testImages\group_default.png" class="mainPicture"/>
-        }
-        <div class="pull-right">
-            <button onclick="UploadImageDialog()" class="btn btn-default">Upload Pictures</button>
+        <div class="row text-center">
+            @if (@Model.AnEvent.EventPictures.Any())
+            {
+                <img src="@Model.AnEvent.EventPictures.First().PicturePath" class="mainPicture" />
+            }
+            else
+            {
+                <img src="\Content\Images\testImages\group_default.png" class="mainPicture" />
+            }
+            @if (isAdmin == true)
+            {
+                <br />
+                <center>
+                    <button onclick="UploadImageDialog()" class="btn btn-default">Upload Pictures</button>
+                </center>
+            }
         </div>
-        <h4>@attending People Attending</h4>
+
         
+        <br>
         @{
             bool userReplied = true;
             foreach (EventHub.Models.EventUserReply reply in Model.AnEvent.EventReplies)
@@ -59,9 +64,10 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("EventId", Model.AnEvent.Id)
-            
-                    <br />
-                    <input type="submit" class="btn btn-default" value="+I'm In!" />
+                    <div class="col-md-8" style="padding-left: 0px; padding-right: 0px"><h4>@attending People Attending</h4></div>
+                    <div class="col-md-4" style="padding-left: 0px; padding-right: 0px; ">
+                        <input type="submit" class="btn btn-default" value="+I'm In!" />
+                    </div>
                 }
             }
             else
@@ -70,45 +76,55 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.Hidden("EventId", Model.AnEvent.Id)
-            
-                    <br />
-                    <input type="submit" class="btn btn-default" value="-I'm Out!" />
-                }   
+                    <div class="col-md-8" style="padding-left: 0px; padding-right: 0px">
+                        <h4>@attending People Attending</h4>
+                    </div>
+                    <div class="col-md-4" style="padding-left: 0px; padding-right: 0px">
+                        <input type="submit" class="btn btn-default" value="-I'm Out!" />
+                    </div>
+
+                }
             }
-        }
-        <br/>
-       
+}
+        @if (isAdmin == true)
+{
+                 <center class="group"></center>
+            <p class="pull-right" style="margin-bottom:-5px;">
+                <button onclick="EditEventDialog()" class="btn btn-default">Edit</button>
+                <button onclick="DeleteEventDialog()" class="btn btn-default">Delete</button>
+            </p>
+}
     </div>
-    <div class =" col-md-6">
+
+    <div class=" col-md-6">
+        <div class="row text-center">
+            <h3>@Model.AnEvent.Group.Name Event</h3>
+        </div>
         @Html.Partial("Event", Model);
     </div>
-    <div id="EditEventDialog" title="Edit Event">
+
+
+    
+
+    <div class="group-details-actions col-md-3 ">
+            @{Html.RenderAction("GetAttendees", "Event", new { id = Model.AnEvent.Id});}
     </div>
 </div>
-<div>
-    <p>
-        @if (isAdmin == true)
-        {
-            <button onclick="EditEventDialog()" class="btn btn-default">Edit Event</button>
-            <br />
-            <br />
-            <button onclick="DeleteEventDialog()" class="btn btn-default">Delete Event</button>
-        }
 
-    </p>
+
+<div id="EditEventDialog" title="Edit Event">
 </div>
 <div id="UploadImageDialog" title="Upload Account Picture">
     @Html.Partial("UploadPicture", new EventHub.Models.UploadViewModel() { AllowMultiple = true, Action = "UploadPictures", Controller = "Event" })
 </div>
 <div id="DeleteEventDialog" title="Delete Event?">
-
 </div>
 @section scripts
 {
     <script type="text/javascript">
     var eventDialog = $("#EditEventDialog").dialog({
         autoOpen: false,
-        height: 500,
+        height: 350,
         width: 750
     });
 

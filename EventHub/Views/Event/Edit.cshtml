@@ -7,10 +7,6 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
 <body>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
@@ -21,7 +17,6 @@
         @Html.AntiForgeryToken()
         
         <div class="form-horizontal">
-            <h4>Event</h4>
             <hr />
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Id)
@@ -66,8 +61,5 @@
         </div>
     }
     
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
 </body>
 </html>

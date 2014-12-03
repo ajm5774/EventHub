@@ -73,8 +73,14 @@
         <br/>
 
         @if (isAdmin == true)
-        {
-            <button onclick="CreateEventDialog()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Event</button>
+{
+            <center class="group">
+                <button onclick="CreateEventDialog()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Event</button>
+            </center>
+            <p class="pull-right" style="margin-bottom:-5px;">
+                <button onclick="EditGroupDialog()" class="btn btn-default">Edit</button>
+                @*<button onclick="DeleteEventDialog()" class="btn btn-default">Delete</button>*@
+            </p>
         }
 
 
@@ -103,27 +109,13 @@
     </div>
 
 
-    <div class="groupList col-md-3">
-
+    <div class="group-details-actions col-md-3">
+        @{Html.RenderAction("GetMembers", "Group", new { id = Model.Group.Id });}
     </div>
 </div>
-<div class="group-details-actions col-md-3 text-center">
-    @if (isAdmin == true)
-    {
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Group.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = Model.Group.Id }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>
-    }
-    else
-    {
-        <p>
-            @Html.ActionLink("Back to List", "Index")
-        </p>
-    }
-</div>
 <div id="CreateEventDialog" title="Create New Event">
+</div>
+<div id="EditGroupDialog" title="Edit Event">
 </div>
 <div id="AdminRequestDialog" title="Admin Requests">
 </div>
@@ -140,6 +132,25 @@
         height: 350,
         width: 500
     });
+
+    var editDialog = $("#EditGroupDialog").dialog({
+        autoOpen: false,
+        height: 350,
+        width: 700
+    });
+
+    function EditGroupDialog() {
+        $.ajax({
+            url: '/Group/Edit?id=@Model.Group.Id',
+            contentType: 'Application/html; charset=utf-8',
+            type: 'Get',
+            dataType: 'html'
+        }).success(function (result) {
+            $("#EditGroupDialog").html(result);
+        });
+
+        editDialog.dialog("open");
+    }
 
     var adminDialog = $("#AdminRequestDialog").dialog({
         autoOpen: false,
