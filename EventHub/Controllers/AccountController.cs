@@ -11,6 +11,8 @@ using Microsoft.Owin.Security;
 using EventHub.Models;
 using System.IO;
 using System.Data.Entity;
+using System.Web.Security;
+using System.Security.Principal;
 
 namespace EventHub.Controllers
 {
@@ -171,6 +173,7 @@ namespace EventHub.Controllers
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.SetUserInfoSuccess? "User Info Updated Successfully!"
                 : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -295,6 +298,7 @@ namespace EventHub.Controllers
 
         public ActionResult ChangeInfo()
         {
+            var res = UserManager.FindById(User.Identity.GetUserId());
             List<School> schoolList = (from data in db.Schools select data).ToList();
 
             List<SchoolListViewModel> sList = new List<SchoolListViewModel>();
@@ -307,7 +311,8 @@ namespace EventHub.Controllers
             }
             ChangeInfoModel CIM = new ChangeInfoModel();
             CIM.Schools = sList;
-            CIM.UserName = User.Identity.GetUserName();
+            CIM.UserName = res.UserName;
+            CIM.SelectedSchoolId = res.SchoolId == null? 0 : (int)res.SchoolId;
             return View(CIM);
         }
 
@@ -330,8 +335,13 @@ namespace EventHub.Controllers
                     {
                         AddErrors(result);
                     }
+                    else
+                    {
+                        HttpContext.User =
+                                new GenericPrincipal(new GenericIdentity(res.UserName), new string[] { });
+                    }
 
-                    return RedirectToAction("Manage");
+                    return RedirectToAction("Manage", new { Message = ManageMessageId.SetUserInfoSuccess });
                 }
                 catch
                 {
@@ -457,7 +467,8 @@ namespace EventHub.Controllers
             ChangePasswordSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,
-            Error
+            Error,
+            SetUserInfoSuccess
         }
 
         private ActionResult RedirectToLocal(string returnUrl)
