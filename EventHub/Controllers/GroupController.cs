@@ -333,8 +333,6 @@ namespace EventHub.Controllers
                 var group = db.Groups.Single(a => a.Id == id);
                 group.Name = collection.Get("Name").ToString();
                 group.Description = collection.Get("Description").ToString();
-                //picture path info?
-                group.PicturePath = "";
 
                 //db.Groups.Attach(group);
                 db.Entry(group).CurrentValues.SetValues(group);

@@ -77,9 +77,9 @@
             <center class="group">
                 <button onclick="CreateEventDialog()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Event</button>
             </center>
-            <p class="pull-right " style="margin-bottom:-5px;">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Group.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = Model.Group.Id })
+            <p class="pull-right" style="margin-bottom:-5px;">
+                <button onclick="EditGroupDialog()" class="btn btn-default">Edit</button>
+                @*<button onclick="DeleteEventDialog()" class="btn btn-default">Delete</button>*@
             </p>
         }
 
@@ -115,6 +115,8 @@
 </div>
 <div id="CreateEventDialog" title="Create New Event">
 </div>
+<div id="EditGroupDialog" title="Edit Event">
+</div>
 <div id="AdminRequestDialog" title="Admin Requests">
 </div>
 <div id="UploadImageDialog" title="Upload Account Picture">
@@ -130,6 +132,25 @@
         height: 350,
         width: 500
     });
+
+    var editDialog = $("#EditGroupDialog").dialog({
+        autoOpen: false,
+        height: 350,
+        width: 700
+    });
+
+    function EditGroupDialog() {
+        $.ajax({
+            url: '/Group/Edit?id=@Model.Group.Id',
+            contentType: 'Application/html; charset=utf-8',
+            type: 'Get',
+            dataType: 'html'
+        }).success(function (result) {
+            $("#EditGroupDialog").html(result);
+        });
+
+        editDialog.dialog("open");
+    }
 
     var adminDialog = $("#AdminRequestDialog").dialog({
         autoOpen: false,

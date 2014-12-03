@@ -87,15 +87,13 @@
             }
 }
         @if (isAdmin == true)
-        {
-            <center class="group">
-                <button onclick="CreateEventDialog()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Event</button>
-            </center>
+{
+                 <center class="group"></center>
             <p class="pull-right" style="margin-bottom:-5px;">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.AnEvent.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = Model.AnEvent.Id })
+                <button onclick="EditEventDialog()" class="btn btn-default">Edit</button>
+                <button onclick="DeleteEventDialog()" class="btn btn-default">Delete</button>
             </p>
-        }
+}
     </div>
 
     <div class=" col-md-6">
@@ -109,20 +107,7 @@
     
 
     <div class="group-details-actions col-md-3 ">
-        <div>
-            <p>
-                @if (isAdmin == true)
-                {
-                    <button onclick="EditEventDialog()" class="btn btn-default">Edit Event</button>
-                    <br />
-                    <br />
-                    <button onclick="DeleteEventDialog()" class="btn btn-default">Delete Event</button>
-                }
-
-            </p>
-
             @{Html.RenderAction("GetAttendees", "Event", new { id = Model.AnEvent.Id});}
-        </div>
     </div>
 </div>
 
@@ -139,7 +124,7 @@
     <script type="text/javascript">
     var eventDialog = $("#EditEventDialog").dialog({
         autoOpen: false,
-        height: 500,
+        height: 350,
         width: 750
     });
 
