@@ -17,10 +17,10 @@
           bool permRequested = false;
             foreach(EventHub.Models.GroupSubscription gsub in Model.Group.GroupSubscriptions)
             {
-                if(gsub.AspNetUser.UserName == User.Identity.Name && gsub.IsAdministrator == true)
+                if(gsub.AspNetUserId == Model.ViewingUserId && gsub.IsAdministrator == true)
                 {
                     isAdmin = true;
-                    break;
+                    //break;
 
                 }
                 else
@@ -33,7 +33,7 @@
                             break;
                         }
                     }
-                    break;
+                    //break;
                 }
             }
             

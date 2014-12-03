@@ -247,9 +247,12 @@ namespace EventHub.Controllers
             //var updatedGS = groupSub;
             //updateGS.IsAdministrator = true;
             db.AdminRequests.Remove(adminReq);
+
             groupSub.IsAdministrator = true;
             db.GroupSubscriptions.Attach(groupSub);
-            db.Entry(groupSub).State = EntityState.Modified;
+            var entry = db.Entry(groupSub);
+            entry.Property(e => e.IsAdministrator).IsModified = true;
+            
             //var entry = db.Entry(updatedGS);
             //entry.Property(e => e.IsAdministrator).IsModified = true;
             //db.Entry(groupSub).CurrentValues.SetValues(updatedGS);
