@@ -73,8 +73,14 @@
         <br/>
 
         @if (isAdmin == true)
-        {
-            <button onclick="CreateEventDialog()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Event</button>
+{
+            <center class="group">
+                <button onclick="CreateEventDialog()" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Create Event</button>
+            </center>
+            <p class="pull-right " style="margin-bottom:-5px;">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Group.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = Model.Group.Id })
+            </p>
         }
 
 
@@ -108,20 +114,6 @@
     </div>
 </div>
 <div class="group-details-actions col-md-3 text-center">
-    @if (isAdmin == true)
-    {
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Group.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = Model.Group.Id }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>
-    }
-    else
-    {
-        <p>
-            @Html.ActionLink("Back to List", "Index")
-        </p>
-    }
 </div>
 <div id="CreateEventDialog" title="Create New Event">
 </div>

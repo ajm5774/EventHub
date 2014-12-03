@@ -30,7 +30,8 @@ namespace EventHub.Models
                 new List<Group>
                 {
                     new Group() { Id = 1, Name = "Outting Club", Description = "People get together to do outdoor things.", PicturePath = "\\Content\\Images\\testImages\\group1Pic.jpg" , SchoolId = 1},
-                    new Group() { Id = 2, Name = "Dodgeball Club", Description = "Dodge Dip Dive and Dodge", PicturePath = "\\Content\\Images\\testImages\\group2Pic.jpg", SchoolId = 1 }
+                    new Group() { Id = 2, Name = "Dodgeball Club", Description = "Dodge Dip Dive and Dodge", PicturePath = "\\Content\\Images\\testImages\\group2Pic.jpg", SchoolId = 1 },
+                     new Group() { Id = 3, Name = "Better Dodgeball Club", Description = "Dodge Dip Dive and Dodge", PicturePath = "\\Content\\Images\\testImages\\group2Pic.jpg", SchoolId = 2 }
                 }.ForEach(group => context.Groups.Add(group));
                 context.SaveChanges();
 
@@ -51,6 +52,13 @@ namespace EventHub.Models
                         Place = "Red Barn 1",
                         Title = "Rock Climbing Trip 1",
                         Description = "We are going rock climbing at some awesome place, join us, again!" },
+                        new Event() {
+                        Id = 43,
+                        DateTime = DateTime.Now.AddDays(10),
+                        GroupId = 3,
+                        Place = "Joes Gym",
+                        Title = "Dodgeball Off",
+                        Description = "Gonna kick some buns." },
                 };
 
                 for (int i = 0; i < 25; i++ )
