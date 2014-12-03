@@ -230,36 +230,19 @@ namespace EventHub.Controllers
         public ActionResult AddAdmin(int groupId, FormCollection collection)
         {
             var UId = collection.Get("UserId");
-            GroupSubscription groupSub;
-            AdminRequest adminReq;
-            using (var ctx = new Entities())
-            {
-                groupSub = ctx.GroupSubscriptions.Where(gs => gs.AspNetUserId == UId && gs.GroupId == groupId).Single();
-                adminReq = ctx.AdminRequests.Where(r => r.AspNetUserId == UId && r.GroupId == groupId).Single();
-                ctx.AdminRequests.Remove(adminReq);
-                ctx.SaveChanges();
-            }
-            
+            var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == UId && gs.GroupId == groupId).First();
+            var adminReq = db.AdminRequests.Where(r => r.AspNetUserId == UId && r.GroupId == groupId).Single();
             //var updatedGS = groupSub;
             //updateGS.IsAdministrator = true;
-            if (groupSub != null)
-            {
-                groupSub.IsAdministrator = true;
-            }
-            
-            //db.GroupSubscriptions.Attach(groupSub);
-            //db.Entry(groupSub).State = EntityState.Modified;
+            db.AdminRequests.Remove(adminReq);
+            groupSub.IsAdministrator = true;
+            db.GroupSubscriptions.Attach(groupSub);
+            db.Entry(groupSub).State = EntityState.Modified;
             //var entry = db.Entry(updatedGS);
             //entry.Property(e => e.IsAdministrator).IsModified = true;
             //db.Entry(groupSub).CurrentValues.SetValues(updatedGS);
             
-            //db.SaveChanges();
-            using (var dbCtx = new Entities())
-            {
-                //Mark entity as modified
-                dbCtx.Entry(groupSub).State = EntityState.Modified;
-                dbCtx.SaveChanges();
-            }
+            db.SaveChanges();
 
             return RedirectToAction("Details", "Group", new { id = groupId });
         }
