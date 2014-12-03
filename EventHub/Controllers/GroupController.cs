@@ -55,6 +55,31 @@ namespace EventHub.Controllers
             return View(new GroupDetailsViewModel() { Group = group, AdminRequests = requests, ViewingUserId = user.Id });
         }
 
+        // GET:  Group/AdminRequests/5
+        public ActionResult AdminRequests(int groupId)
+        {
+            var requests = db.AdminRequests.Where(r => r.GroupId == groupId).ToList();
+
+            return View(new GroupAdminRequestsViewModel() { AdminRequests = requests, GroupId = groupId });
+        }
+
+        // GET:  Group/AdminRequest/5
+        public ActionResult AdminRequest(int groupId, string userId)
+        {
+            var group = db.Groups.Where(i => i.Id == groupId).Single();
+            var user = db.AspNetUsers.Where(u => u.Id == userId).Single();
+            var adminReq = new AdminRequest();
+            adminReq.AspNetUserId = user.Id;
+            adminReq.GroupId = groupId;
+            adminReq.Group = group;
+            adminReq.Requester = user;
+            db.AdminRequests.Add(adminReq);
+            db.SaveChanges();
+
+            return View();
+            
+        }
+
         [Authorize]
         public PartialViewResult MyGroups()
         {
@@ -198,6 +223,20 @@ namespace EventHub.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult AddAdmin(int groupId, FormCollection collection)
+        {
+            var UId = collection.Get("UserId");
+            var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == UId && gs.GroupId == groupId).Single();
+            var adminReq = db.AdminRequests.Where(r => r.AspNetUserId == UId && r.GroupId == groupId).Single();
+            groupSub.IsAdministrator = true;
+            db.Entry(groupSub).CurrentValues.SetValues(groupSub);
+            db.AdminRequests.Remove(adminReq);
+            db.SaveChanges();
+
+            return RedirectToAction("Details", "Group", new { id = groupId });
         }
 
         // GET: Group/Create

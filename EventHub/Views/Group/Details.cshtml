@@ -52,7 +52,7 @@
             }
             else
             {
-                <button id="adminButton" class="btn btn-default">Admin Permissions Requested</button>
+                <button id="adminButton" disabled class="btn btn-default">Admin Permissions Requested</button>
                 <br />
             }
 
@@ -138,15 +138,36 @@
         width: 500
     });
 
+    var adminDialog = $("#AdminRequestDialog").dialog({
+        autoOpen: false,
+        height: 350,
+        width: 500
+    });
+
     function AdminRequest(){
         $.ajax({
-            url: '/Group/AdminRequest?groupId=@Model.Group.Id?userId=@Model.ViewingUserId',
+            url: '/Group/AdminRequest?groupId=@Model.Group.Id&userId=@Model.ViewingUserId',
             contentType: 'Application/html; charset=utf-8',
             type: 'Get',
             dataType: 'html'
         }).success(function (result) {
-            $("#CreateEventDialog").html(result);
+            confirm("Admin Permissions Requested");
+            $("#adminButton").html("Admin Permissions Requested");
+            $("#adminButton").attr("disabled", true);
         });
+    }
+
+    function AdminRequestsDialog(){
+        $.ajax({
+            url: '/Group/AdminRequests?groupId=@Model.Group.Id',
+            contentType: 'Application/html; charset=utf-8',
+            type: 'Get',
+            dataType: 'html'
+        }).success(function (result) {
+            $("#AdminRequestDialog").html(result);
+        });
+
+        adminDialog.dialog("open");
     }
 
     function CreateEventDialog() {
