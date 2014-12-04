@@ -202,7 +202,7 @@ namespace EventHub.Controllers
             {
                 Groups = temp;
             }
-            return PartialView(new GroupSuggestionsViewModel() { Groups = Groups, School = school });
+            return PartialView("GroupSuggestions", new GroupSuggestionsViewModel() { Groups = Groups, School = school });
         }
 
         [Authorize]
@@ -218,6 +218,7 @@ namespace EventHub.Controllers
         }
 
         [Authorize]
+        [HttpPost]
         public ActionResult Remove(FormCollection collection)
         {
             var user = userManager.FindById(User.Identity.GetUserId());

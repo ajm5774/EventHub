@@ -158,7 +158,7 @@ namespace EventHub.Controllers
                 db.Events.Add(myEvent);
                 db.SaveChanges();
 
-                return RedirectToAction("Details", "Group", new { id = myEvent.GroupId });
+                return RedirectToAction("Details", "Event", new { id = myEvent.Id });
             }
             catch
             {
@@ -254,6 +254,15 @@ namespace EventHub.Controllers
                     {
                         return RedirectToAction("Index", "Home", new { success = false });
                     }
+
+                    foreach(var pic in ev.EventPictures.ToList())
+                    {
+                        var serverPath = Server.MapPath(pic.PicturePath);
+                        if (System.IO.File.Exists(serverPath))
+                            System.IO.File.Delete(serverPath);
+                        db.EventPictures.Remove(pic);
+                    }
+
                     db.Events.Remove(ev);
                     db.SaveChanges();
                     return RedirectToAction("details", "Group", new {id = ev.GroupId, success = true });
