@@ -286,6 +286,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\ajax-loader.gif" />
+    <Content Include="Content\Images\testImages\event-placeholder.jpg" />
+    <Content Include="Content\Images\testImages\group_default.png" />
     <Content Include="Content\Images\testImages\person_default.png" />
     <Content Include="Content\Images\testImages\bob-hope.jpg" />
     <Content Include="Content\Images\testImages\bobby-joe.jpg" />
@@ -310,6 +312,7 @@
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\jquery-ui.structure.min.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
+    <Content Include="Scripts\jquery.confirm.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

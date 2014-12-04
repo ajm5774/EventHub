@@ -8,10 +8,10 @@
 <div >
     <div class="col-md-3">
         <div id="profile-pic" class="row">
-            <div class="text-center">
-                <img src="@Model.PicturePath" class="mainPicture"/>
+            <div class="row text-center">
+                <img src="@Model.PicturePath" class="mainPicture" />
                 <br />
-                <button onclick="UploadImageDialog()" id="upload-img-btn"class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> change picture</button>
+                <button onclick="UploadImageDialog()" id="upload-img-btn" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> change picture</button>
             </div>
         </div>
         <div class="row groups">
@@ -43,16 +43,16 @@
         </div>
 
         <div class="col-md-12">
-            <div class="col-md-8">
-                <input id="searchBar" type="text" placeholder="Search">
+            <div class="col-md-9 " style="padding-left: 0px; padding-right: 0px; ">
+                <input id="searchBar" type="text" placeholder="Search" style="max-width:170px; margin-top:3px">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3" style="padding-left: 0px; padding-right: 0px; ">
                 <button onclick="SearchGroups()" id="search-groups-btn" class="btn btn-primary">Search</button>
             </div>
         </div>
         <br />
         <br />
-        <div id="suggestionList" class="group">
+        <div id="suggestionList" class="">
             @{Html.RenderAction("GroupSuggestions", "Group");}
         </div>
              
@@ -72,8 +72,9 @@
 
         var groupDialog = $("#CreateGroupDialog").dialog({
             autoOpen: false,
-            height: 500,
-            width: 750
+            height: 250,
+            width: 400,
+            resizable: false
         });
 
         function SearchGroups() {
@@ -103,8 +104,9 @@
 
         var uploadImageDialog = $("#UploadImageDialog").dialog({
             autoOpen: false,
-            height: 200,
-            width: 500
+            height: 150,
+            width: 500,
+            resizable: false
         });
 
         function UploadImageDialog() {

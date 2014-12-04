@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -281,7 +282,7 @@ namespace EventHub.Controllers
                 group.Name = collection.Get("Name").ToString();
                 group.Description = collection.Get("Description").ToString();
                 group.SchoolId = school.Id;
-                group.PicturePath = "";
+                group.PicturePath = "\\Content\\Images\\testImages\\group_default.png";
                 //picture path info?
                 db.Groups.Add(group);
                 //Add user to group subscription
@@ -289,7 +290,7 @@ namespace EventHub.Controllers
                 db.GroupSubscriptions.Add(gs);
 
                 db.SaveChanges();
-                return RedirectToAction("Index", "Home", new { success = true });
+                return RedirectToAction("Details", "Group", new { id=group.Id, success = true });
             }
             catch
             {
@@ -340,19 +341,38 @@ namespace EventHub.Controllers
             try
             {
                 // TODO: Add delete logic here
-                var group = db.Groups.Single(a => a.Id == id);
+                var group = db.Groups.Find(id);
 
                 if (group != null)
                 {
-                    var user = userManager.FindById(User.Identity.GetUserId());
-                    var groupSub = db.GroupSubscriptions.Where(gs => gs.AspNetUserId == user.Id && gs.GroupId == id).First();
-                    db.GroupSubscriptions.Remove(groupSub);
+                    var userid = User.Identity.GetUserId();
+                    if (group.GroupSubscriptions.Where(gs => gs.AspNetUser.Id == userid).Single() == null)
+                    {
+                        return RedirectToAction("Index", "Home", new { success = false });
+                    }
+                    
+                    foreach(var gs in group.GroupSubscriptions.ToList())
+                    {
+                        db.GroupSubscriptions.Remove(gs);
+                    }
+                    db.SaveChanges();
+                    foreach (var e in group.Events.ToList())
+                    {
+                        db.Events.Remove(e);
+                    }
+                    db.SaveChanges();
+                    foreach (var ar in group.AdminRequests.ToList())
+                    {
+                        db.AdminRequests.Remove(ar);
+                    }
+                    db.SaveChanges();
+                    group = db.Groups.Find(id);
                     db.Groups.Remove(group);
                     db.SaveChanges();
                 }
                 return RedirectToAction("Index", "Home", new { success = true });
             }
-            catch
+            catch(Exception ex)
             {
                 return RedirectToAction("Index", "Home", new { success = true });
             }

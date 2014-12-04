@@ -240,24 +240,29 @@ namespace EventHub.Controllers
         */
         //
         // POST: /Event/Delete/5
-        [HttpPost]
         public ActionResult Delete(int id)
         {
             try
             {
                 // TODO: Add delete logic here
-                var ev = db.Events.Single(e => e.Id == id);
+                var ev = db.Events.Find(id);
 
                 if (ev != null)
                 {
+                    var userid = User.Identity.GetUserId();
+                    if (ev.Group.GroupSubscriptions.Where(gs => gs.AspNetUser.Id == userid).Single() == null)
+                    {
+                        return RedirectToAction("Index", "Home", new { success = false });
+                    }
                     db.Events.Remove(ev);
                     db.SaveChanges();
+                    return RedirectToAction("details", "Group", new {id = ev.GroupId, success = true });
                 }
-                return RedirectToAction("Index", "Home", new { success = true });
+                return RedirectToAction("Index", "Home", new { success = false });
             }
             catch
             {
-                return RedirectToAction("Index", "Home", new { success = true });
+                return RedirectToAction("Index", "Home", new { success = false });
             }
         }
 

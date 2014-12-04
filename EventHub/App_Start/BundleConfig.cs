@@ -35,7 +35,8 @@ namespace EventHub
                       "~/Content/jquery-ui.theme.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui.min.js"));
+                        "~/Scripts/jquery-ui.min.js",
+                        "~/Scripts/jquery.confirm.min.js"));
         }
     }
 }

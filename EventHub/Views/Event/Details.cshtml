@@ -91,7 +91,7 @@
                  <center class="group"></center>
             <p class="pull-right" style="margin-bottom:-5px;">
                 <button onclick="EditEventDialog()" class="btn btn-default">Edit</button>
-                <button onclick="DeleteEventDialog()" class="btn btn-default">Delete</button>
+                <a href="/Event/Delete/@Model.AnEvent.Id " class="btn btn-default confirm">Delete</a>
             </p>
 }
     </div>
@@ -122,10 +122,13 @@
 @section scripts
 {
     <script type="text/javascript">
+        $(".confirm").confirm();
+
     var eventDialog = $("#EditEventDialog").dialog({
         autoOpen: false,
-        height: 350,
-        width: 750
+        height: 290,
+        width: 400,
+        resizable: false
     });
 
     function EditEventDialog() {
@@ -144,34 +147,12 @@
     var uploadImageDialog = $("#UploadImageDialog").dialog({
         autoOpen: false,
         height: 200,
-        width: 500
+        width: 500,
+        resizable: false
     });
 
     function UploadImageDialog() {
         uploadImageDialog.dialog("open");
-    }
-
-    var deleteEventDialog = $("#DeleteEventDialog").dialog({
-        autoOpen: false,
-        height: 200,
-        width: 500,
-        buttons: {
-            "Delete": function () {
-                $.ajax({
-                    url: '/Event/Delete?id=@Model.AnEvent.Id',
-                    type: 'Post',
-                }).success(function (result) {
-                    window.location.href = "/Home/Index?success=true";
-                });
-            },
-            "Cancel": function () {
-                deleteEventDialog.dialog("close");
-            }
-        }
-    });
-
-    function DeleteEventDialog() {
-        deleteEventDialog.dialog("open");
     }
 
     </script>

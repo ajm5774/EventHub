@@ -2,27 +2,29 @@
 
 <div>
     @if (Model.Groups.Count > 0)
+{
+    foreach (var group in Model.Groups)
     {
-        foreach (var group in Model.Groups)
-        {
-            <div >
-                @using (Html.BeginForm("Add", "Group", FormMethod.Post))
-                {
-                    <img src="@group.PicturePath" class="pictureBorder" width="40" height="40" />
+        <div class="clearfix group" >
+            @using (Html.BeginForm("Add", "Group", FormMethod.Post))
+            {
+                <img src="@group.PicturePath" class="pictureBorder" width="40" height="40" />
 
-                    @Html.ActionLink(@group.Name, "Details", "Group", new { id = @group.Id }, htmlAttributes: new { })
-                    @Html.AntiForgeryToken()
-                    @Html.Hidden("GroupId", @group.Id, new { @class = "form-control commentTextArea" })
+                @Html.ActionLink(@group.Name, "Details", "Group", new { id = @group.Id }, htmlAttributes: new { })
+                @Html.AntiForgeryToken()
+                @Html.Hidden("GroupId", @group.Id, new { @class = "form-control commentTextArea" })
 
-                    <input type="submit" class="btn btn-default pull-right" value="+Subscribe" />
-                    
-                }
-            </div>
-            <br />
-        }
+                <span class="pull-right">
+                    <button type="submit" class="btn btn-default pull-right ui-icon-circle-plus">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
+            }
+        </div>
     }
-    else
-    {
+}
+else
+{
         <h4>No Suggestions</h4>
     }
     
